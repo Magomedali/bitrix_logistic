@@ -11,13 +11,12 @@ use \Bitrix\Main\Application;
 class CompaniesTable extends Entity\DataManager
 {   
 
-    
-
-
     public static function getTableName()
     {
         return 'ali_logistic_companies';
     }
+
+
 
     public static function getMap()
     {

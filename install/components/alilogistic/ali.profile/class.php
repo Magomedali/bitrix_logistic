@@ -4,12 +4,7 @@ use \Bitrix\Main\Loader;
 use \Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UserUtils;
 use Bitrix\Main\UserTable;
-use Social\Chat\MembersTable;
-use Social\Chat\MessagesTable;
-use Social\Chat\TopicTable;
-use Social\Chat\PhotoalbumTable;
-use Social\Chat\PhotoTable;
-use Social\Chat\MembertopicsTable;
+use Ali\Logistic\CompaniesTable;
 
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
@@ -21,7 +16,7 @@ class AliProfile extends CBitrixComponent
 
     protected function checkModules()
     {
-        if (!Loader::includeModule('ali.logisitc'))
+        if (!Loader::includeModule('ali.logistic'))
         {
             ShowError(Loc::getMessage('ALI_MODULE_NOT_INSTALLED'));
             return false;
@@ -56,9 +51,11 @@ class AliProfile extends CBitrixComponent
     {
         $this->includeComponentLang('class.php');
 
+
+
         if($this->checkModules())
         {   
-
+            
             $template = $this->executeAction();
 
             $context = Application::getInstance()->getContext();
@@ -103,6 +100,8 @@ class AliProfile extends CBitrixComponent
         $id = CUser::GetID();
         
         $this->arResult['id'] = $id;
+
+
 
         //Редирект
         // LocalRedirect("/chat/profile");
