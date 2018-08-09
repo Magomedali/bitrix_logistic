@@ -63,13 +63,13 @@ Class ali_logistic extends CModule
     {
         Loader::includeModule($this->MODULE_ID);
 
-        if(!Application::getConnection(\Social\Chat\MembersTable::getConnectionName())->isTableExists(
-            Base::getInstance('\Social\Chat\MembersTable')->getDBTableName()
+        if(!Application::getConnection(\Ali\Logistic\CompaniesTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\CompaniesTable')->getDBTableName()
             )
         )
         {
-            Base::getInstance('\Social\Chat\MembersTable')->createDbTable();
-            \Social\Chat\MembersTable::fullStartData();
+            Base::getInstance('\Ali\Logistic\CompaniesTable')->createDbTable();
+            \Ali\Logistic\CompaniesTable::fullStartData();
         }
         
 
@@ -93,8 +93,8 @@ Class ali_logistic extends CModule
     {
         Loader::includeModule($this->MODULE_ID);
 
-        Application::getConnection(\Social\Chat\MembersTable::getConnectionName())->
-             queryExecute('drop table if exists '.Base::getInstance('\Social\Chat\MembersTable')->getDBTableName());
+        Application::getConnection(\Ali\Logistic\CompaniesTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\CompaniesTable')->getDBTableName());
 
         
             
