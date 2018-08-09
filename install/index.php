@@ -69,7 +69,6 @@ Class ali_logistic extends CModule
         )
         {
             Base::getInstance('\Ali\Logistic\CompaniesTable')->createDbTable();
-            \Ali\Logistic\CompaniesTable::fullStartData();
         }
         
 
@@ -117,7 +116,9 @@ Class ali_logistic extends CModule
 	}
 
 	function InstallFiles($arParams = array())
-	{
+	{  
+
+
         $path=$this->GetPath()."/install/components";
 
         if(\Bitrix\Main\IO\Directory::isDirectoryExists($path))
@@ -154,8 +155,9 @@ Class ali_logistic extends CModule
 	function UnInstallFiles()
 	{
         
+
         \Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/alilogistic/');
-        \Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/chat/');
+        \Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/alklogistic/');
 
         if (\Bitrix\Main\IO\Directory::isDirectoryExists($path = $this->GetPath() . '/admin')) {
             DeleteDirFiles($_SERVER["DOCUMENT_ROOT"] . $this->GetPath() . '/install/admin/', $_SERVER["DOCUMENT_ROOT"] . '/bitrix/admin');
@@ -200,7 +202,7 @@ Class ali_logistic extends CModule
 
 	function DoUninstall()
 	{
-       
+
         global $APPLICATION;
 
         $context = Application::getInstance()->getContext();
@@ -227,7 +229,7 @@ Class ali_logistic extends CModule
             $configuration->add('ali_logistic_module', $ali_logistic_module);
             $configuration->saveConfiguration();
             #работа с .settings.php
-
+            
             $APPLICATION->IncludeAdminFile(Loc::getMessage("ALI_UNINSTALL_TITLE"), $this->GetPath()."/install/unstep2.php");
         }
 	}
