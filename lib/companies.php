@@ -30,7 +30,7 @@ class CompaniesTable extends Entity\DataManager
             new Entity\IntegerField('OWNER_ID'),
 
             new Entity\ReferenceField(
-                'USER',
+                'OWNER',
                 '\Bitrix\Main\UserTable',
                 array('=this.OWNER_ID' => 'ref.ID'),
                 array('join_type' => 'INNER')

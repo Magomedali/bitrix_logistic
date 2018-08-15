@@ -70,6 +70,23 @@ Class ali_logistic extends CModule
         {
             Base::getInstance('\Ali\Logistic\CompaniesTable')->createDbTable();
         }
+
+        if(!Application::getConnection(\Ali\Logistic\ContractorsTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\ContractorsTable')->getDBTableName()
+            )
+        )
+        {
+            Base::getInstance('\Ali\Logistic\ContractorsTable')->createDbTable();
+        }
+
+
+        if(!Application::getConnection(\Ali\Logistic\CompanyEmployeeTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\CompanyEmployeeTable')->getDBTableName()
+            )
+        )
+        {
+            Base::getInstance('\Ali\Logistic\CompanyEmployeeTable')->createDbTable();
+        }
         
 
         $this->installDbProgramming();
@@ -95,7 +112,12 @@ Class ali_logistic extends CModule
         Application::getConnection(\Ali\Logistic\CompaniesTable::getConnectionName())->
              queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\CompaniesTable')->getDBTableName());
 
-        
+        Application::getConnection(\Ali\Logistic\ContractorsTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\ContractorsTable')->getDBTableName());
+
+        Application::getConnection(\Ali\Logistic\CompanyEmployeeTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\CompanyEmployeeTable')->getDBTableName());
+
             
         global $DB, $DBType, $APPLICATION;
 
