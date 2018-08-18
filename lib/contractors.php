@@ -32,7 +32,7 @@ class ContractorsTable extends Entity\DataManager
             )),
             
             //ID
-            new Entity\IntegerField('ID', array(
+            new Entity\IntegerField('INTEGRATED_ID', array(
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -122,37 +122,84 @@ class ContractorsTable extends Entity\DataManager
             )),
 
 
-            new Entity\IntegerField('INN',array(
+            new Entity\StringField('INN',array(
                 'required'=>1,
                 'unique'=>1,
+                'validation'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            $length = strlen($value);
+                            $validLeng = $row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::IP ? 12 : 10; 
+                            if($length != $validLeng){
+                                $msg = $row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::LEGAL ? "Юр.лицо" : "ИП";
+                                return "Неправильный формат ИНН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
+                            }
+
+                            return true;
+                        },
+                        new Entity\Validator\Unique('Организация с таким ИНН зарегистрирован на сайте'),
+                    );
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return (int)$value;
+                            return trim(strip_tags($value));
                         }
                     );
                 }
             )),
 
-            new Entity\IntegerField('KPP',array(
-                'required'=>1,
+            new Entity\StringField('KPP',array(
                 'unique'=>1,
+                'default_value'=>function(){
+                    return null;
+                },
+                'validation'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            $validLeng = 9;
+                            $len = strlen($value);
+                            $type = $row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::IP;
+                            
+                            if($row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::IP && $len > 0){
+                                return "У ИП должен отсутствовать код КПП";
+                            }
+
+                            if($row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::LEGAL && $len != $validLeng){
+                                return "Код КПП должен состоять из ".$validLeng." цифр";
+                            }
+
+                            if($row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::LEGAL){
+                                //Для юр лиц обязателен и должен быть уникальным
+                                $field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким КПП зарегистрирован на сайте'));
+                            }
+
+                            return true;
+                        }
+                        
+                    );
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return (int)$value;
+                            return trim(strip_tags($value));
                         }
                     );
                 }
             )),
 
-            new Entity\IntegerField('OGRN',array(
+            new Entity\StringField('OGRN',array(
                 'required'=>1,
                 'unique'=>1,
+                'validation'=>function(){
+                    return array(
+                        new Entity\Validator\Unique('Организация с таким OGRN зарегистрирован на сайте'),
+                    );
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return (int)$value;
+                            return trim(strip_tags($value));
                         }
                     );
                 }
@@ -205,18 +252,18 @@ class ContractorsTable extends Entity\DataManager
 
             new Entity\DatetimeField('CREATED_AT',array(
                 'default_value'=>function(){
-                    return date("Y-m-d\TH:i:s",time());
+                    return new \Bitrix\Main\Type\DateTime();
                 }
             )),
 
             new Entity\DatetimeField('UPDATED_AT',array(
                 'default_value'=>function(){
-                    return date("Y-m-d\TH:i:s",time());
+                    return new \Bitrix\Main\Type\DateTime();
                 },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return date("Y-m-d\TH:i:s",time());
+                            return new \Bitrix\Main\Type\DateTime();
                         }
                     );
                 }
@@ -225,6 +272,19 @@ class ContractorsTable extends Entity\DataManager
 
         );
     }
+
+
+
+    public static function defaultSelect(){
+        return array(
+            'ID','OWNER_ID','NAME','LEGAL_ADDRESS',
+            'PHYSICAL_ADDRESS','ENTITY_TYPE','INN',
+            'KPP','OGRN','BANK_NAME','BANK_BIK','CHECKING_ACCOUNT',
+            'CORRESPONDENT_ACCOUNT'
+        );
+    }
+
+
 
     public static function save($data){
         global $USER;
@@ -241,24 +301,51 @@ class ContractorsTable extends Entity\DataManager
         
         $res = new Result();
         
-        $data = self::checkFields($res,['ID'],$data);
+        $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
+        self::checkFields($res,$primary,$data);
         
+
         if(!$res->isSuccess()){
-            print_r($res->getErrorMessages());
+            
+            return $res;
         }
-        
 
-        exit;
-        //фильтрация данных
-        // $data['NAME'] = isset($data['NAME']) ? trim(strip_tags($data['NAME'])) : "";
-        // $data['LEGAL_ADDRESS'] = isset($data['LEGAL_ADDRESS']) ? trim(strip_tags($data['LEGAL_ADDRESS'])) : "";
-        // $data['PHYSICAL_ADDRESS'] = isset($data['PHYSICAL_ADDRESS']) ? trim(strip_tags($data['PHYSICAL_ADDRESS'])) : "";
-        // $data['ENTITY_TYPE'] = isset($data['ENTITY_TYPE']) ? trim(strip_tags($data['ENTITY_TYPE'])) : "";
-        // $data['INN'] = isset($data['INN']) ? (int)$data['INN'] : ""; 
-
-        $result = self::add($data);
+        if(isset($data['ID']))
+            $result = self::update(['ID'=>$data['ID']],$data);
+        else
+            $result = self::add($data);
         
-        return $result->isSuccess() ? true :false;
+        return $result;
     }
 
+
+
+
+    public static function getOrgs($id = null,$parameters = array()){
+        global $USER;
+        
+        $company_id = CompaniesTable::getCurrentUserCompany();
+        if(!$company_id){
+
+            //Проверка на присоединение к компании в таблице ali_logistic_company_employee
+            return array();
+        } 
+
+        $local_params = array(
+            'select'=>self::defaultSelect()
+        );
+        $params = array_merge($local_params,$parameters);
+        
+        $params['filter']['COMPANY_ID']=$company_id;
+        
+        if($id){
+            
+            $local_params['filter']['ID']=$id;
+
+            return self::getRow($params);
+        }else{
+            return self::getList($params)->fetchAll();
+        }
+
+    }
 }

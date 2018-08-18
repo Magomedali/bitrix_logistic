@@ -13,6 +13,28 @@ use Bitrix\Main\Entity\Result;
 class AliProfile extends CBitrixComponent
 {
 
+    protected $pageName = "personal";
+    
+    public function getPageName(){
+        return $this->pageName;
+    }
+
+
+    public function getUrl($action, $params = array()){
+
+        $url = "/".$this->pageName."/index.php?r=".$action;
+        if(!empty($params) && is_array($params) && count($params)){
+            $arr_q = array();
+            foreach ($params as $key => $value) {
+                $arr_q[] = $key."=".$value;
+            }
+            if(count($arr_q)){
+                $query_string = implode("&", $arr_q);
+                $url .="&".$query_string; 
+            }
+        }
+        return $url;
+    }
 
     protected function checkModules()
     {
@@ -108,6 +130,11 @@ class AliProfile extends CBitrixComponent
     }
 
 
+    public function personalAction(){
+        $id = CUser::GetID();
+
+        return "personal/data";
+    }
 
 
     /**
@@ -118,10 +145,16 @@ class AliProfile extends CBitrixComponent
         
         $id = CUser::GetID();
 
-        $this->arResult = [];
 
 
-        return "organisations";
+        $orgs = ContractorsTable::getOrgs(null,$params);
+
+        $this->arResult = [
+            'orgs'=>$orgs
+        ];
+
+
+        return "orgs/organisations";
     }
 
 
@@ -130,22 +163,87 @@ class AliProfile extends CBitrixComponent
     *
     * @return template name 
     */
-    public function neworgAction(){
+    public function formorgAction(){
         
         $context = Application::getInstance()->getContext();
         $request = $context->getRequest();
 
-        $id = CUser::GetID();
-        
+        $errors = array();
+        $org = array();
         if($request->isPost() && isset($request['ORG'])){
             
-            ContractorsTable::save($request['ORG']);
-
+            $org = $request['ORG'];
+            $res = ContractorsTable::save($request['ORG']);
+            
+            if(!$res->isSuccess()){
+                $errors = $res->getErrorMessages();
+            }
+        }elseif(isset($request['id'])){
+            $org = ContractorsTable::getOrgs((int)$request['id']);
         }
 
-        $this->arResult = [];
+
+        $this->arResult = [
+            'errors'=>$errors,
+            'org'=>$org
+        ];
 
 
-        return "formOrg";
+        return "orgs/formOrg";
     }
+
+
+
+    public function vieworgAction(){
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+        $org = null;
+        if(isset($request['id'])){
+            $org = ContractorsTable::getOrgs((int)$request['id']);
+        }
+
+        if(!$org || !isset($org['ID'])){
+            LocalRedirect($this->getUrl("organisations"));
+        }
+
+        $this->arResult = [
+            'org'=>$org
+        ];
+
+        return "orgs/viewOrg";
+    }
+
+
+    public function removeorgAction(){
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+        
+        $org = null;
+
+        if($request->isPost() && isset($request['id']) && (int)$request['id'] && isset($request['id']) && (int)$request['confirm']){
+            $org = ContractorsTable::getOrgs((int)$request['id']);
+
+            if($org && isset($org['ID'])){
+                ContractorsTable::delete($org['ID']);
+                LocalRedirect($this->getUrl("organisations"));
+            }
+
+        }elseif(isset($request['id'])){
+            $org = ContractorsTable::getOrgs((int)$request['id']);
+        }
+
+        if(!$org || !isset($org['ID'])){
+            LocalRedirect($this->getUrl("organisations"));
+        }
+
+        $this->arResult = [
+            'org'=>$org
+        ];
+
+        return "orgs/confirmRemove";
+    }
+
+
 }
