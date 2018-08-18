@@ -177,6 +177,8 @@ class AliProfile extends CBitrixComponent
             
             if(!$res->isSuccess()){
                 $errors = $res->getErrorMessages();
+            }else{
+                LocalRedirect($this->getUrl("organisations"));
             }
         }elseif(isset($request['id'])){
             $org = ContractorsTable::getOrgs((int)$request['id']);
@@ -191,6 +193,34 @@ class AliProfile extends CBitrixComponent
 
         return "orgs/formOrg";
     }
+
+
+
+
+    public function checkinnAction(){
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        if(!$request->isAjaxRequest()){
+           LocalRedirect($this->getUrl("organisations")); 
+        }
+        
+        $id = CUser::GetID();
+        $success = false;
+        $inn = null;
+        if(isset($request['inn'])){
+            $inn = trim(strip_tags($request['inn']));
+            $success = true;
+        }
+
+        $this->arResult = [
+            'user_id'=>$id,
+            'success'=>$success,
+            'inn'=>$inn
+        ];
+    }
+
 
 
 

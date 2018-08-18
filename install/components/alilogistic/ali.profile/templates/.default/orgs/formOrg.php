@@ -2,7 +2,7 @@
 
 use Ali\Logistic\ContractorsType;
 
-$types = Ali\Logistic\ContractorsType::getLabels();
+$types = ContractorsType::getLabels();
 
 $errors = is_array($arResult['errors']) && count($arResult['errors']) ? $arResult['errors'] : null;
 $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] : null;
@@ -33,12 +33,12 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 		</div>
 	<?php } ?>
 	<div class="form-org col-xs-12">
-		<form action="" method="POST">
+		<form action="" method="POST" id="formOrg">
 			<div class="row">
 				<div class="col-xs-12">
 					<p>
 						<label for="org_name" class="form-label">Наименование организации</label>
-						<input type="text" name="ORG[NAME]" id="org_name" value="<?php echo $org ? $org['NAME'] : null;?>" class="form-control">
+						<input type="text" name="ORG[NAME]" id="org_name" value="<?php echo $org ? $org['NAME'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 			</div>
@@ -46,7 +46,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="org_legal_address" class="form-label">Юридический адрес</label>
-						<input type="text" name="ORG[LEGAL_ADDRESS]" id="org_legal_address" value="<?php echo $org ? $org['LEGAL_ADDRESS'] : null;?>" class="form-control">
+						<input type="text" name="ORG[LEGAL_ADDRESS]" id="org_legal_address" value="<?php echo $org ? $org['LEGAL_ADDRESS'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 			</div>
@@ -54,7 +54,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-6">
 					<p>
 						<label for="org_physical_address" class="form-label">Физический адрес</label>
-						<input type="text" name="ORG[PHYSICAL_ADDRESS]" id="org_physical_address" value="<?php echo $org ? $org['PHYSICAL_ADDRESS'] : null;?>" class="form-control">
+						<input type="text" name="ORG[PHYSICAL_ADDRESS]" id="org_physical_address" value="<?php echo $org ? $org['PHYSICAL_ADDRESS'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 				<div class="col-xs-6">
@@ -68,18 +68,15 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 			<div class="row">
 				<div class="col-xs-12">
 					<?php 
-						$checked_1 = $checked_2 = "";
-						if(isset($org['ENTITY_TYPE'])){
-							$org['ENTITY_TYPE'] == 1 ? $checked_1 = "checked" : $checked_2 = "checked";
-						}
+						
 					?>
 					<p>
 						<?php 
 							foreach ($types as $v => $t) {
-								
-								
-								$checked = isset($org['ENTITY_TYPE']) && $org['ENTITY_TYPE'] == $v ? "checked" : "";
-								
+								if(isset($org['ENTITY_TYPE']))
+									$checked = $org['ENTITY_TYPE'] == $v ? "checked" : "";
+								else
+									$checked = $v == ContractorsType::IP ? "checked" : "";
 						?>
 							<label for="org_type_<?php echo $v;?>" class="form-label"><?php echo $t?></label>
 							<input type="radio" name="ORG[ENTITY_TYPE]" id="org_type_<?php echo $v;?>" value="<?php echo $v;?>" <?php echo $checked;?>>
@@ -95,7 +92,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="org_inn" class="form-label">ИНН</label>
-						<input type="number" name="ORG[INN]" id="org_inn" value="<?php echo $org ? $org['INN'] : null;?>" class="form-control">
+						<input type="number" name="ORG[INN]" id="org_inn" value="<?php echo $org ? $org['INN'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 			</div>
@@ -113,7 +110,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="org_ogrn" class="form-label">ОГРН</label>
-						<input type="number" name="ORG[OGRN]" id="org_ogrn" value="<?php echo $org ? $org['OGRN'] : null;?>" class="form-control">
+						<input type="number" name="ORG[OGRN]" id="org_ogrn" value="<?php echo $org ? $org['OGRN'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 			</div>
@@ -122,7 +119,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="bank_bik" class="form-label">Бик Банка</label>
-						<input type="number" name="ORG[BANK_BIK]" id="bank_bik" value="<?php echo $org ? $org['BANK_BIK'] : null;?>" class="form-control">
+						<input type="number" name="ORG[BANK_BIK]" id="bank_bik" value="<?php echo $org ? $org['BANK_BIK'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 			</div>
@@ -131,7 +128,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="bank_name" class="form-label">Наименование Банка</label>
-						<input type="text" name="ORG[BANK_NAME]" id="bank_name" value="<?php echo $org ? $org['BANK_NAME'] : null;?>" class="form-control">
+						<input type="text" name="ORG[BANK_NAME]" id="bank_name" value="<?php echo $org ? $org['BANK_NAME'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 			</div>
@@ -140,7 +137,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="checking_account" class="form-label">Расчетный счет</label>
-						<input type="text" name="ORG[CHECKING_ACCOUNT]" id="checking_account" value="<?php echo $org ? $org['CHECKING_ACCOUNT'] : null;?>" class="form-control">
+						<input type="text" name="ORG[CHECKING_ACCOUNT]" id="checking_account" value="<?php echo $org ? $org['CHECKING_ACCOUNT'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 			</div>
@@ -149,7 +146,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="correspondent_account" class="form-label">Корреспондентский счет</label>
-						<input type="text" name="ORG[CORRESPONDENT_ACCOUNT]" id="correspondent_account" value="<?php echo $org ? $org['CORRESPONDENT_ACCOUNT'] : null;?>" class="form-control">
+						<input type="text" name="ORG[CORRESPONDENT_ACCOUNT]" id="correspondent_account" value="<?php echo $org ? $org['CORRESPONDENT_ACCOUNT'] : null;?>" class="form-control" required>
 					</p>
 				</div>
 			</div>
@@ -164,3 +161,81 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 		</form>
 	</div>
 </div>
+
+<script type="text/javascript">
+	$(function(){
+
+		$("#formOrg").submit(function(event){
+			event.preventDefault();
+			
+		});
+
+		$("#equal_legal_address").change(function(){
+			
+			if($(this).prop("checked")){
+				$("#org_physical_address").val($("#org_legal_address").val());
+			}
+		});
+
+		$("#org_legal_address").keyup(function(){
+			if($("#equal_legal_address").prop("checked")){
+				$("#org_physical_address").val($("#org_legal_address").val());
+			}
+		});
+
+		$("#org_physical_address").keyup(function(){
+			if($("#equal_legal_address").prop("checked")){
+				$("#org_legal_address").val($("#org_physical_address").val());
+			}
+		});
+
+
+		$("#org_inn").focusout(function(){
+			
+			var r = checkInn($(this).val());
+
+			console.log(r);
+
+		})
+
+
+		var checkInn = function(inn){
+
+			var responce = {
+				success : true,
+				error : ''
+			};
+
+			if(inn.length < 10){
+				responce.success = false;
+				responce.error = "Неправильный формат ИНН";
+				return responce;
+			}
+
+			$.ajax({
+				url:"<?php echo $component->getUrl('checkinn');?>",
+				data: {
+					inn:inn
+				},
+				dataType:"json",
+				beforeSend:function(){
+
+				},
+				success:function(json){
+
+				},
+				error:function(msg){
+					console.log(msg);
+				},
+				complete:function(){
+
+				}
+			});
+
+
+			return responce;
+		}
+		
+
+	});
+</script>

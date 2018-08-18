@@ -66,6 +66,7 @@ class ContractorsTable extends Entity\DataManager
             ),
 
             new Entity\StringField('NAME',array(
+                'title'=>'Наименование организации',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -78,6 +79,7 @@ class ContractorsTable extends Entity\DataManager
 
 
             new Entity\StringField('LEGAL_ADDRESS',array(
+                'title'=>'Юридический адрес',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -90,6 +92,7 @@ class ContractorsTable extends Entity\DataManager
 
 
             new Entity\StringField('PHYSICAL_ADDRESS',array(
+                'title'=>'Физический организации',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -102,6 +105,7 @@ class ContractorsTable extends Entity\DataManager
 
 
             new Entity\IntegerField('ENTITY_TYPE',array(
+                'title'=>'Вид организации',
                 'required'=>true,
                 'default_value'=>function(){
                     return \Ali\Logistic\ContractorsType::IP;
@@ -123,6 +127,7 @@ class ContractorsTable extends Entity\DataManager
 
 
             new Entity\StringField('INN',array(
+                'title'=>'ИНН',
                 'required'=>1,
                 'unique'=>1,
                 'validation'=>function(){
@@ -150,6 +155,7 @@ class ContractorsTable extends Entity\DataManager
             )),
 
             new Entity\StringField('KPP',array(
+                'title'=>'КПП',
                 'unique'=>1,
                 'default_value'=>function(){
                     return null;
@@ -189,10 +195,21 @@ class ContractorsTable extends Entity\DataManager
             )),
 
             new Entity\StringField('OGRN',array(
+                'title'=>'ОГРН',
                 'required'=>1,
                 'unique'=>1,
                 'validation'=>function(){
                     return array(
+                        function($value,$primary,$row,$field){
+                            $length = strlen($value);
+                            $validLeng = $row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::IP ? 15 : 13; 
+                            if($length != $validLeng){
+                                $msg = $row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::LEGAL ? "Юр.лицо" : "ИП";
+                                return "Неправильный формат ОГРН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
+                            }
+
+                            return true;
+                        },
                         new Entity\Validator\Unique('Организация с таким OGRN зарегистрирован на сайте'),
                     );
                 },
@@ -206,6 +223,7 @@ class ContractorsTable extends Entity\DataManager
             )),
 
             new Entity\StringField('BANK_BIK',array(
+                'title'=>'Бик банка',
                 'required'=>1,
                 'save_data_modification'=>function(){
                     return array(
@@ -217,6 +235,7 @@ class ContractorsTable extends Entity\DataManager
             )),
 
             new Entity\StringField('BANK_NAME',array(
+                'title'=>'Наименование банка',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -228,6 +247,7 @@ class ContractorsTable extends Entity\DataManager
             )),
 
             new Entity\StringField('CHECKING_ACCOUNT',array(
+                'title'=>'Расчетный счет',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -239,6 +259,7 @@ class ContractorsTable extends Entity\DataManager
             )),
 
             new Entity\StringField('CORRESPONDENT_ACCOUNT',array(
+                'title'=>'Корреспондентский счет',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
