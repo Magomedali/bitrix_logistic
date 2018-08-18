@@ -40,4 +40,28 @@ class CompaniesTable extends Entity\DataManager
 
 
 
+    public static function hasCurrentUserHasComany(){
+        return self::getCurrentUserCompany();
+    }
+
+
+
+    public static function getCurrentUserCompany(){
+        global $USER;
+
+        $company = self::getRow(array('select'=>array("ID"),'filter'=>array("OWNER_ID"=>$USER->GetId())));
+
+        return isset($company['ID']) ? $company['ID'] : null;
+    }
+
+
+
+    public static function createCompanyForCurrentUser(){
+        global $USER;
+
+        if(!self::hasCurrentUserHasComany() && $USER->GetId()){
+            $res = self::add(['OWNER_ID'=>$USER->GetId()]);
+            return $res->isSuccess() ? true :false;
+        }
+    }
 }

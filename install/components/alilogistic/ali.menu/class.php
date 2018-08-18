@@ -20,7 +20,14 @@ class AliMenu extends CBitrixComponent
 		    array(),
 		    "",
 		    ""
-		)
+		),
+        array(
+            "Мои организации",
+            "/personal/index.php?r=organisations",
+            array(),
+            "",
+            ""
+        )
 	);
 
     protected function checkModules()

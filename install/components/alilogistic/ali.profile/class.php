@@ -5,7 +5,7 @@ use \Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UserUtils;
 use Bitrix\Main\UserTable;
 use Ali\Logistic\CompaniesTable;
-
+use Ali\Logistic\ContractorsTable;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
 
@@ -53,6 +53,7 @@ class AliProfile extends CBitrixComponent
 
 
 
+
         if($this->checkModules())
         {   
             
@@ -69,7 +70,7 @@ class AliProfile extends CBitrixComponent
                     $this->returnAjaxJsonResult();
                 }
             }else{
-                $this->includeComponentTemplate();
+                $this->includeComponentTemplate($template);
             }
         }
     }
@@ -101,10 +102,50 @@ class AliProfile extends CBitrixComponent
         
         $this->arResult['id'] = $id;
 
-
-
         //Редирект
         // LocalRedirect("/chat/profile");
         return $this->arResult;
+    }
+
+
+
+
+    /**
+    *
+    * @return template name 
+    */
+    public function organisationsAction(){
+        
+        $id = CUser::GetID();
+
+        $this->arResult = [];
+
+
+        return "organisations";
+    }
+
+
+
+    /**
+    *
+    * @return template name 
+    */
+    public function neworgAction(){
+        
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        $id = CUser::GetID();
+        
+        if($request->isPost() && isset($request['ORG'])){
+            
+            ContractorsTable::save($request['ORG']);
+
+        }
+
+        $this->arResult = [];
+
+
+        return "formOrg";
     }
 }
