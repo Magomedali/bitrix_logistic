@@ -11,6 +11,7 @@ use \Bitrix\Main\Application;
 use Ali\Logistic\ContractorsType;
 use Ali\Logistic\User;
 use Ali\Logistic\CompaniesTable;
+use Ali\Logistic\soap\clients\Contractors1C;
 
 class ContractorsTable extends Entity\DataManager
 {   
@@ -138,6 +139,11 @@ class ContractorsTable extends Entity\DataManager
                             if($length != $validLeng){
                                 $msg = $row['ENTITY_TYPE'] == \Ali\Logistic\ContractorsType::LEGAL ? "Юр.лицо" : "ИП";
                                 return "Неправильный формат ИНН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
+                            }
+
+                            $state = \Ali\Logistic\soap\clients\CheckINN::check($value);
+                            if(!$state['success']){
+                                return $state['msg'];
                             }
 
                             return true;
@@ -331,11 +337,19 @@ class ContractorsTable extends Entity\DataManager
             return $res;
         }
 
+
+
         if(isset($data['ID']))
             $result = self::update(['ID'=>$data['ID']],$data);
         else
             $result = self::add($data);
         
+
+
+        if($result->isSuccess()){
+            $responce = Contractors1C::save($data);
+        }
+
         return $result;
     }
 

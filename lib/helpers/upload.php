@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Social\Chat\helpers;
+namespace Ali\Logistic\helpers;
 
 // +------------------------------------------------------------------------+
 // | class.upload.php                                                       |

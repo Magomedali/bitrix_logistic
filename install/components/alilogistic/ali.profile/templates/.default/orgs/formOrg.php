@@ -165,10 +165,50 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 <script type="text/javascript">
 	$(function(){
 
-		$("#formOrg").submit(function(event){
-			event.preventDefault();
+		var checkInn = function(inn){
+
+			var responce = {
+				success : true,
+				msg : ''
+			};
+
+			if(inn.length < 10){
+				responce.success = false;
+				responce.msg = "Неправильный формат ИНН";
+				return responce;
+			}
+
+			$.ajax({
+				url:"<?php echo $component->getUrl('checkinn');?>",
+				data: {
+					inn:inn
+				},
+				dataType:"json",
+				beforeSend:function(){
+
+				},
+				success:function(json){
+					responce = json;
+				},
+				error:function(msg){
+					console.log(msg);
+				},
+				complete:function(){
+
+				}
+			});
+
+
+			return responce;
+		}
+
+		//$("#formOrg").submit(function(event){
+			// var inn = $("#org_inn").val();
 			
-		});
+			// var state = checkInn(inn);
+			// console.log(state);
+			// event.preventDefault();
+		//});
 
 		$("#equal_legal_address").change(function(){
 			
@@ -190,51 +230,12 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 		});
 
 
-		$("#org_inn").focusout(function(){
-			
-			var r = checkInn($(this).val());
-
-			console.log(r);
-
-		})
+		//$("#org_inn").focusout(function(){
+			//var r = checkInn($(this).val());
+		//});
 
 
-		var checkInn = function(inn){
-
-			var responce = {
-				success : true,
-				error : ''
-			};
-
-			if(inn.length < 10){
-				responce.success = false;
-				responce.error = "Неправильный формат ИНН";
-				return responce;
-			}
-
-			$.ajax({
-				url:"<?php echo $component->getUrl('checkinn');?>",
-				data: {
-					inn:inn
-				},
-				dataType:"json",
-				beforeSend:function(){
-
-				},
-				success:function(json){
-
-				},
-				error:function(msg){
-					console.log(msg);
-				},
-				complete:function(){
-
-				}
-			});
-
-
-			return responce;
-		}
+		
 		
 
 	});

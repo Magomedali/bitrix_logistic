@@ -8,6 +8,7 @@ use Ali\Logistic\CompaniesTable;
 use Ali\Logistic\ContractorsTable;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
+use Ali\Logistic\soap\clients\CheckINN;
 
 
 class AliProfile extends CBitrixComponent
@@ -206,19 +207,19 @@ class AliProfile extends CBitrixComponent
            LocalRedirect($this->getUrl("organisations")); 
         }
         
-        $id = CUser::GetID();
-        $success = false;
-        $inn = null;
+        $state = array(
+            'success'=>0,
+            'msg'=>'ИНН отсутствует'
+        );
         if(isset($request['inn'])){
             $inn = trim(strip_tags($request['inn']));
-            $success = true;
+            
+            $state = CheckINN::check($inn);
+            $state['INN'] = $inn;
         }
 
-        $this->arResult = [
-            'user_id'=>$id,
-            'success'=>$success,
-            'inn'=>$inn
-        ];
+            
+        $this->arResult = $state;
     }
 
 
