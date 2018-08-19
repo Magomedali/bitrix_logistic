@@ -1,6 +1,6 @@
 <?php
 
-use Ali\Logistic\ContractorsType;
+use Ali\Logistic\Dictionary\ContractorsType;
 
 $types = ContractorsType::getLabels();
 
