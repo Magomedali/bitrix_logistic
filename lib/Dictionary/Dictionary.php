@@ -12,10 +12,10 @@ abstract class Dictionary{
 
 
 	public static function getLabels($code){
-        if(in_array($code, self::$labels))
-            return self::$labels[$code];
+        if(in_array($code, static::$labels))
+            return static::$labels[$code];
 
 
-        return self::$labels;
+        return static::$labels;
     }
 }

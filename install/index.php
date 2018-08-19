@@ -63,38 +63,56 @@ Class ali_logistic extends CModule
     {
         Loader::includeModule($this->MODULE_ID);
 
-        if(!Application::getConnection(\Ali\Logistic\CompaniesTable::getConnectionName())->isTableExists(
-            Base::getInstance('\Ali\Logistic\CompaniesTable')->getDBTableName()
+        if(!Application::getConnection(\Ali\Logistic\Schemas\CompaniesSchemaTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\Schemas\CompaniesSchemaTable')->getDBTableName()
             )
         )
         {
-            Base::getInstance('\Ali\Logistic\CompaniesTable')->createDbTable();
+            Base::getInstance('\Ali\Logistic\Schemas\CompaniesSchemaTable')->createDbTable();
         }
 
-        if(!Application::getConnection(\Ali\Logistic\ContractorsTable::getConnectionName())->isTableExists(
-            Base::getInstance('\Ali\Logistic\ContractorsTable')->getDBTableName()
+        if(!Application::getConnection(\Ali\Logistic\Schemas\ContractorsSchemaTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\Schemas\ContractorsSchemaTable')->getDBTableName()
             )
         )
         {
-            Base::getInstance('\Ali\Logistic\ContractorsTable')->createDbTable();
-        }
-
-
-        if(!Application::getConnection(\Ali\Logistic\CompanyEmployeeTable::getConnectionName())->isTableExists(
-            Base::getInstance('\Ali\Logistic\CompanyEmployeeTable')->getDBTableName()
-            )
-        )
-        {
-            Base::getInstance('\Ali\Logistic\CompanyEmployeeTable')->createDbTable();
+            Base::getInstance('\Ali\Logistic\Schemas\ContractorsSchemaTable')->createDbTable();
         }
 
 
-        if(!Application::getConnection(\Ali\Logistic\DealsTable::getConnectionName())->isTableExists(
-            Base::getInstance('\Ali\Logistic\DealsTable')->getDBTableName()
+        if(!Application::getConnection(\Ali\Logistic\Schemas\CompanyEmployeeSchemaTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\Schemas\CompanyEmployeeSchemaTable')->getDBTableName()
             )
         )
         {
-            Base::getInstance('\Ali\Logistic\DealsTable')->createDbTable();
+            Base::getInstance('\Ali\Logistic\Schemas\CompanyEmployeeSchemaTable')->createDbTable();
+        }
+
+
+        if(!Application::getConnection(\Ali\Logistic\Schemas\DealsSchemaTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\Schemas\DealsSchemaTable')->getDBTableName()
+            )
+        )
+        {
+            Base::getInstance('\Ali\Logistic\Schemas\DealsSchemaTable')->createDbTable();
+        }
+
+
+        if(!Application::getConnection(\Ali\Logistic\Schemas\RoutesSchemaTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\Schemas\RoutesSchemaTable')->getDBTableName()
+            )
+        )
+        {
+            Base::getInstance('\Ali\Logistic\Schemas\RoutesSchemaTable')->createDbTable();
+        }
+
+
+        if(!Application::getConnection(\Ali\Logistic\Schemas\DealCostingsSchemaTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\Schemas\DealCostingsSchemaTable')->getDBTableName()
+            )
+        )
+        {
+            Base::getInstance('\Ali\Logistic\Schemas\DealCostingsSchemaTable')->createDbTable();
         }
         
 
@@ -118,17 +136,24 @@ Class ali_logistic extends CModule
     {
         Loader::includeModule($this->MODULE_ID);
 
-        Application::getConnection(\Ali\Logistic\CompaniesTable::getConnectionName())->
-             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\CompaniesTable')->getDBTableName());
+        Application::getConnection(\Ali\Logistic\Schemas\CompaniesSchemaTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\CompaniesSchemaTable')->getDBTableName());
 
-        Application::getConnection(\Ali\Logistic\ContractorsTable::getConnectionName())->
-             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\ContractorsTable')->getDBTableName());
+        Application::getConnection(\Ali\Logistic\Schemas\ContractorsSchemaTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\ContractorsSchemaTable')->getDBTableName());
 
-        Application::getConnection(\Ali\Logistic\CompanyEmployeeTable::getConnectionName())->
-             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\CompanyEmployeeTable')->getDBTableName());
+        Application::getConnection(\Ali\Logistic\Schemas\CompanyEmployeeSchemaTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\CompanyEmployeeSchemaTable')->getDBTableName());
 
-        Application::getConnection(\Ali\Logistic\DealsTable::getConnectionName())->
-             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\DealsTable')->getDBTableName());
+        Application::getConnection(\Ali\Logistic\Schemas\DealsSchemaTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\DealsSchemaTable')->getDBTableName());
+
+
+        Application::getConnection(\Ali\Logistic\Schemas\RoutesSchemaTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\RoutesSchemaTable')->getDBTableName());
+
+        Application::getConnection(\Ali\Logistic\Schemas\DealCostingsSchemaTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\DealCostingsSchemaTable')->getDBTableName());
 
             
         global $DB, $DBType, $APPLICATION;

@@ -11,14 +11,20 @@ use \Bitrix\Main\Application;
 class AdditionalEquipment extends \Ali\Logistic\Dictionary\Dictionary{
 
 	const CONICS = 1;
-	const SIDE = 2;
-	const BACKSIDE = 3;
+	const RAMPS = 2;
+	const TAIL_LIFT = 3;
+	const MANIPULATOR = 4;
+	const WRECKER = 5;
+	const CRANE = 6;
 
 
 	protected static $labels = array(
 		self::CONICS=>"Коники",
-		self::SIDE=>"Бок",
-		self::BACKSIDE=>"Зад",
+		self::RAMPS=>"Аппарели",
+		self::TAIL_LIFT=>"Гидроборт",
+		self::MANIPULATOR=>"Манипулятор",
+		self::WRECKER=>"Эвакуатор",
+		self::CRANE=>"Кран",
 	); 
 
 

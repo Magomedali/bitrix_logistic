@@ -4,8 +4,8 @@ use \Bitrix\Main\Loader;
 use \Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UserUtils;
 use Bitrix\Main\UserTable;
-use Ali\Logistic\CompaniesTable;
-use Ali\Logistic\ContractorsTable;
+use Ali\Logistic\Companies;
+use Ali\Logistic\Contractors;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
 use Ali\Logistic\soap\clients\CheckINN;
@@ -148,7 +148,7 @@ class AliProfile extends CBitrixComponent
 
 
 
-        $orgs = ContractorsTable::getOrgs(null,$params);
+        $orgs = Contractors::getOrgs(null,$params);
 
         $this->arResult = [
             'orgs'=>$orgs
@@ -174,7 +174,7 @@ class AliProfile extends CBitrixComponent
         if($request->isPost() && isset($request['ORG'])){
             
             $org = $request['ORG'];
-            $res = ContractorsTable::save($request['ORG']);
+            $res = Contractors::save($request['ORG']);
             
             if(!$res->isSuccess()){
                 $errors = $res->getErrorMessages();
@@ -182,7 +182,7 @@ class AliProfile extends CBitrixComponent
                 LocalRedirect($this->getUrl("organisations"));
             }
         }elseif(isset($request['id'])){
-            $org = ContractorsTable::getOrgs((int)$request['id']);
+            $org = Contractors::getOrgs((int)$request['id']);
         }
 
 
@@ -231,7 +231,7 @@ class AliProfile extends CBitrixComponent
         $request = $context->getRequest();
         $org = null;
         if(isset($request['id'])){
-            $org = ContractorsTable::getOrgs((int)$request['id']);
+            $org = Contractors::getOrgs((int)$request['id']);
         }
 
         if(!$org || !isset($org['ID'])){
@@ -254,15 +254,15 @@ class AliProfile extends CBitrixComponent
         $org = null;
 
         if($request->isPost() && isset($request['id']) && (int)$request['id'] && isset($request['id']) && (int)$request['confirm']){
-            $org = ContractorsTable::getOrgs((int)$request['id']);
+            $org = Contractors::getOrgs((int)$request['id']);
 
             if($org && isset($org['ID'])){
-                ContractorsTable::delete($org['ID']);
+                Contractors::delete($org['ID']);
                 LocalRedirect($this->getUrl("organisations"));
             }
 
         }elseif(isset($request['id'])){
-            $org = ContractorsTable::getOrgs((int)$request['id']);
+            $org = Contractors::getOrgs((int)$request['id']);
         }
 
         if(!$org || !isset($org['ID'])){

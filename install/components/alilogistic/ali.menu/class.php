@@ -4,7 +4,7 @@ use \Bitrix\Main\Loader;
 use \Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UserUtils;
 use Bitrix\Main\UserTable;
-use Ali\Logistic\CompaniesTable;
+use Ali\Logistic\Companies;
 
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
