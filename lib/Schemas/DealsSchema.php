@@ -252,28 +252,7 @@ class DealsSchemaTable extends Entity\DataManager{
                 }
             )),
 
-
-
-            new Entity\IntegerField('ADDITIONAL_EQUIPMENT',array(
-                'title'=>'Требуются дополнительные оборудования',
-                'default_value'=>function(){
-                    return 0;
-                },
-                'validation'=>function(){
-                    return array(
-                        function($v,$pr,$row,$f){
-
-                            $types = \Ali\Logistic\Dictionary\AdditionalEquipment::getLabels();
-                            if(array_key_exists($v, $types) == false){
-                                return "Недопустимое значение типа!";
-                            }
-
-                            return true;
-                        }
-                    );
-                }
-            )),
-
+            
             new Entity\BooleanField('SUPPORT_REQUIRED',array(
                 'title'=>'Требуется сопровождение',
                 'default_value'=>function(){
@@ -283,25 +262,89 @@ class DealsSchemaTable extends Entity\DataManager{
 
 
 
-            new Entity\IntegerField('REQUIRED_DOCUMENTS',array(
+            new Entity\BooleanField('ADDITIONAL_EQUIPMENT',array(
+                'title'=>'Требуются дополнительные оборудования',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_CONICS',array(
+                'title'=>'Требуются коники',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_RAMPS',array(
+                'title'=>'Требуются аппарели',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+
+            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_TAIL_LIFT',array(
+                'title'=>'Требуются гидроборт',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+
+            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_MANIPULATOR',array(
+                'title'=>'Требуются  манипулятор',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+
+            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_WRECKER',array(
+                'title'=>'Требуются эвакуатор',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_CRANE',array(
+                'title'=>'Требуется кран',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+
+            new Entity\BooleanField('REQUIRED_DOCUMENTS',array(
                 'title'=>'Требуется документы',
                 'default_value'=>function(){
                     return 0;
-                },
-                'validation'=>function(){
-                    return array(
-                        function($v,$pr,$row,$f){
-
-                            $types = \Ali\Logistic\Dictionary\Documents::getLabels();
-                            if(array_key_exists($v, $types) == false){
-                                return "Недопустимое значение типа!";
-                            }
-
-                            return true;
-                        }
-                    );
                 }
             )),
+
+
+            new Entity\BooleanField('REQUIRED_DOCUMENTS_PROCURATION',array(
+                'title'=>'Требуется доверенность',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+            new Entity\BooleanField('REQUIRED_DOCUMENTS_MEDICAL_BOOK',array(
+                'title'=>'Требуется медкнижка',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+            new Entity\BooleanField('REQUIRED_DOCUMENTS_SANITIZATION',array(
+                'title'=>'Требуется санобработка',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+
 
             new Entity\BooleanField('WITH_NDS',array(
                 'title'=>'С НДС',

@@ -164,16 +164,60 @@ $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['dea
 					</p>
 				</div>
 				<div class="col-xs-4">
-					<p>
-						<label for="deal_additional_equipment" class="form-label">Требуются дополнительные оборудования?</label>
-						<?php echo Html::dropDownList("DEAL[ADDITIONAL_EQUIPMENT]",null,$AdditionalEquipment,['id'=>'deal_additional_equipment','class'=>'form-control','prompt'=>"Дополнительное оборудование"]);?>
-					</p>
+					<div class="parent_checkbox">
+						<p>
+							<label for="deal_additional_equipment" class="form-label">Требуются дополнительные оборудования?</label>
+							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT]",null,['id'=>'deal_additional_equipment']);?>
+						</p>
+					</div>
+					<div class="child_checkboxes">
+						<p>
+							<label for="deal_additional_equipment_1" class="form-label">Требуется коники?</label>
+							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_CONICS]",null,['id'=>'deal_additional_equipment_1']);?>
+						</p>
+						<p>
+							<label for="deal_additional_equipment_2" class="form-label">Требуется аппарели?</label>
+							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_RAMPS]",null,['id'=>'deal_additional_equipment_2']);?>
+						</p>
+						<p>
+							<label for="deal_additional_equipment_3" class="form-label">Требуется гидроборт?</label>
+							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_TAIL_LIFT]",null,['id'=>'deal_additional_equipment_3']);?>
+						</p>
+						<p>
+							<label for="deal_additional_equipment_4" class="form-label">Требуется манипулятор?</label>
+							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_MANIPULATOR]",null,['id'=>'deal_additional_equipment_4']);?>
+						</p>
+						<p>
+							<label for="deal_additional_equipment_5" class="form-label">Требуется эвакуатор?</label>
+							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_WRECKER]",null,['id'=>'deal_additional_equipment_5']);?>
+						</p>
+						<p>
+							<label for="deal_additional_equipment_6" class="form-label">Требуется кран?</label>
+							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_CRANE]",null,['id'=>'deal_additional_equipment_6']);?>
+						</p>
+					</div>
 				</div>
 				<div class="col-xs-4">
-					<p>
-						<label for="deal_req_documents" class="form-label">Требуется документы?</label>
-						<?php echo Html::dropDownList("DEAL[REQUIRED_DOCUMENTS]",null,$Documents,['id'=>'deal_req_documents','class'=>'form-control','prompt'=>"Документы"]);?>
-					</p>
+					<div class="parent_checkbox">
+						<p>
+							<label for="deal_req_documents" class="form-label">Требуется документы?</label>
+							<?php echo Html::checkbox("DEAL[REQUIRED_DOCUMENTS]",null,['id'=>'deal_req_documents']);?>
+						</p>
+					</div>
+					<div class="child_checkboxes">
+						<p>
+							<label for="deal_req_documents_1" class="form-label">Требуется доверенность?</label>
+							<?php echo Html::checkbox("DEAL[REQUIRED_DOCUMENTS_PROCURATION]",null,['id'=>'deal_req_documents_1']);?>
+						</p>
+						<p>
+							<label for="deal_req_documents_2" class="form-label">Требуется медкнижка?</label>
+							<?php echo Html::checkbox("DEAL[REQUIRED_DOCUMENTS_MEDICAL_BOOK]",null,['id'=>'deal_req_documents_2']);?>
+						</p>
+						<p>
+							<label for="deal_req_documents_3" class="form-label">Требуется санобработка?</label>
+							<?php echo Html::checkbox("DEAL[REQUIRED_DOCUMENTS_SANITIZATION]",null,['id'=>'deal_req_documents_3']);?>
+						</p>
+					</div>
 				</div>
 			</div>
 
@@ -192,9 +236,19 @@ $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['dea
 
 			<div class="row">
 				<div class="col-xs-12">
+					<h4>Маршрут</h4>
 					<table class="table table-bordered table-hover">
 						<thead>
-							<tr></tr>
+							<tr>
+								<th>Тип</th>
+								<th>Время от</th>
+								<th>Время до</th>
+								<th>Организация</th>
+								<th>Адрес</th>
+								<th>Контактное лицо</th>
+								<th>Телефон</th>
+								<th>Комментарий</th>
+							</tr>
 						</thead>
 						<tbody>
 							
