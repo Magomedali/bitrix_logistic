@@ -9,6 +9,7 @@ use Ali\Logistic\Companies;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
 
+use Ali\Logistic\User;
 
 class AliMenu extends CBitrixComponent
 {
@@ -30,6 +31,24 @@ class AliMenu extends CBitrixComponent
         )
 	);
 
+
+    public $protected_menu = array(
+        array(
+            "Новая заявка",
+            "/personal/index.php?r=dealform",
+            array(),
+            "",
+            ""
+        ),
+        array(
+            "Активные заявки",
+            "/personal/index.php?r=deals",
+            array(),
+            "",
+            ""
+        ),
+    );
+
     protected function checkModules()
     {
         if (!Loader::includeModule('ali.logistic'))
@@ -50,8 +69,14 @@ class AliMenu extends CBitrixComponent
             $context = Application::getInstance()->getContext();
             $request = $context->getRequest();
 
+            $menus = $this->menu_items;
+            if(User::hasCurrentUserHasComany()){
 
-            return $this->menu_items;
+                $menus = array_merge($menus,$this->protected_menu);
+            }
+
+
+            return $menus;
         }
 
         return array();

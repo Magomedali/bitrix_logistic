@@ -11,6 +11,95 @@ use \Ali\Logistic\Schemas\DealsSchemaTable;
 
 class Deals{
 
-	
+
+
+
+	public static function defaultSelect(){
+        return array(
+            'ID','OWNER_ID','NAME','LEGAL_ADDRESS',
+            'PHYSICAL_ADDRESS','ENTITY_TYPE','INN',
+            'KPP','OGRN','BANK_NAME','BANK_BIK','CHECKING_ACCOUNT',
+            'CORRESPONDENT_ACCOUNT'
+        );
+    }
+
+
+
+    public static function save($data){
+        global $USER;
+        if(!($company_id = Companies::hasCurrentUserHasComany())){
+            if(Companies::createCompanyForCurrentUser()){
+                $company_id = Companies::getCurrentUserCompany();
+            }
+        }
+
+        if(!$company_id) return false;
+
+        $data['COMPANY_ID'] = $company_id;
+        $data['OWNER_ID'] = $USER::GetId();
+        
+        $res = new Result();
+        
+        $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
+        ContractorsSchemaTable::checkFields($res,$primary,$data);
+        
+
+        if(!$res->isSuccess()){
+            
+            return $res;
+        }
+
+
+
+        if(isset($data['ID']))
+            $result = ContractorsSchemaTable::update(['ID'=>$data['ID']],$data);
+        else
+            $result = ContractorsSchemaTable::add($data);
+        
+
+
+        if($result->isSuccess()){
+            $responce = Contractors1C::save($data);
+        }
+
+        return $result;
+    }
+
+
+
+
+    public static function getOrgs($id = null,$parameters = array()){
+        global $USER;
+        
+        $company_id = Companies::getCurrentUserCompany();
+        if(!$company_id){
+
+            //Проверка на присоединение к компании в таблице ali_logistic_company_employee
+            return array();
+        } 
+
+        $local_params = array(
+            'select'=>self::defaultSelect()
+        );
+        $params = array_merge($local_params,$parameters);
+        
+        $params['filter']['COMPANY_ID']=$company_id;
+        
+        if($id){
+            
+            $local_params['filter']['ID']=$id;
+
+            return ContractorsSchemaTable::getRow($params);
+        }else{
+            return ContractorsSchemaTable::getList($params)->fetchAll();
+        }
+
+    }
+
+
+
+    public static function delete($id){
+        return ContractorsSchemaTable::delete($id);
+    }
 
 }

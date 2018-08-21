@@ -79,7 +79,7 @@ class DealsSchemaTable extends Entity\DataManager{
             )),
 
             new Entity\FloatField('WEIGHT',array(
-                'title'=>'Вес',
+                'title'=>'Вес груза',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -91,7 +91,7 @@ class DealsSchemaTable extends Entity\DataManager{
             )),
 
             new Entity\FloatField('SPACE',array(
-                'title'=>'Объем',
+                'title'=>'Объем (куб. м.)',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -103,7 +103,7 @@ class DealsSchemaTable extends Entity\DataManager{
             )),
 
             new Entity\FloatField('WIDTH',array(
-                'title'=>'Ширина',
+                'title'=>'Ширина (м)',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -115,7 +115,19 @@ class DealsSchemaTable extends Entity\DataManager{
             )),
 
             new Entity\FloatField('HEIGHT',array(
-                'title'=>'Высота',
+                'title'=>'Высота (м)',
+                'required'=>true,
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value;
+                        }
+                    );
+                }
+            )),
+
+            new Entity\FloatField('LENGTH',array(
+                'title'=>'Длина (м)',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -234,7 +246,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
 
             new Entity\IntegerField('REQUIRES_TEMPERATURE_TO',array(
-                'title'=>'Темп. от',
+                'title'=>'Темп. до',
                 'default_value'=>function(){
                     return 0;
                 }

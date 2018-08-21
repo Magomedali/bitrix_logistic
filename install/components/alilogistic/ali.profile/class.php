@@ -5,6 +5,8 @@ use \Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UserUtils;
 use Bitrix\Main\UserTable;
 use Ali\Logistic\Companies;
+use Ali\Logistic\Deals;
+use Ali\Logistic\User;
 use Ali\Logistic\Contractors;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
@@ -21,19 +23,24 @@ class AliProfile extends CBitrixComponent
     }
 
 
-    public function getUrl($action, $params = array()){
+    public function getUrl($action = null, $params = array()){
 
-        $url = "/".$this->pageName."/index.php?r=".$action;
-        if(!empty($params) && is_array($params) && count($params)){
-            $arr_q = array();
-            foreach ($params as $key => $value) {
-                $arr_q[] = $key."=".$value;
+        if($action != null || !empty($action)){
+            $url = "/".$this->pageName."/index.php?r=".$action;
+            if(!empty($params) && is_array($params) && count($params)){
+                $arr_q = array();
+                foreach ($params as $key => $value) {
+                    $arr_q[] = $key."=".$value;
+                }
+                if(count($arr_q)){
+                    $query_string = implode("&", $arr_q);
+                    $url .="&".$query_string; 
+                }
             }
-            if(count($arr_q)){
-                $query_string = implode("&", $arr_q);
-                $url .="&".$query_string; 
-            }
+        }else{
+            $url = "/".$this->pageName."/";
         }
+        
         return $url;
     }
 
@@ -131,11 +138,30 @@ class AliProfile extends CBitrixComponent
     }
 
 
+
+
+
+
+
+
+
+
+
     public function personalAction(){
         $id = CUser::GetID();
 
         return "personal/data";
     }
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -157,6 +183,23 @@ class AliProfile extends CBitrixComponent
 
         return "orgs/organisations";
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -198,6 +241,18 @@ class AliProfile extends CBitrixComponent
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     public function checkinnAction(){
 
         $context = Application::getInstance()->getContext();
@@ -225,6 +280,19 @@ class AliProfile extends CBitrixComponent
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function vieworgAction(){
 
         $context = Application::getInstance()->getContext();
@@ -244,6 +312,18 @@ class AliProfile extends CBitrixComponent
 
         return "orgs/viewOrg";
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function removeorgAction(){
@@ -275,6 +355,83 @@ class AliProfile extends CBitrixComponent
 
         return "orgs/confirmRemove";
     }
+
+
+
+
+
+
+
+
+
+    public function dealformAction(){
+
+        if(!User::hasCurrentUserHasComany()){
+
+            LocalRedirect($this->getUrl());
+        }
+        
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        $errors = array();
+        $deal = array();
+        if($request->isPost() && isset($request['DEAL'])){
+            
+            $deal = $request['DEAL'];
+            $res = Deals::save($request['DEAL']);
+            
+            if(!$res->isSuccess()){
+                $errors = $res->getErrorMessages();
+            }else{
+                LocalRedirect($this->getUrl("deals"));
+            }
+        }elseif(isset($request['id'])){
+            $deal = Deals::getOrgs((int)$request['id']);
+        }
+
+
+        $this->arResult = [
+            'errors'=>$errors,
+            'deal'=>$deal
+        ];
+
+        return "deals/form";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function dealsAction(){
+
+        return "deals/deals";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
