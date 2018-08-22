@@ -16,32 +16,19 @@ class Deals{
 
 	public static function defaultSelect(){
         return array(
-            'ID','OWNER_ID','NAME','LEGAL_ADDRESS',
-            'PHYSICAL_ADDRESS','ENTITY_TYPE','INN',
-            'KPP','OGRN','BANK_NAME','BANK_BIK','CHECKING_ACCOUNT',
-            'CORRESPONDENT_ACCOUNT'
+            'ID','OWNER_ID','NAME'
         );
     }
 
 
 
     public static function save($data){
-        global $USER;
-        if(!($company_id = Companies::hasCurrentUserHasComany())){
-            if(Companies::createCompanyForCurrentUser()){
-                $company_id = Companies::getCurrentUserCompany();
-            }
-        }
-
-        if(!$company_id) return false;
-
-        $data['COMPANY_ID'] = $company_id;
-        $data['OWNER_ID'] = $USER::GetId();
+       
         
         $res = new Result();
         
         $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
-        ContractorsSchemaTable::checkFields($res,$primary,$data);
+        DealsSchemaTable::checkFields($res,$primary,$data);
         
 
         if(!$res->isSuccess()){
@@ -52,14 +39,14 @@ class Deals{
 
 
         if(isset($data['ID']))
-            $result = ContractorsSchemaTable::update(['ID'=>$data['ID']],$data);
+            $result = DealsSchemaTable::update(['ID'=>$data['ID']],$data);
         else
-            $result = ContractorsSchemaTable::add($data);
+            $result = DealsSchemaTable::add($data);
         
 
 
         if($result->isSuccess()){
-            $responce = Contractors1C::save($data);
+            $responce = Deals1C::save($data);
         }
 
         return $result;
@@ -68,7 +55,7 @@ class Deals{
 
 
 
-    public static function getOrgs($id = null,$parameters = array()){
+    public static function getDeals($id = null,$parameters = array()){
         global $USER;
         
         $company_id = Companies::getCurrentUserCompany();
@@ -89,9 +76,9 @@ class Deals{
             
             $local_params['filter']['ID']=$id;
 
-            return ContractorsSchemaTable::getRow($params);
+            return DealsSchemaTable::getRow($params);
         }else{
-            return ContractorsSchemaTable::getList($params)->fetchAll();
+            return DealsSchemaTable::getList($params)->fetchAll();
         }
 
     }
@@ -99,7 +86,7 @@ class Deals{
 
 
     public static function delete($id){
-        return ContractorsSchemaTable::delete($id);
+        return DealsSchemaTable::delete($id);
     }
 
 }

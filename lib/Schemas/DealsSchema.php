@@ -49,8 +49,19 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\ReferenceField(
                 'COMPANY',
-                '\Ali\Logistic\CompaniesTable',
+                '\Ali\Logistic\Schemas\CompaniesSchemaTable',
                 array('=this.COMPANY_ID' => 'ref.ID'),
+                array('join_type' => 'INNER')
+            ),
+
+
+            new Entity\IntegerField('CONTRACTOR_ID'),
+
+
+            new Entity\ReferenceField(
+                'CONTRACTOR',
+                '\Ali\Logistic\Schemas\ContractorsSchemaTable',
+                array('=this.CONTRACTOR_ID' => 'ref.ID'),
                 array('join_type' => 'INNER')
             ),
 

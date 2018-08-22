@@ -50,7 +50,7 @@ class ContractorsSchemaTable extends Entity\DataManager
 
             new Entity\ReferenceField(
                 'COMPANY',
-                '\Ali\Logistic\CompaniesTable',
+                '\Ali\Logistic\Schemas\CompaniesSchemaTable',
                 array('=this.COMPANY_ID' => 'ref.ID'),
                 array('join_type' => 'INNER')
             ),

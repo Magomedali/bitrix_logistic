@@ -366,7 +366,7 @@ class AliProfile extends CBitrixComponent
 
     public function dealformAction(){
 
-        if(!User::hasCurrentUserHasComany()){
+        if(!($company_id = User::hasCurrentUserHasComany())){
 
             LocalRedirect($this->getUrl());
         }
@@ -379,7 +379,11 @@ class AliProfile extends CBitrixComponent
         if($request->isPost() && isset($request['DEAL'])){
             
             $deal = $request['DEAL'];
-            $res = Deals::save($request['DEAL']);
+            $deal['COMPANY_ID'] = $company_id;
+            $user_id = CUser::GetID();
+            $deal['OWNER_ID'] = $user_id;
+
+            $res = Deals::save($deal);
             
             if(!$res->isSuccess()){
                 $errors = $res->getErrorMessages();
@@ -387,7 +391,7 @@ class AliProfile extends CBitrixComponent
                 LocalRedirect($this->getUrl("deals"));
             }
         }elseif(isset($request['id'])){
-            $deal = Deals::getOrgs((int)$request['id']);
+            $deal = Deals::getDeals((int)$request['id']);
         }
 
 
@@ -415,6 +419,17 @@ class AliProfile extends CBitrixComponent
 
 
     public function dealsAction(){
+
+        $id = CUser::GetID();
+
+
+
+        $deals = Deals::getDeals(null,$params);
+
+        $this->arResult = [
+            'deals'=>$deals
+        ];
+
 
         return "deals/deals";
     }
