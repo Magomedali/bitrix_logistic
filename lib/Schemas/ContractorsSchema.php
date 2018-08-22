@@ -33,11 +33,11 @@ class ContractorsSchemaTable extends Entity\DataManager
             )),
             
             //INTEGRATED_ID
-            new Entity\IntegerField('INTEGRATED_ID', array(
+            new Entity\StringField('INTEGRATED_ID', array(
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return (int)$value;
+                            return $value;
                         }
                     );
                 }

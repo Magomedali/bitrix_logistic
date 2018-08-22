@@ -25,7 +25,7 @@ class DealCostingsSchemaTable extends Entity\DataManager
                 'autocomplete' => true
             )),
             
-            new Entity\IntegerField('INTEGRATED_ID'),
+            new Entity\StringField('INTEGRATED_ID'),
 
             new Entity\IntegerField('DEAL_ID'),
 

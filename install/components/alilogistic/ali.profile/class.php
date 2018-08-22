@@ -307,7 +307,7 @@ class AliProfile extends CBitrixComponent
             LocalRedirect($this->getUrl("organisations"));
         }
 
-        print_r($org);
+        
         Contractors::integrateTo1C($org);
         exit;
 

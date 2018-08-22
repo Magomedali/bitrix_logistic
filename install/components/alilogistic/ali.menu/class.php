@@ -70,7 +70,8 @@ class AliMenu extends CBitrixComponent
             $request = $context->getRequest();
 
             $menus = $this->menu_items;
-            if(User::hasCurrentUserHasComany()){
+            $contractors = User::getCurrentUserContractors();
+            if(is_array($contractors) && count($contractors)){
 
                 $menus = array_merge($menus,$this->protected_menu);
             }

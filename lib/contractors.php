@@ -52,10 +52,6 @@ class Contractors
 
         if($result->isSuccess()){
             $data['ID']=$result->getId();
-
-            print_r($data['ID']);
-            exit;
-
             $responce = Contractors1C::save($data);
         }
 

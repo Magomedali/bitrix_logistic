@@ -3,6 +3,7 @@
 namespace Ali\Logistic\soap\clients;
 
 use Ali\Logistic\Dictionary\ContractorsType;
+use Ali\Logistic\Schemas\ContractorsSchemaTable;
 
 /**
 * 
@@ -28,17 +29,19 @@ class Contractors1C extends Client1C
 			$output = $client->getcustomer(['customer'=>$soap_data]);
 
 			if($output->success && $output->uuid){
+				$res = ContractorsSchemaTable::update($data['ID'],['INTEGRATED_ID'=>$output->uuid]);
 
+				return $res->isSuccess();
 			}
-		} catch (Exception $e) {
-			
+		} catch (\Exception $e) {
+			return false;
 		}
 		
 
 		var_dump($output);
 		// print_r($soap_data);
 		exit;
-		return true;
+		return false;
 	}
 
 
