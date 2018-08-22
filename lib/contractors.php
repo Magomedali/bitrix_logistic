@@ -41,27 +41,21 @@ class Contractors
         $data['COMPANY_ID'] = $company_id;
         $data['OWNER_ID'] = $USER::GetId();
         
-        $res = new Result();
-        
+
         $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
-        ContractorsSchemaTable::checkFields($res,$primary,$data);
-        
-
-        if(!$res->isSuccess()){
-            
-            return $res;
-        }
-
-
-
-        if(isset($data['ID']))
-            $result = ContractorsSchemaTable::update(['ID'=>$data['ID']],$data);
+        if($primary)
+            $result = ContractorsSchemaTable::update($primary,$data);
         else
             $result = ContractorsSchemaTable::add($data);
         
 
 
         if($result->isSuccess()){
+            $data['ID']=$result->getId();
+
+            print_r($data['ID']);
+            exit;
+
             $responce = Contractors1C::save($data);
         }
 
@@ -103,5 +97,11 @@ class Contractors
 
     public static function delete($id){
         return ContractorsSchemaTable::delete($id);
+    }
+
+
+
+    public static function integrateTo1C($data){
+        return Contractors1C::save($data);
     }
 }

@@ -3,10 +3,13 @@
 namespace Ali\Logistic;
 
 use \Bitrix\Main\Entity;
+use \Bitrix\Main\Entity\Result;
 use \Bitrix\Main\Type;
 use \Bitrix\Main\UserTable;
 use \Bitrix\Main\Application;
 use \Ali\Logistic\Schemas\DealsSchemaTable;
+use Ali\Logistic\soap\clients\Deals1C;
+
 
 
 class Deals{
@@ -16,7 +19,7 @@ class Deals{
 
 	public static function defaultSelect(){
         return array(
-            'ID','OWNER_ID','NAME'
+            '*'
         );
     }
 
@@ -25,21 +28,34 @@ class Deals{
     public static function save($data){
        
         
-        $res = new Result();
         
+
+        $data['REQUIRES_LOADER'] = isset($data['REQUIRES_LOADER']);
+        $data['REQUIRES_INSURANCE'] = isset($data['REQUIRES_INSURANCE']);
+        $data['SUPPORT_REQUIRED'] = isset($data['SUPPORT_REQUIRED']);
+        $data['ADDITIONAL_EQUIPMENT'] = isset($data['ADDITIONAL_EQUIPMENT']);
+        $data['ADDITIONAL_EQUIPMENT_CONICS'] = isset($data['ADDITIONAL_EQUIPMENT_CONICS']);
+        $data['ADDITIONAL_EQUIPMENT_RAMPS'] = isset($data['ADDITIONAL_EQUIPMENT_RAMPS']);
+        $data['ADDITIONAL_EQUIPMENT_TAIL_LIFT'] = isset($data['ADDITIONAL_EQUIPMENT_TAIL_LIFT']);
+        $data['ADDITIONAL_EQUIPMENT_MANIPULATOR'] = isset($data['ADDITIONAL_EQUIPMENT_MANIPULATOR']);
+        $data['ADDITIONAL_EQUIPMENT_WRECKER'] = isset($data['ADDITIONAL_EQUIPMENT_WRECKER']);
+        $data['ADDITIONAL_EQUIPMENT_CRANE'] = isset($data['ADDITIONAL_EQUIPMENT_CRANE']);
+        $data['REQUIRED_DOCUMENTS'] = isset($data['REQUIRED_DOCUMENTS']);
+        $data['REQUIRED_DOCUMENTS_PROCURATION'] = isset($data['REQUIRED_DOCUMENTS_PROCURATION']);
+        $data['REQUIRED_DOCUMENTS_MEDICAL_BOOK'] = isset($data['REQUIRED_DOCUMENTS_MEDICAL_BOOK']);
+        $data['REQUIRED_DOCUMENTS_SANITIZATION'] = isset($data['REQUIRED_DOCUMENTS_SANITIZATION']);
+        $data['WITH_NDS'] = isset($data['WITH_NDS']) && (int)$data['WITH_NDS'];
+        
+        
+
+        
+
+
+        
+
         $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
-        DealsSchemaTable::checkFields($res,$primary,$data);
-        
-
-        if(!$res->isSuccess()){
-            
-            return $res;
-        }
-
-
-
-        if(isset($data['ID']))
-            $result = DealsSchemaTable::update(['ID'=>$data['ID']],$data);
+        if($primary)
+            $result = DealsSchemaTable::update($primary,$data);
         else
             $result = DealsSchemaTable::add($data);
         

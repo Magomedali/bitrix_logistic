@@ -44,7 +44,10 @@ class DealsSchemaTable extends Entity\DataManager{
             )),
             
 
-            new Entity\IntegerField('COMPANY_ID'),
+            new Entity\IntegerField('COMPANY_ID',array(
+                'title'=>'Компания',
+                'required'=>true,
+            )),
 
 
             new Entity\ReferenceField(
@@ -55,7 +58,10 @@ class DealsSchemaTable extends Entity\DataManager{
             ),
 
 
-            new Entity\IntegerField('CONTRACTOR_ID'),
+            new Entity\IntegerField('CONTRACTOR_ID',array(
+                'title'=>'Контрагент',
+                'required'=>true,
+            )),
 
 
             new Entity\ReferenceField(
@@ -395,14 +401,14 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\BooleanField('IS_ACTIVE',array(
                 'title'=>'Активна',
                 'default_value'=>function(){
-                    return 1;
+                    return true;
                 }
             )),
 
             new Entity\BooleanField('COMPLETED',array(
                 'title'=>'Завершена',
                 'default_value'=>function(){
-                    return 0;
+                    return false;
                 }
             )),
 
@@ -410,7 +416,7 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\BooleanField('IS_DRAFT',array(
                 'title'=>'Черновик',
                 'default_value'=>function(){
-                    return 0;
+                    return false;
                 }
             )),
 

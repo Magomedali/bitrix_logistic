@@ -11,6 +11,7 @@ use Ali\Logistic\Contractors;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
 use Ali\Logistic\soap\clients\CheckINN;
+use Ali\Logistic\helpers\ArrayHelper;
 
 
 class AliProfile extends CBitrixComponent
@@ -306,6 +307,10 @@ class AliProfile extends CBitrixComponent
             LocalRedirect($this->getUrl("organisations"));
         }
 
+        print_r($org);
+        Contractors::integrateTo1C($org);
+        exit;
+
         $this->arResult = [
             'org'=>$org
         ];
@@ -365,21 +370,27 @@ class AliProfile extends CBitrixComponent
 
 
     public function dealformAction(){
+        $contractors = User::getCurrentUserContractors();
 
-        if(!($company_id = User::hasCurrentUserHasComany())){
-
+        if(!is_array($contractors) || !count($contractors)){
             LocalRedirect($this->getUrl());
         }
-        
+
         $context = Application::getInstance()->getContext();
         $request = $context->getRequest();
 
         $errors = array();
         $deal = array();
         if($request->isPost() && isset($request['DEAL'])){
-            
             $deal = $request['DEAL'];
-            $deal['COMPANY_ID'] = $company_id;
+            $contrs = ArrayHelper::map($contractors,'ID','COMPANY_ID');
+
+            if(!isset($deal['CONTRACTOR_ID']) || !array_key_exists($deal['CONTRACTOR_ID'], $contrs)){
+                LocalRedirect($this->getUrl());
+            }
+
+            
+            $deal['COMPANY_ID'] = $contrs[$deal['CONTRACTOR_ID']];
             $user_id = CUser::GetID();
             $deal['OWNER_ID'] = $user_id;
 
@@ -397,7 +408,8 @@ class AliProfile extends CBitrixComponent
 
         $this->arResult = [
             'errors'=>$errors,
-            'deal'=>$deal
+            'deal'=>$deal,
+            'contractors'=>$contractors
         ];
 
         return "deals/form";
