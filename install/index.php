@@ -114,6 +114,16 @@ Class ali_logistic extends CModule
         {
             Base::getInstance('\Ali\Logistic\Schemas\DealCostingsSchemaTable')->createDbTable();
         }
+
+
+
+        if(!Application::getConnection(\Ali\Logistic\Schemas\DealFilesSchemaTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\Schemas\DealFilesSchemaTable')->getDBTableName()
+            )
+        )
+        {
+            Base::getInstance('\Ali\Logistic\Schemas\DealFilesSchemaTable')->createDbTable();
+        }
         
 
         $this->installDbProgramming();
@@ -154,6 +164,9 @@ Class ali_logistic extends CModule
 
         Application::getConnection(\Ali\Logistic\Schemas\DealCostingsSchemaTable::getConnectionName())->
              queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\DealCostingsSchemaTable')->getDBTableName());
+
+        Application::getConnection(\Ali\Logistic\Schemas\DealFilesSchemaTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\DealFilesSchemaTable')->getDBTableName());
 
             
         global $DB, $DBType, $APPLICATION;
