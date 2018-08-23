@@ -8,6 +8,7 @@ use Ali\Logistic\Companies;
 use Ali\Logistic\Deals;
 use Ali\Logistic\User;
 use Ali\Logistic\Contractors;
+use Ali\Logistic\Routes;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
 use Ali\Logistic\soap\clients\CheckINN;
@@ -308,8 +309,9 @@ class AliProfile extends CBitrixComponent
         }
 
         
-        Contractors::integrateTo1C($org);
-        exit;
+        // Contractors::integrateTo1C($org);
+        // exit;
+        
 
         $this->arResult = [
             'org'=>$org
@@ -381,6 +383,7 @@ class AliProfile extends CBitrixComponent
 
         $errors = array();
         $deal = array();
+        $routes = array();
         if($request->isPost() && isset($request['DEAL'])){
             $deal = $request['DEAL'];
             $contrs = ArrayHelper::map($contractors,'ID','COMPANY_ID');
@@ -394,22 +397,52 @@ class AliProfile extends CBitrixComponent
             $user_id = CUser::GetID();
             $deal['OWNER_ID'] = $user_id;
 
+            $routes = isset($request['ROUTES']) && is_array($request['ROUTES']) ? $request['ROUTES'] : array();
+
             $res = Deals::save($deal);
             
             if(!$res->isSuccess()){
                 $errors = $res->getErrorMessages();
             }else{
-                LocalRedirect($this->getUrl("deals"));
+                $deal['ID']=$res->getId();
+                
+                if(count($routes)){
+                    $tmpRoute = array();
+                    foreach ($routes as $key => $rData) {
+                        $rData['DEAL_ID'] = $deal['ID'];
+                        $rData['OWNER_ID'] = $user_id;
+                        $res = Routes::save($rData);
+                        if(!$res->isSuccess()){
+                            $errors = array_merge($errors,$res->getErrorMessages());
+                        }else{
+                            $rData['ID'] = $res->getId();
+                        }
+                        $tmpRoute[]=$rData;
+                    }
+
+                    $routes = count($tmpRoute) ? $tmpRoute : $routes;
+                }
+
+                if(!count($errors)){
+                    $deal['ROUTES']=$routes;
+                    Deals::integrateDealTo1C($deal);
+                    LocalRedirect($this->getUrl("deals"));
+                }
+
+                
             }
         }elseif(isset($request['id'])){
             $deal = Deals::getDeals((int)$request['id']);
+            $routes = Routes::getRoutes((int)$request['id']);
+
         }
 
 
         $this->arResult = [
             'errors'=>$errors,
             'deal'=>$deal,
-            'contractors'=>$contractors
+            'contractors'=>$contractors,
+            'routes'=>$routes
         ];
 
         return "deals/form";
@@ -419,11 +452,35 @@ class AliProfile extends CBitrixComponent
 
 
 
+    public function getrowrouteAction(){
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        $number = isset($request['number']) && (int)$request['number'] ? (int)$request['number'] : 0;
+        $this->arResult = [
+            'number'=>$number
+        ];
+
+        return "deals/rowRoute";
+    }
 
 
 
+    public function rmrouteAction(){
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+        $success = false;
 
+        if($request->isAjaxRequest() && isset($request['id'])){
+            
+            $user_id = CUser::GetID();
+            $success = Routes::delete((int)$request['id'],$user_id);
+        }
 
+        $this->arResult = [
+            'success'=>$success
+        ];
+    }
 
 
 
@@ -453,7 +510,32 @@ class AliProfile extends CBitrixComponent
 
 
 
+    public function viewdealAction(){
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+        $deal = null;
+        $user_id = CUser::GetID();
+        
+        
 
+        if(isset($request['id'])){
+            $deal = Deals::getDeals((int)$request['id']);
+            $routes = Routes::getRoutes((int)$request['id']);
+        }
+
+        if(!$deal || !isset($deal['ID']) || $deal['OWNER_ID'] != $user_id){
+            LocalRedirect($this->getUrl("deals"));
+        }
+
+        
+
+        $this->arResult = [
+            'deal'=>$deal,
+            'routes'=>$routes
+        ];
+
+        return "deals/view";
+    }
 
 
 

@@ -11,7 +11,23 @@ use Ali\Logistic\Schemas\ContractorsSchemaTable;
 class Contractors1C extends Client1C 
 {
 	
+	public $success = false;
+	public $uuid;
 
+
+	public function parseResponce($response){
+
+
+		if(isset($response->return) && isset($response->return->success) && $response->return->success){
+			$this->success = true;
+		}
+
+		if(isset($response->return) && isset($response->return->uuid) && $response->return->uuid){
+			$this->uuid = $response->return->uuid;
+		}
+
+
+	}
 
 	public static function save($data){
 		
@@ -26,23 +42,27 @@ class Contractors1C extends Client1C
 		$soap_data['ogrn'] = $data['OGRN'];
 		
 		try {
-			$output = $client->getcustomer(['customer'=>$soap_data]);
+			$response = $client->createcustomer(['customer'=>$soap_data]);
 
-			if($output->success && $output->uuid){
-				$res = ContractorsSchemaTable::update($data['ID'],['INTEGRATED_ID'=>$output->uuid]);
+			$integrator = new self();
+			$integrator->parseResponce($response);
+
+			if($integrator->success  && $integrator->uuid){
+				$res = ContractorsSchemaTable::update($data['ID'],['INTEGRATED_ID'=>$integrator->uuid]);
 
 				return $res->isSuccess();
 			}
+
 		} catch (\Exception $e) {
 			return false;
 		}
 		
 
-		var_dump($output);
-		// print_r($soap_data);
-		exit;
+		
 		return false;
 	}
+
+
 
 
 

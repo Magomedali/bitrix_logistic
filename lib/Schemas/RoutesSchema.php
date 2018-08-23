@@ -72,13 +72,6 @@ class RoutesSchemaTable extends Entity\DataManager
                 'required'=>true,
                 'default_value'=>function(){
                     return new \Bitrix\Main\Type\DateTime();
-                },
-                'save_data_modification'=>function(){
-                    return array(
-                        function($value,$primary,$row,$field){
-                            return new \Bitrix\Main\Type\DateTime();
-                        }
-                    );
                 }
             )),
 
@@ -97,7 +90,6 @@ class RoutesSchemaTable extends Entity\DataManager
 
             new Entity\StringField('COMMENT',array(
                 'title'=>'Комментарий',
-                'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){

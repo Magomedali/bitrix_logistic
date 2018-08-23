@@ -17,6 +17,7 @@ $Documents = Documents::getLabels();
 $errors = is_array($arResult['errors']) && count($arResult['errors']) ? $arResult['errors'] : null;
 $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['deal'] : null;
 $contractors = is_array($arResult['contractors']) && count($arResult['contractors']) ? $arResult['contractors'] : array();
+$routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResult['routes'] : array();
 
 ?>
 
@@ -256,10 +257,11 @@ $contractors = is_array($arResult['contractors']) && count($arResult['contractor
 			<div class="row">
 				<div class="col-xs-12">
 					<h4>Маршрут</h4>
-					<table class="table table-bordered table-hover">
+					<a href="<?php echo $component->getUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-success'>Добаить</a>
+					<table class="table table-bordered table-hover" id="formRoutesTable">
 						<thead>
 							<tr>
-								<th>Тип</th>
+								<th style="min-width: 100px;">Тип</th>
 								<th>Время от</th>
 								<th>Время до</th>
 								<th>Организация</th>
@@ -267,10 +269,19 @@ $contractors = is_array($arResult['contractors']) && count($arResult['contractor
 								<th>Контактное лицо</th>
 								<th>Телефон</th>
 								<th>Комментарий</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							
+							<?php
+								if(count($routes)){
+									foreach ($routes as $key => $r) {
+										$arResult['number'] = $key;
+										$arResult['route'] = $r;
+										$this->getComponent()->includeComponentTemplate("deals/rowRoute");
+									}
+								}
+							?>
 						</tbody>
 					</table>
 				</div>
@@ -289,5 +300,67 @@ $contractors = is_array($arResult['contractors']) && count($arResult['contractor
 </div>
 
 <script type="text/javascript">
+	$("#btn_getRowRoute").click(function(event){
+		event.preventDefault();
+
+		var count = parseInt($("#formRoutesTable tbody tr").length);
+		var number = 0;
+		if(count){
+			number = parseInt($("#formRoutesTable tbody tr").eq(-1).data("number")) + 1;
+		}
+		var url = $(this).attr("href");
+
+		$.ajax({
+			url:url,
+			type:"GET",
+			data:{
+				number:number
+			},
+			dataType:"html",
+			beforeSend:function(){
+			},
+			success:function(html){
+				$("#formRoutesTable tbody").append(html);
+			},
+			error:function(msg){
+				console.log(msg);
+			},
+			complete:function(){
+
+			}
+		})
+	});
+
+
+
+	$("body").on("click",".rmRouteForm",function(){
+		$(this).parents("tr.form-route").remove();
+	});
+
+	$("body").on("click",".rmRoute",function(event){
+		event.preventDefault();
+
+		var url = $(this).attr("href");
+		var route = $(this).parents("tr.form-route");
+		$.ajax({
+			url:url,
+			type:"POST",
+			dataType:"json",
+			beforeSend:function(){
+			},
+			success:function(json){
+				if(json.hasOwnProperty("success") && json.success && route.length){
+					route.remove();
+				}
+			},
+			error:function(msg){
+				console.log(msg);
+			},
+			complete:function(){
+
+			}
+		})
+	});
+
 	
 </script>

@@ -48,11 +48,6 @@ class Deals{
         
         
 
-        
-
-
-        
-
         $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
         if($primary)
             $result = DealsSchemaTable::update($primary,$data);
@@ -62,7 +57,7 @@ class Deals{
 
 
         if($result->isSuccess()){
-            $responce = Deals1C::save($data);
+            $data['ID']=$result->getId();
         }
 
         return $result;
@@ -103,6 +98,12 @@ class Deals{
 
     public static function delete($id){
         return DealsSchemaTable::delete($id);
+    }
+
+
+
+    public static function integrateDealTo1C($data){
+        return Deals1C::save($data);
     }
 
 }

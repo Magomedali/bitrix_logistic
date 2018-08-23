@@ -52,7 +52,7 @@ class Contractors
 
         if($result->isSuccess()){
             $data['ID']=$result->getId();
-            $responce = Contractors1C::save($data);
+            $responce = self::integrateTo1C($data);
         }
 
         return $result;
