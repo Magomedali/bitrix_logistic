@@ -132,10 +132,11 @@ class AliProfile extends CBitrixComponent
 
         $id = CUser::GetID();
         
-        $this->arResult['id'] = $id;
+        $user = UserTable::getRowById($id);
+        
 
-        //Редирект
-        // LocalRedirect("/chat/profile");
+        $this->arResult['user'] = $user;
+
         return $this->arResult;
     }
 
@@ -151,6 +152,9 @@ class AliProfile extends CBitrixComponent
 
     public function personalAction(){
         $id = CUser::GetID();
+
+
+
 
         return "personal/data";
     }

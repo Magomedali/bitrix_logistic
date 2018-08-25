@@ -25,6 +25,13 @@ class RoutesSchemaTable extends Entity\DataManager
                 'autocomplete' => true
             )),
             
+            new Entity\BooleanField('IS_INTEGRATED',array(
+                'title'=>'Интегрирован в 1С',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+            
             new Entity\StringField('INTEGRATED_ID'),
 
             new Entity\IntegerField('DEAL_ID'),

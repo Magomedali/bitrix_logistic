@@ -1,4 +1,4 @@
-<?php
+Ôªø<?php
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 
@@ -16,14 +16,23 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 use \Bitrix\Main\Localization\Loc;
 
 $APPLICATION->SetTitle(getMessage("ALI_PROFILE_TITLE"));
-$aMenuLinks[] = Array(
-		"œÓ‰‡Ú¸ Á‡ˇ‚ÍÛ", 
-		"/personal/podat-zayavku/", 
-		Array(), 
-		Array(), 
-		"" 
-	);
+
+
+
+$user = is_array($arResult['user']) && count($arResult['user']) ? $arResult['user'] : null;
+
+// print_r($user);
 ?>
-<div id="chat_container">
-	
+<?php if(!empty($user)){ ?>
+
+<div id="personal_page" class="row">
+	<div class="col-xs-12">
+		<p>–§–∞–º–∏–ª–∏—è: <?php echo $user['SECOND_NAME']?></p>
+		<p>–ò–º—è: <?php echo $user['NAME']?></p>
+		<p>–û—Ç—á–µ—Å—Ç–≤–æ: <?php echo $user['LAST_NAME']?></p>
+		<p>Email: <?php echo $user['EMAIL']?></p>
+	</div>
 </div>
+
+<?php } ?>
+

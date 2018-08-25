@@ -14,7 +14,6 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 </div>
 
 
-
 <div class="row">
 	<div class="col-xs-12">
 		<h4>Маршрут</h4>
