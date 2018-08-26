@@ -34,6 +34,8 @@ class Contractors1C extends Client1C
 
 		$client = self::init();
 
+		if(!$client) return false;
+		
 		$soap_data['inn'] = $data['INN'];
 		$soap_data['name'] = $data['NAME'];
 		$soap_data['type'] = ContractorsType::getLabels($data['ENTITY_TYPE']);
@@ -70,4 +72,20 @@ class Contractors1C extends Client1C
 		return true;
 	}
 	
+
+
+
+
+	public static function loadContractors(){
+		$client = self::init();
+		
+		if(!$client) return false;
+
+		try {
+			return $client->getcustomers();
+		} catch (\Exception $e) {
+			return false;
+		}
+		
+	}
 }

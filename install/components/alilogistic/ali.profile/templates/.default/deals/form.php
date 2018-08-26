@@ -19,6 +19,8 @@ $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['dea
 $contractors = is_array($arResult['contractors']) && count($arResult['contractors']) ? $arResult['contractors'] : array();
 $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResult['routes'] : array();
 
+
+
 ?>
 
 <div class="row form-deal-page">
@@ -102,7 +104,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 					<p>
 						<label for="deal_type_od_vehicle" class="form-label">Tип транспортного средства</label>
 						<?php 
-							echo Html::dropDownList("DEAL[TYPE_OF_VEHICLE]",$deal['TYPE_OF_VEHICLE'],$TypeOfVehicle,['id'=>"deal_type_od_vehicle",'class'=>'form-control','prompt'=>'Выберите тип транспортного средства']);
+							echo Html::checkboxList("DEAL[TYPE_OF_VEHICLE]",TypeOfVehicle::toArrayCode($deal['TYPE_OF_VEHICLE']),$TypeOfVehicle,['id'=>"deal_type_od_vehicle"]);
 						?>
 					</p>
 				</div>
@@ -111,7 +113,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 					<p>
 						<label for="deal_loading_method" class="form-label">Способ погрузки</label>
 						<?php 
-							echo Html::dropDownList("DEAL[LOADING_METHOD]",$deal['LOADING_METHOD'],$LoadingMethod,['id'=>"deal_loading_method",'class'=>'form-control','prompt'=>'Выберите cпособ погрузки']);
+							echo Html::checkboxList("DEAL[LOADING_METHOD]",LoadingMethod::toArrayCode($deal['LOADING_METHOD']),$LoadingMethod,['id'=>"deal_loading_method"]);
 						?>
 					</p>
 				</div>
@@ -120,7 +122,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 					<p>
 						<label for="deal_way_of_transportation" class="form-label">Способ перевозки</label>
 						<?php 
-							echo Html::dropDownList("DEAL[WAY_OF_TRANSPORTATION]",$deal['WAY_OF_TRANSPORTATION'],$WayOfTransportation,['id'=>"deal_way_of_transportation",'class'=>'form-control','prompt'=>'Выберите cпособ перевозки']);
+							echo Html::radioList("DEAL[WAY_OF_TRANSPORTATION]",$deal['WAY_OF_TRANSPORTATION'],$WayOfTransportation,['id'=>"deal_way_of_transportation"]);
 						?>
 					</p>
 				</div>
@@ -179,33 +181,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 					<div class="parent_checkbox">
 						<p>
 							<label for="deal_additional_equipment" class="form-label">Требуются дополнительные оборудования?</label>
-							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT]",$deal['ADDITIONAL_EQUIPMENT'],['id'=>'deal_additional_equipment']);?>
-						</p>
-					</div>
-					<div class="child_checkboxes">
-						<p>
-							<label for="deal_additional_equipment_1" class="form-label">Требуется коники?</label>
-							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_CONICS]",$deal['ADDITIONAL_EQUIPMENT_CONICS'],['id'=>'deal_additional_equipment_1']);?>
-						</p>
-						<p>
-							<label for="deal_additional_equipment_2" class="form-label">Требуется аппарели?</label>
-							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_RAMPS]",$deal['ADDITIONAL_EQUIPMENT_RAMPS'],['id'=>'deal_additional_equipment_2']);?>
-						</p>
-						<p>
-							<label for="deal_additional_equipment_3" class="form-label">Требуется гидроборт?</label>
-							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_TAIL_LIFT]",$deal['ADDITIONAL_EQUIPMENT_TAIL_LIFT'],['id'=>'deal_additional_equipment_3']);?>
-						</p>
-						<p>
-							<label for="deal_additional_equipment_4" class="form-label">Требуется манипулятор?</label>
-							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_MANIPULATOR]",$deal['ADDITIONAL_EQUIPMENT_MANIPULATOR'],['id'=>'deal_additional_equipment_4']);?>
-						</p>
-						<p>
-							<label for="deal_additional_equipment_5" class="form-label">Требуется эвакуатор?</label>
-							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_WRECKER]",$deal['ADDITIONAL_EQUIPMENT_WRECKER'],['id'=>'deal_additional_equipment_5']);?>
-						</p>
-						<p>
-							<label for="deal_additional_equipment_6" class="form-label">Требуется кран?</label>
-							<?php echo Html::checkbox("DEAL[ADDITIONAL_EQUIPMENT_CRANE]",$deal['ADDITIONAL_EQUIPMENT_CRANE'],['id'=>'deal_additional_equipment_6']);?>
+							<?php echo Html::checkboxList("DEAL[ADDITIONAL_EQUIPMENT]",AdditionalEquipment::toArrayCode($deal['ADDITIONAL_EQUIPMENT']),$AdditionalEquipment,['id'=>'deal_additional_equipment']);?>
 						</p>
 					</div>
 				</div>
@@ -213,21 +189,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 					<div class="parent_checkbox">
 						<p>
 							<label for="deal_req_documents" class="form-label">Требуется документы?</label>
-							<?php echo Html::checkbox("DEAL[REQUIRED_DOCUMENTS]",$deal['REQUIRED_DOCUMENTS'],['id'=>'deal_req_documents']);?>
-						</p>
-					</div>
-					<div class="child_checkboxes">
-						<p>
-							<label for="deal_req_documents_1" class="form-label">Требуется доверенность?</label>
-							<?php echo Html::checkbox("DEAL[REQUIRED_DOCUMENTS_PROCURATION]",$deal['REQUIRED_DOCUMENTS_PROCURATION'],['id'=>'deal_req_documents_1']);?>
-						</p>
-						<p>
-							<label for="deal_req_documents_2" class="form-label">Требуется медкнижка?</label>
-							<?php echo Html::checkbox("DEAL[REQUIRED_DOCUMENTS_MEDICAL_BOOK]",$deal['REQUIRED_DOCUMENTS_MEDICAL_BOOK'],['id'=>'deal_req_documents_2']);?>
-						</p>
-						<p>
-							<label for="deal_req_documents_3" class="form-label">Требуется санобработка?</label>
-							<?php echo Html::checkbox("DEAL[REQUIRED_DOCUMENTS_SANITIZATION]",$deal['REQUIRED_DOCUMENTS_SANITIZATION'],['id'=>'deal_req_documents_3']);?>
+							<?php echo Html::checkboxList("DEAL[REQUIRED_DOCUMENTS]",Documents::toArrayCode($deal['REQUIRED_DOCUMENTS']),$Documents,['id'=>'deal_req_documents']);?>
 						</p>
 					</div>
 				</div>
@@ -280,6 +242,16 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 										$arResult['route'] = $r;
 										$this->getComponent()->includeComponentTemplate("deals/rowRoute");
 									}
+								}else{
+									$arResult['number'] = 1;
+									$dr['KIND'] = 1;
+									$arResult['route'] = $dr;
+									$this->getComponent()->includeComponentTemplate("deals/rowRoute");
+
+									$arResult['number'] = 2;
+									$dr['KIND'] = 2;
+									$arResult['route'] = $dr;
+									$this->getComponent()->includeComponentTemplate("deals/rowRoute");
 								}
 							?>
 						</tbody>
@@ -291,8 +263,12 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 				<div class="col-xs-6">
 					<?php if($deal && isset($deal['ID']) && $deal['ID']){?>
 						<input type="hidden" name="DEAL[ID]" value="<?php echo $deal['ID']?>">
+						<input type="submit" value="Сохранить" class="btn btn-primary">
+						<input type="submit" value="Сохранить как черновик" name="how_draft" class="btn btn-primary">
+					<?php }else{?>
+						<input type="submit" value="Сохранить" class="btn btn-primary">
+						<input type="submit" value="Сохранить как черновик" name="how_draft" class="btn btn-primary">
 					<?php } ?>
-					<input type="submit" value="Добавить" class="btn btn-primary">
 				</div>
 			</div>
 		</form>
@@ -305,6 +281,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 
 		var count = parseInt($("#formRoutesTable tbody tr").length);
 		var number = 0;
+
 		if(count){
 			number = parseInt($("#formRoutesTable tbody tr").eq(-1).data("number")) + 1;
 		}
@@ -334,11 +311,18 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 
 
 	$("body").on("click",".rmRouteForm",function(){
+		
+		var count = parseInt($("#formRoutesTable tbody tr").length);
+		//if(count <= 2) return false;
+
 		$(this).parents("tr.form-route").remove();
 	});
 
 	$("body").on("click",".rmRoute",function(event){
 		event.preventDefault();
+
+		var count = parseInt($("#formRoutesTable tbody tr").length);
+		if(count <= 2) return false;
 
 		var url = $(this).attr("href");
 		var route = $(this).parents("tr.form-route");

@@ -9,7 +9,10 @@ use \Bitrix\Main\UserTable;
 use \Bitrix\Main\Application;
 use \Ali\Logistic\Schemas\DealsSchemaTable;
 use Ali\Logistic\soap\clients\Deals1C;
-
+use Ali\Logistic\Dictionary\TypeOfVehicle;
+use Ali\Logistic\Dictionary\LoadingMethod;
+use Ali\Logistic\Dictionary\AdditionalEquipment;
+use Ali\Logistic\Dictionary\Documents;
 
 
 class Deals{
@@ -29,24 +32,35 @@ class Deals{
        
         
         
+        
+
+        if(isset($data['TYPE_OF_VEHICLE']) && is_array($data['TYPE_OF_VEHICLE'])){
+            $typesOfVehicle = TypeOfVehicle::toString($data['TYPE_OF_VEHICLE']);
+            $data['TYPE_OF_VEHICLE'] = $typesOfVehicle;
+        }
+
+        if(isset($data['LOADING_METHOD']) && is_array($data['LOADING_METHOD'])){
+            $loadingMethods = LoadingMethod::toString($data['LOADING_METHOD']);
+            $data['LOADING_METHOD'] = $loadingMethods;
+        }
+
+        if(isset($data['ADDITIONAL_EQUIPMENT']) && is_array($data['ADDITIONAL_EQUIPMENT'])){
+            $addEq = AdditionalEquipment::toString($data['ADDITIONAL_EQUIPMENT']);
+            $data['ADDITIONAL_EQUIPMENT'] = $addEq;
+        }
+
+        if(isset($data['REQUIRED_DOCUMENTS']) && is_array($data['REQUIRED_DOCUMENTS'])){
+            $docs = Documents::toString($data['REQUIRED_DOCUMENTS']);
+            $data['REQUIRED_DOCUMENTS'] = $docs;
+        }
+        
 
         $data['REQUIRES_LOADER'] = isset($data['REQUIRES_LOADER']);
         $data['REQUIRES_INSURANCE'] = isset($data['REQUIRES_INSURANCE']);
         $data['SUPPORT_REQUIRED'] = isset($data['SUPPORT_REQUIRED']);
-        $data['ADDITIONAL_EQUIPMENT'] = isset($data['ADDITIONAL_EQUIPMENT']);
-        $data['ADDITIONAL_EQUIPMENT_CONICS'] = isset($data['ADDITIONAL_EQUIPMENT_CONICS']);
-        $data['ADDITIONAL_EQUIPMENT_RAMPS'] = isset($data['ADDITIONAL_EQUIPMENT_RAMPS']);
-        $data['ADDITIONAL_EQUIPMENT_TAIL_LIFT'] = isset($data['ADDITIONAL_EQUIPMENT_TAIL_LIFT']);
-        $data['ADDITIONAL_EQUIPMENT_MANIPULATOR'] = isset($data['ADDITIONAL_EQUIPMENT_MANIPULATOR']);
-        $data['ADDITIONAL_EQUIPMENT_WRECKER'] = isset($data['ADDITIONAL_EQUIPMENT_WRECKER']);
-        $data['ADDITIONAL_EQUIPMENT_CRANE'] = isset($data['ADDITIONAL_EQUIPMENT_CRANE']);
-        $data['REQUIRED_DOCUMENTS'] = isset($data['REQUIRED_DOCUMENTS']);
-        $data['REQUIRED_DOCUMENTS_PROCURATION'] = isset($data['REQUIRED_DOCUMENTS_PROCURATION']);
-        $data['REQUIRED_DOCUMENTS_MEDICAL_BOOK'] = isset($data['REQUIRED_DOCUMENTS_MEDICAL_BOOK']);
-        $data['REQUIRED_DOCUMENTS_SANITIZATION'] = isset($data['REQUIRED_DOCUMENTS_SANITIZATION']);
         $data['WITH_NDS'] = isset($data['WITH_NDS']) && (int)$data['WITH_NDS'];
         
-        
+        $data['IS_ACTIVE'] = !$data['IS_DRAFT'];
 
         $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
         if($primary)
@@ -56,7 +70,7 @@ class Deals{
         
 
 
-        if($result->isSuccess()){
+        if($result->isSuccess() && !$data['IS_DRAFT']){
             $data['ID']=$result->getId();
         }
 

@@ -34,15 +34,84 @@ class AliMenu extends CBitrixComponent
 
     public $protected_menu = array(
         array(
-            "Новая заявка",
+            "Создать заявку",
             "/personal/index.php?r=dealform",
             array(),
             "",
             ""
         ),
         array(
-            "Активные заявки",
+            "Текущие заявки",
             "/personal/index.php?r=deals",
+            array(),
+            "",
+            ""
+        ),
+        array(
+            "Выполненые заявки",
+            "/personal/index.php?r=completeddeals",
+            array(),
+            "",
+            ""
+        ),
+        array(
+            "Поиск заявок",
+            "/personal/index.php?r=searchdeals",
+            array(),
+            "",
+            ""
+        ),
+        array(
+            "Черновики",
+            "/personal/index.php?r=draftdeals",
+            array(),
+            "",
+            ""
+        ),
+        array(
+            "Архив",
+            "/personal/index.php?r=archive",
+            array(),
+            "",
+            ""
+        ),
+
+        array(
+            "Счета",
+            "/personal/index.php?r=bills",
+            array(),
+            "",
+            ""
+        ),
+
+
+        array(
+            "Акты",
+            "/personal/index.php?r=acts",
+            array(),
+            "",
+            ""
+        ),
+
+        array(
+            "Счета-фактуры",
+            "/personal/index.php?r=invoices",
+            array(),
+            "",
+            ""
+        ),
+
+        array(
+            "Товаро-транспортные документы",
+            "/personal/index.php?r=tth",
+            array(),
+            "",
+            ""
+        ),
+
+        array(
+            "Договоры",
+            "/personal/index.php?r=docs",
             array(),
             "",
             ""

@@ -161,20 +161,21 @@ class DealsSchemaTable extends Entity\DataManager{
                 }
             )),
 
-            new Entity\IntegerField('TYPE_OF_VEHICLE',array(
+            new Entity\TextField('TYPE_OF_VEHICLE',array(
                 'title'=>'Тип транспортного средства',
                 'required'=>true,
                 'default_value'=>function(){
-                    return 0;
+                    return "";
                 },
                 'validation'=>function(){
                     return array(
                         function($v,$pr,$row,$f){
 
-                            $types = \Ali\Logistic\Dictionary\TypeOfVehicle::getLabels();
-                            if(array_key_exists($v, $types) == false){
-                                return "Недопустимое значение типа!";
-                            }
+                            // $types = \Ali\Logistic\Dictionary\TypeOfVehicle::getLabels();
+                            
+                            // if(array_key_exists($v, $types) == false){
+                            //     return "Недопустимое значение типа!";
+                            // }
 
                             return true;
                         }
@@ -183,20 +184,20 @@ class DealsSchemaTable extends Entity\DataManager{
             )),
 
 
-            new Entity\IntegerField('LOADING_METHOD',array(
+            new Entity\TextField('LOADING_METHOD',array(
                 'title'=>'Способ погрузки',
                 'required'=>true,
                 'default_value'=>function(){
-                    return 0;
+                    return "";
                 },
                 'validation'=>function(){
                     return array(
                         function($v,$pr,$row,$f){
 
-                            $types = \Ali\Logistic\Dictionary\LoadingMethod::getLabels();
-                            if(array_key_exists($v, $types) == false){
-                                return "Недопустимое значение типа!";
-                            }
+                            // $types = \Ali\Logistic\Dictionary\LoadingMethod::getLabels();
+                            // if(array_key_exists($v, $types) == false){
+                            //     return "Недопустимое значение типа!";
+                            // }
 
                             return true;
                         }
@@ -232,7 +233,7 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\BooleanField('REQUIRES_LOADER',array(
                 'title'=>'Требуется грузчик',
                 'default_value'=>function(){
-                    return 0;
+                    return false;
                 }
             )),
 
@@ -254,7 +255,7 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\BooleanField('REQUIRES_INSURANCE',array(
                 'title'=>'Требуется страхование',
                 'default_value'=>function(){
-                    return 0;
+                    return false;
                 }
             )),
 
@@ -279,91 +280,52 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\BooleanField('SUPPORT_REQUIRED',array(
                 'title'=>'Требуется сопровождение',
                 'default_value'=>function(){
-                    return 0;
+                    return false;
                 }
             )),
 
 
 
-            new Entity\BooleanField('ADDITIONAL_EQUIPMENT',array(
+            new Entity\TextField('ADDITIONAL_EQUIPMENT',array(
                 'title'=>'Требуются дополнительные оборудования',
                 'default_value'=>function(){
-                    return 0;
+                    return "";
+                },
+                'validation'=>function(){
+                    return array(
+                        function($v,$pr,$row,$f){
+
+                            // $types = \Ali\Logistic\Dictionary\AdditionalEquipment::getLabels();
+                            // if(array_key_exists($v, $types) == false){
+                            //     return "Недопустимое значение типа!";
+                            // }
+
+                            return true;
+                        }
+                    );
                 }
             )),
 
-            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_CONICS',array(
-                'title'=>'Требуются коники',
-                'default_value'=>function(){
-                    return 0;
-                }
-            )),
-
-            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_RAMPS',array(
-                'title'=>'Требуются аппарели',
-                'default_value'=>function(){
-                    return 0;
-                }
-            )),
+            
 
 
-            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_TAIL_LIFT',array(
-                'title'=>'Требуются гидроборт',
-                'default_value'=>function(){
-                    return 0;
-                }
-            )),
-
-
-            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_MANIPULATOR',array(
-                'title'=>'Требуются  манипулятор',
-                'default_value'=>function(){
-                    return 0;
-                }
-            )),
-
-
-            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_WRECKER',array(
-                'title'=>'Требуются эвакуатор',
-                'default_value'=>function(){
-                    return 0;
-                }
-            )),
-
-            new Entity\BooleanField('ADDITIONAL_EQUIPMENT_CRANE',array(
-                'title'=>'Требуется кран',
-                'default_value'=>function(){
-                    return 0;
-                }
-            )),
-
-
-            new Entity\BooleanField('REQUIRED_DOCUMENTS',array(
+            new Entity\TextField('REQUIRED_DOCUMENTS',array(
                 'title'=>'Требуется документы',
                 'default_value'=>function(){
-                    return 0;
-                }
-            )),
+                    return "";
+                },
+                'validation'=>function(){
+                    return array(
+                        function($v,$pr,$row,$f){
 
+                            // $types = \Ali\Logistic\Dictionary\Documents::getLabels();
+                            // if(array_key_exists($v, $types) == false){
+                            //     return "Недопустимое значение типа!";
+                            // }
 
-            new Entity\BooleanField('REQUIRED_DOCUMENTS_PROCURATION',array(
-                'title'=>'Требуется доверенность',
-                'default_value'=>function(){
-                    return 0;
-                }
-            )),
-
-            new Entity\BooleanField('REQUIRED_DOCUMENTS_MEDICAL_BOOK',array(
-                'title'=>'Требуется медкнижка',
-                'default_value'=>function(){
-                    return 0;
-                }
-            )),
-
-            new Entity\BooleanField('REQUIRED_DOCUMENTS_SANITIZATION',array(
-                'title'=>'Требуется санобработка',
-                'default_value'=>function(){
-                    return 0;
+                            return true;
+                        }
+                    );
                 }
             )),
 
@@ -400,14 +362,14 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\BooleanField('IS_DELETED',array(
                 'title'=>'В архиве',
                 'default_value'=>function(){
-                    return 0;
+                    return false;
                 }
             )),
 
             new Entity\BooleanField('IS_ACTIVE',array(
                 'title'=>'Активна',
                 'default_value'=>function(){
-                    return true;
+                    return false;
                 }
             )),
 

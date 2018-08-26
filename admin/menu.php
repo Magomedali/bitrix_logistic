@@ -1,14 +1,14 @@
 <?php
 IncludeModuleLangFile(__FILE__);
 
-if(\Bitrix\Main\ModuleManager::isModuleInstalled('social.chat')){
+if(\Bitrix\Main\ModuleManager::isModuleInstalled('ali.logistic')){
 
   $aMenu = [
     "parent_menu" => "global_menu_content", // поместим в раздел "Сервис"
     "sort"        => 100,                    // вес пункта меню
-    "url"         => "social.chat_chat_setting.php",  // ссылка на пункте меню
-    "text"        => GetMessage("ADMIN_ALI_CHAT_MENU_TITLE"),       // текст пункта меню
-    "title"       => GetMessage("ADMIN_ALI_CHAT_MENU_TITLE"), // текст всплывающей подсказки
+    "url"         => "ali.logisitc_main.php",  // ссылка на пункте меню
+    "text"        => GetMessage("ADMIN_ALI_LOGISTIC_MENU_TITLE"),       // текст пункта меню
+    "title"       => GetMessage("ADMIN_ALI_LOGISTIC_MENU_TITLE"), // текст всплывающей подсказки
    //"icon"        => "form_menu_icon", // малая иконка
    //"page_icon"   => "form_page_icon", // большая иконка
     "items_id"    => "menu_chat",  // идентификатор ветви
@@ -16,9 +16,15 @@ if(\Bitrix\Main\ModuleManager::isModuleInstalled('social.chat')){
   ];
 
   $aMenu['items'][]=[
-        "url" => "social.chat_topic_form.php",
-        "text"        => GetMessage("ADMIN_ALI_CHAT_MENU_NEW_TOPIC"),
-        "title"       => GetMessage("ADMIN_ALI_CHAT_MENU_NEW_TOPIC"),
+        "url" => "ali.logistic_loadcustomers.php",
+        "text"        => GetMessage("ADMIN_ALI_LOGISTIC_MENU_LOAD_CUSTOMERS"),
+        "title"       => GetMessage("ADMIN_ALI_LOGISTIC_MENU_LOAD_CUSTOMERS"),
+  ];
+
+  $aMenu['items'][]=[
+        "url" => "ali.logistic_settingscustomers.php",
+        "text"        => GetMessage("ADMIN_ALI_LOGISTIC_MENU_SETTING_CUSTOMERS"),
+        "title"       => GetMessage("ADMIN_ALI_LOGISTIC_MENU_SETTING_CUSTOMERS"),
   ];
 }else{
   $aMenu = false;

@@ -26,7 +26,7 @@ abstract class Client1C
 			
 			return $client;
 
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			
 			return false;
 		}

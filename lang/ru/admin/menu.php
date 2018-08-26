@@ -1,6 +1,7 @@
 <?php
 
 $MESS=[
-	"ADMIN_ALI_CHAT_MENU_TITLE" => "��������� ����",
-	"ADMIN_ALI_CHAT_MENU_NEW_TOPIC"=>"����� �����"
+	"ADMIN_ALI_LOGISTIC_MENU_TITLE" => "Модуль логистики",
+	"ADMIN_ALI_LOGISTIC_MENU_LOAD_CUSTOMERS" => "Загрузка контрагентов из 1С",
+	"ADMIN_ALI_LOGISTIC_MENU_SETTING_CUSTOMERS" => "Настройка свободных контрагентов"
 ];

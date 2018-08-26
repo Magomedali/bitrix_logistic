@@ -4,7 +4,7 @@ require("top.php");
 use \Social\Chat\TopicTable;
 
 
-$APPLICATION->SetTitle(GetMessage("ADMIN_ALI_CHAT_SETTING_TITLE"));
+$APPLICATION->SetTitle(GetMessage("ADMIN_ALI_LOGISTIC_SETTING_TITLE"));
 
 $filter = isset($_GET['Topic']) && count($_GET['Topic']) ? $_GET['Topic'] : null;
 if($filter){

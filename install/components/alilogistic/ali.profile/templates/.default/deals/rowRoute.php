@@ -15,42 +15,42 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 <tr class="form-route" data-number="<?php echo $number; ?>">
 	<td style="min-width: 40px;">
 		<?php
-			echo Html::dropDownList("ROUTES[{$number}][KIND]",$route ? $route['KIND'] : null,$routeKinds,['class'=>'form-control']);
+			echo Html::dropDownList("ROUTES[{$number}][KIND]",$route && isset($route['KIND']) ? $route['KIND'] : null,$routeKinds,['class'=>'form-control']);
 		?>
 	</td>
 	<td>
 		<?php
-			echo Html::input("date","ROUTES[{$number}][START_AT]",$route ? date("Y-m-d",strtotime($route['START_AT'])) : null,['class'=>'form-control']);
+			echo Html::input("datetime-local","ROUTES[{$number}][START_AT]",$route && isset($route['START_AT']) ? date("Y-m-d\TH:i",strtotime($route['START_AT'])) : null,['class'=>'form-control']);
 		?>
 	</td>
 	<td>
 		<?php
-			echo Html::input("date","ROUTES[{$number}][FINISH_AT]",$route ? date("Y-m-d",strtotime($route['FINISH_AT'])) : null,['class'=>'form-control']);
+			echo Html::input("datetime-local","ROUTES[{$number}][FINISH_AT]",$route && isset($route['FINISH_AT']) ? date("Y-m-d\TH:i",strtotime($route['FINISH_AT'])) : null,['class'=>'form-control']);
 		?>
 	</td>
 	<td>
 		<?php
-			echo Html::input("text","ROUTES[{$number}][ORGANISATION]",$route ? $route['ORGANISATION'] : null,['class'=>'form-control']);
+			echo Html::input("text","ROUTES[{$number}][ORGANISATION]",$route && isset($route['ORGANISATION']) ? $route['ORGANISATION'] : null,['class'=>'form-control']);
 		?>
 	</td>
 	<td>
 		<?php
-			echo Html::input("text","ROUTES[{$number}][ADDRESS]",$route ? $route['ADDRESS'] : null,['class'=>'form-control']);
+			echo Html::input("text","ROUTES[{$number}][ADDRESS]",$route && isset($route['ADDRESS']) ? $route['ADDRESS'] : null,['class'=>'form-control']);
 		?>
 	</td>
 	<td>
 		<?php
-			echo Html::input("text","ROUTES[{$number}][PERSON]",$route ? $route['PERSON'] : null,['class'=>'form-control']);
+			echo Html::input("text","ROUTES[{$number}][PERSON]",$route && isset($route['PERSON']) ? $route['PERSON'] : null,['class'=>'form-control']);
 		?>
 	</td>
 	<td>
 		<?php
-			echo Html::input("text","ROUTES[{$number}][PHONE]",$route ? $route['PHONE'] : null,['class'=>'form-control']);
+			echo Html::input("text","ROUTES[{$number}][PHONE]",$route && isset($route['PHONE']) ? $route['PHONE'] : null,['class'=>'form-control']);
 		?>
 	</td>
 	<td>
 		<?php
-			echo Html::input("text","ROUTES[{$number}][COMMENT]",$route ? $route['COMMENT'] : null,['class'=>'form-control']);
+			echo Html::input("text","ROUTES[{$number}][COMMENT]",$route && isset($route['COMMENT']) ? $route['COMMENT'] : null,['class'=>'form-control']);
 		?>
 	</td>
 	<td>

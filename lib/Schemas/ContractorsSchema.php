@@ -52,7 +52,7 @@ class ContractorsSchemaTable extends Entity\DataManager
             )),
 
             new Entity\IntegerField('COMPANY_ID',array(
-                'required'=>true,
+                'required'=>false,
             )),
 
 
@@ -64,7 +64,7 @@ class ContractorsSchemaTable extends Entity\DataManager
             ),
             
             new Entity\IntegerField('OWNER_ID',array(
-                'required'=>true,
+                'required'=>false,
             )),
 
             new Entity\ReferenceField(
@@ -102,7 +102,7 @@ class ContractorsSchemaTable extends Entity\DataManager
 
             new Entity\StringField('PHYSICAL_ADDRESS',array(
                 'title'=>'Физический организации',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -191,7 +191,7 @@ class ContractorsSchemaTable extends Entity\DataManager
 
                             if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL){
                                 //Для юр лиц обязателен и должен быть уникальным
-                                $field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким КПП зарегистрирован на сайте'));
+                                //$field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким КПП зарегистрирован на сайте'));
                             }
 
                             return true;
@@ -210,7 +210,7 @@ class ContractorsSchemaTable extends Entity\DataManager
 
             new Entity\StringField('OGRN',array(
                 'title'=>'ОГРН',
-                'required'=>1,
+                'required'=>false,
                 'unique'=>1,
                 'validation'=>function(){
                     return array(
@@ -238,7 +238,7 @@ class ContractorsSchemaTable extends Entity\DataManager
 
             new Entity\StringField('BANK_BIK',array(
                 'title'=>'Бик банка',
-                'required'=>1,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -250,7 +250,7 @@ class ContractorsSchemaTable extends Entity\DataManager
 
             new Entity\StringField('BANK_NAME',array(
                 'title'=>'Наименование банка',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -262,7 +262,7 @@ class ContractorsSchemaTable extends Entity\DataManager
 
             new Entity\StringField('CHECKING_ACCOUNT',array(
                 'title'=>'Расчетный счет',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -274,7 +274,7 @@ class ContractorsSchemaTable extends Entity\DataManager
 
             new Entity\StringField('CORRESPONDENT_ACCOUNT',array(
                 'title'=>'Корреспондентский счет',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){

@@ -11,6 +11,6 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_aft
 
 
 
-\Bitrix\Main\Loader::includeModule("social.chat");
+\Bitrix\Main\Loader::includeModule("ali.logistic");
 
 ?>

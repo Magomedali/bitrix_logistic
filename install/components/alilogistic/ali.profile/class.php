@@ -396,51 +396,63 @@ class AliProfile extends CBitrixComponent
                 LocalRedirect($this->getUrl());
             }
 
-            
             $deal['COMPANY_ID'] = $contrs[$deal['CONTRACTOR_ID']];
             $user_id = CUser::GetID();
             $deal['OWNER_ID'] = $user_id;
-
+            $deal['IS_DRAFT'] = isset($request['how_draft']);
+            
             $routes = isset($request['ROUTES']) && is_array($request['ROUTES']) ? $request['ROUTES'] : array();
 
-            $res = Deals::save($deal);
+            if(count($routes) >= 2){
+                $res = Deals::save($deal);
             
-            if(!$res->isSuccess()){
-                $errors = $res->getErrorMessages();
-            }else{
-                $deal['ID']=$res->getId();
-                
-                if(count($routes)){
-                    $tmpRoute = array();
-                    foreach ($routes as $key => $rData) {
-                        $rData['DEAL_ID'] = $deal['ID'];
-                        $rData['OWNER_ID'] = $user_id;
-                        $res = Routes::save($rData);
-                        if(!$res->isSuccess()){
-                            $errors = array_merge($errors,$res->getErrorMessages());
-                        }else{
-                            $rData['ID'] = $res->getId();
+                if(!$res->isSuccess()){
+                    $errors = $res->getErrorMessages();
+
+                    
+                }else{
+                    $deal['ID']=$res->getId();
+                    
+                    if(count($routes)){
+                        $tmpRoute = array();
+                        foreach ($routes as $key => $rData) {
+                            $rData['DEAL_ID'] = $deal['ID'];
+                            $rData['OWNER_ID'] = $user_id;
+                            $res = Routes::save($rData);
+                            if(!$res->isSuccess()){
+                                $errors = array_merge($errors,$res->getErrorMessages());
+                            }else{
+                                $rData['ID'] = $res->getId();
+                            }
+                            $tmpRoute[]=$rData;
                         }
-                        $tmpRoute[]=$rData;
+
+                        $routes = count($tmpRoute) ? $tmpRoute : $routes;
                     }
 
-                    $routes = count($tmpRoute) ? $tmpRoute : $routes;
-                }
+                    if(!count($errors)){
+                        $deal['ROUTES']=$routes;
+                        Deals::integrateDealTo1C($deal);
+                        if($deal['IS_DRAFT']){
+                            LocalRedirect($this->getUrl("draftdeals"));
+                        }else{
+                            LocalRedirect($this->getUrl("deals"));
+                        }
+                        
+                    }
 
-                if(!count($errors)){
-                    $deal['ROUTES']=$routes;
-                    Deals::integrateDealTo1C($deal);
-                    LocalRedirect($this->getUrl("deals"));
+                    
                 }
-
-                
+            }else{
+                $errors[] = "Добавьте пожалуйста машруты, необходимо минимум 2!";
             }
+
+            
         }elseif(isset($request['id'])){
             $deal = Deals::getDeals((int)$request['id']);
             $routes = Routes::getRoutes((int)$request['id']);
 
         }
-
 
         $this->arResult = [
             'errors'=>$errors,
@@ -495,8 +507,24 @@ class AliProfile extends CBitrixComponent
 
         $id = CUser::GetID();
 
+        $params['filter']['IS_ACTIVE'] = true;
+        $deals = Deals::getDeals(null,$params);
+
+        $this->arResult = [
+            'deals'=>$deals
+        ];
 
 
+        return "deals/deals";
+    }
+
+
+
+    public function draftdealsAction(){
+
+        $id = CUser::GetID();
+
+        $params['filter']['IS_DRAFT'] = true;
         $deals = Deals::getDeals(null,$params);
 
         $this->arResult = [
