@@ -26,13 +26,8 @@ class Deals{
         );
     }
 
+    public static function normalizeData($data){
 
-
-    public static function save($data){
-       
-        
-        
-        
 
         if(isset($data['TYPE_OF_VEHICLE']) && is_array($data['TYPE_OF_VEHICLE'])){
             $typesOfVehicle = TypeOfVehicle::toString($data['TYPE_OF_VEHICLE']);
@@ -59,6 +54,17 @@ class Deals{
         $data['REQUIRES_INSURANCE'] = isset($data['REQUIRES_INSURANCE']);
         $data['SUPPORT_REQUIRED'] = isset($data['SUPPORT_REQUIRED']);
         $data['WITH_NDS'] = isset($data['WITH_NDS']) && (int)$data['WITH_NDS'];
+
+
+        if(!isset($data['CREATED_AT']))
+            $data['CREATED_AT'] = new \Bitrix\Main\Type\DateTime();
+
+        return $data;
+    }
+
+    public static function save($data){
+       
+        $data = self::normalizeData($data); 
         
         $data['IS_ACTIVE'] = !$data['IS_DRAFT'];
 
@@ -70,9 +76,9 @@ class Deals{
         
 
 
-        if($result->isSuccess() && !$data['IS_DRAFT']){
-            $data['ID']=$result->getId();
-        }
+        // if($result->isSuccess() && !$data['IS_DRAFT']){
+        //     $data['ID']=$result->getId();
+        // }
 
         return $result;
     }
@@ -117,7 +123,7 @@ class Deals{
 
 
     public static function integrateDealTo1C($data){
-        return Deals1C::save($data);
+        return Deals1C::save(self::normalizeData($data));
     }
 
 }

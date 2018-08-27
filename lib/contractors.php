@@ -26,7 +26,7 @@ class Contractors
         );
     }
 
-
+   
 
     public static function save($data){
         global $USER;
@@ -52,6 +52,15 @@ class Contractors
 
         if($result->isSuccess()){
             $data['ID']=$result->getId();
+
+
+            $user = UserTable::getRowById($data['OWNER_ID']);
+            if($user){
+               $data['USER_NAME'] = $user['SECOND_NAME']." ".$user['NAME'];
+               $data['USER_EMAIL'] = $user['EMAIL'];
+               $data['USER_PHONE'] = $user['PERSONAL_PHONE']; 
+            }
+            
             $responce = self::integrateTo1C($data);
         }
 

@@ -38,7 +38,18 @@ class User
     public static function getCurrentUserContractors(){
         global $USER;
 
-        $contractors = ContractorsSchemaTable::getList(array('select'=>array("ID","COMPANY_ID","NAME"),'filter'=>array("OWNER_ID"=>$USER->GetId())))->fetchAll();
+        $contractors = ContractorsSchemaTable::getList(array('select'=>array("ID","COMPANY_ID","NAME","INTEGRATED_ID"),'filter'=>array("OWNER_ID"=>$USER->GetId())))->fetchAll();
+
+        return $contractors;
+    }
+
+
+    public static function getCurrentUserIntegratedContractors(){
+        global $USER;
+
+        $contractors = ContractorsSchemaTable::getList(array('select'=>array("ID","COMPANY_ID","NAME","INTEGRATED_ID"),'filter'=>array("OWNER_ID"=>$USER->GetId(),"!=INTEGRATED_ID"=>'')))->fetchAll();
+
+
 
         return $contractors;
     }

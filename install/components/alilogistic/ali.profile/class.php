@@ -133,7 +133,6 @@ class AliProfile extends CBitrixComponent
         $id = CUser::GetID();
         
         $user = UserTable::getRowById($id);
-        
 
         $this->arResult['user'] = $user;
 
@@ -152,8 +151,6 @@ class AliProfile extends CBitrixComponent
 
     public function personalAction(){
         $id = CUser::GetID();
-
-
 
 
         return "personal/data";
@@ -376,12 +373,13 @@ class AliProfile extends CBitrixComponent
 
 
     public function dealformAction(){
-        $contractors = User::getCurrentUserContractors();
+        $contractors = User::getCurrentUserIntegratedContractors();
 
         if(!is_array($contractors) || !count($contractors)){
             LocalRedirect($this->getUrl());
         }
 
+        
         $context = Application::getInstance()->getContext();
         $request = $context->getRequest();
 
@@ -390,13 +388,14 @@ class AliProfile extends CBitrixComponent
         $routes = array();
         if($request->isPost() && isset($request['DEAL'])){
             $deal = $request['DEAL'];
-            $contrs = ArrayHelper::map($contractors,'ID','COMPANY_ID');
+            $contrs_company = ArrayHelper::map($contractors,'ID','COMPANY_ID');
+            $contrs_uuids = ArrayHelper::map($contractors,'ID','INTEGRATED_ID');
 
-            if(!isset($deal['CONTRACTOR_ID']) || !array_key_exists($deal['CONTRACTOR_ID'], $contrs)){
+            if(!isset($deal['CONTRACTOR_ID']) || !array_key_exists($deal['CONTRACTOR_ID'], $contrs_company)){
                 LocalRedirect($this->getUrl());
             }
 
-            $deal['COMPANY_ID'] = $contrs[$deal['CONTRACTOR_ID']];
+            $deal['COMPANY_ID'] = $contrs_company[$deal['CONTRACTOR_ID']];
             $user_id = CUser::GetID();
             $deal['OWNER_ID'] = $user_id;
             $deal['IS_DRAFT'] = isset($request['how_draft']);
@@ -430,12 +429,18 @@ class AliProfile extends CBitrixComponent
                         $routes = count($tmpRoute) ? $tmpRoute : $routes;
                     }
 
+                    
                     if(!count($errors)){
-                        $deal['ROUTES']=$routes;
-                        Deals::integrateDealTo1C($deal);
+                        
                         if($deal['IS_DRAFT']){
                             LocalRedirect($this->getUrl("draftdeals"));
                         }else{
+
+                            $deal['ROUTES']=$routes;
+
+                            $deal['CONTRACTOR_INTEGRATED_ID'] = $contrs_uuids[$deal['CONTRACTOR_ID']];
+                            Deals::integrateDealTo1C($deal);
+
                             LocalRedirect($this->getUrl("deals"));
                         }
                         

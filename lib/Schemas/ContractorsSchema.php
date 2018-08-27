@@ -51,6 +51,24 @@ class ContractorsSchemaTable extends Entity\DataManager
                 }
             )),
 
+             new Entity\BooleanField('INTEGRATE_ERROR', array(
+                'title'=>'Ошибка интеграции в 1С',
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
+            new Entity\TextField('INTEGRATE_ERROR_MSG', array(
+                'title'=>'Описание ошибки интеграции в 1С',
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value;
+                        }
+                    );
+                }
+            )),
+
             new Entity\IntegerField('COMPANY_ID',array(
                 'required'=>false,
             )),
