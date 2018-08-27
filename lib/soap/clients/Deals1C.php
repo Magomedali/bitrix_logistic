@@ -14,23 +14,7 @@ use Bitrix\Main\Type\DateTime;
 class Deals1C extends Client1C 
 {
 	
-	public $success = false;
-	public $uuid;
-
-
-	public function parseResponce($response){
-
-
-		if(isset($response->return) && isset($response->return->success) && $response->return->success){
-			$this->success = true;
-		}
-
-		if(isset($response->return) && isset($response->return->uuid) && $response->return->uuid){
-			$this->uuid = $response->return->uuid;
-		}
-
-
-	}
+	
 
 	public static function save($params){
       	
@@ -98,7 +82,11 @@ class Deals1C extends Client1C
 			// print_r($response);
 			// exit;
 			if($integrator->success  && $integrator->uuid){
-				$res = DealsSchemaTable::update($params['ID'],['IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid]);
+				$res = DealsSchemaTable::update($params['ID'],['IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid,'INTEGRATE_ERROR'=>false,'INTEGRATE_ERROR_MSG'=>""]);
+
+				return $res->isSuccess();
+			}else{
+				$res = DealsSchemaTable::update($params['ID'],['INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$integrator->error_msg]);
 
 				return $res->isSuccess();
 			}

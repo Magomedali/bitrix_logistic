@@ -49,6 +49,17 @@ class DealsSchemaTable extends Entity\DataManager{
                 }
             )),
 
+            //DOC_NUMBER
+            new Entity\StringField('DOCUMENT_NUMBER', array(
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value;
+                        }
+                    );
+                }
+            )),
+
             new Entity\BooleanField('INTEGRATE_ERROR', array(
                 'title'=>'Ошибка интеграции в 1С',
                 'default_value'=>function(){
