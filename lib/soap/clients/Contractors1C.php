@@ -4,6 +4,7 @@ namespace Ali\Logistic\soap\clients;
 
 use Ali\Logistic\Dictionary\ContractorsType;
 use Ali\Logistic\Schemas\ContractorsSchemaTable;
+use Ali\Logistic\soap\Types\Customer;
 
 /**
 * 
@@ -42,6 +43,13 @@ class Contractors1C extends Client1C
 		$soap_data['address'] = $data['LEGAL_ADDRESS'];
 		$soap_data['kpp'] = $data['KPP'];
 		$soap_data['ogrn'] = $data['OGRN'];
+		$soap_data['bik'] = $data['BANK_BIK'];
+		$soap_data['namebank'] = $data['BANK_NAME'];
+		$soap_data['bankaccount'] = $data['CHECKING_ACCOUNT'];
+		$soap_data['corraccount'] = $data['CORRESPONDENT_ACCOUNT'];
+		$soap_data['namecontact'] = "";
+		$soap_data['email'] = "";
+		$soap_data['numberphone'] = "";
 		
 		try {
 			$response = $client->createcustomer(['customer'=>$soap_data]);
@@ -82,10 +90,44 @@ class Contractors1C extends Client1C
 		if(!$client) return false;
 
 		try {
-			return $client->getcustomers();
+			$responce = $client->getcustomers();
+
+			if(isset($responce->return) && isset($responce->return->customer)){
+				return self::saveToSite($responce->return->customer);
+			}
+
 		} catch (\Exception $e) {
 			return false;
 		}
-		
+
+		return false;
+	}
+
+
+
+
+
+	public static function saveToSite($data){
+
+
+
+		$log = array();
+		if(is_array($data)){
+			foreach ($data as $key => $row) {
+				$c_data = json_decode(json_encode($row),true);
+				
+				$c = new Customer($c_data);
+
+				$res = $c->save();
+
+				if($res->isSuccess()){
+					$log['success_log'][] = $c_data['name']." - ".$c_data['inn'];
+				}else{
+					$log['error_log'][] = $c_data['name']." - ".$c_data['inn'];
+				}
+			}
+		}
+
+		return $log;
 	}
 }

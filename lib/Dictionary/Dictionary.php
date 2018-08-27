@@ -58,6 +58,16 @@ abstract class Dictionary{
 
 
 
+    public static function getCode($str = null){
+        if($str == null) return null;
+
+        $nls = static::normalizeLabels();
+        
+        return array_search($str, $nls);
+    }
+
+
+
     public static function normalizeLabels(){
 
         $labels = [];

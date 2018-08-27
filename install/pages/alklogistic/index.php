@@ -1,26 +1,16 @@
 <?php
-define("NEED_AUTH", true);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
+use Ali\Logistic\Schemas\ContractorsSchemaTable;
 
-$APPLICATION->SetTitle("Logisitc");
-
-?>
-<?php
-
-if($USER->IsAuthorized()) {
-    
-
-	$APPLICATION->IncludeComponent(
-	"alilogistic:main.window",
-	"",
-	Array()
-	);
+if(CModule::IncludeModule('ali.logistic')){
 
 }else{
-	require("login.php");
-}
-?>
 
-<?php require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+
+	
+}
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");
+
+?>

@@ -14,8 +14,8 @@ class ContractorsType extends \Ali\Logistic\Dictionary\Dictionary{
 
 
 	protected static $labels = array(
-		self::IP=>"ИП",
-		self::LEGAL=>"Юридическое лицо",
+		self::IP=>"физлицо",
+		self::LEGAL=>"юрлицо",
 	); 
 
 }
