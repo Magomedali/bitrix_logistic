@@ -92,7 +92,13 @@ class AliMenu extends CBitrixComponent
             "",
             ""
         ),
-
+        array(
+            "Акты сверок",
+            "/personal/index.php?r=report",
+            array(),
+            "",
+            ""
+        ),
         array(
             "Счета-фактуры",
             "/personal/index.php?r=invoices",
@@ -139,7 +145,7 @@ class AliMenu extends CBitrixComponent
             $request = $context->getRequest();
 
             $menus = $this->menu_items;
-            $contractors = User::getCurrentUserContractors();
+            $contractors = User::getCurrentUserIntegratedContractors();
             if(is_array($contractors) && count($contractors)){
 
                 $menus = array_merge($menus,$this->protected_menu);

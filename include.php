@@ -3,14 +3,8 @@
 define("ALI_MODULE_NAME","ali.logistic");
 define("ALI_COMPONENTS_NS","alilogistic");
 
-define("ALI_AVA_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/components/".ALI_COMPONENTS_NS."/main.window/files/ava/");
-define("ALI_PUBLIC_AVA_PATH", "/bitrix/components/".ALI_COMPONENTS_NS."/main.window/files/ava/");
-
-define("ALI_ALBUM_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/components/".ALI_COMPONENTS_NS."/main.window/files/album/");
-define("ALI_PUBLIC_ALBUM_PATH", "/bitrix/components/".ALI_COMPONENTS_NS."/main.window/files/album/");
-
-define("ALI_MSG_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/components/".ALI_COMPONENTS_NS."/main.window/files/message/");
-define("ALI_PUBLIC_MSG_PATH", "/bitrix/components/".ALI_COMPONENTS_NS."/main.window/files/message/");
+define("ALI_FILE_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/");
+define("ALI_LOG_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/lib/soap/Server/output/");
 
 //Количество сообщении на страницу(на загрузку)
 define("MESSAGE_LIMIT", 15);

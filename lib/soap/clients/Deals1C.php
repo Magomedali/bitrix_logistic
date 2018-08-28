@@ -4,6 +4,7 @@ namespace Ali\Logistic\soap\clients;
 
 
 use Ali\Logistic\Dictionary\RoutesKind;
+use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\soap\Types\Deal;
 use Ali\Logistic\Schemas\DealsSchemaTable;
 use Bitrix\Main\Type\DateTime;
@@ -82,7 +83,7 @@ class Deals1C extends Client1C
 			// print_r($response);
 			// exit;
 			if($integrator->success  && $integrator->uuid){
-				$res = DealsSchemaTable::update($params['ID'],['IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid,'INTEGRATE_ERROR'=>false,'INTEGRATE_ERROR_MSG'=>""]);
+				$res = DealsSchemaTable::update($params['ID'],['IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid,'INTEGRATE_ERROR'=>false,'INTEGRATE_ERROR_MSG'=>"",'STATE'=>DealStates::IN_PLANNING]);
 
 				return $res->isSuccess();
 			}else{

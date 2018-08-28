@@ -50,6 +50,8 @@ class Deals{
         }
         
 
+        $data['INTEGRATE_ERROR'] = isset($data['INTEGRATE_ERROR']);
+        $data['IS_INTEGRATED'] = isset($data['IS_INTEGRATED']);
         $data['REQUIRES_LOADER'] = isset($data['REQUIRES_LOADER']);
         $data['REQUIRES_INSURANCE'] = isset($data['REQUIRES_INSURANCE']);
         $data['SUPPORT_REQUIRED'] = isset($data['SUPPORT_REQUIRED']);
@@ -69,10 +71,11 @@ class Deals{
         $data['IS_ACTIVE'] = !$data['IS_DRAFT'];
 
         $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
-        if($primary)
+        if($primary){
             $result = DealsSchemaTable::update($primary,$data);
-        else
+        }else{
             $result = DealsSchemaTable::add($data);
+        }
         
 
 

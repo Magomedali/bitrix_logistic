@@ -34,7 +34,7 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\BooleanField('IS_INTEGRATED',array(
                 'title'=>'Интегрирована в 1С',
                 'default_value'=>function(){
-                    return 0;
+                    return false;
                 }
             )),
 
@@ -63,7 +63,7 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\BooleanField('INTEGRATE_ERROR', array(
                 'title'=>'Ошибка интеграции в 1С',
                 'default_value'=>function(){
-                    return 0;
+                    return false;
                 }
             )),
 

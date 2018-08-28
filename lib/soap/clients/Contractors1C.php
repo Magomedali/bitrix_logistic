@@ -32,8 +32,8 @@ class Contractors1C extends Client1C
 		$soap_data['bankaccount'] = $data['CHECKING_ACCOUNT'];
 		$soap_data['corraccount'] = $data['CORRESPONDENT_ACCOUNT'];
 		$soap_data['namecontact'] = $data['USER_NAME'];
-		$soap_data['email'] = $data['USER_EMAIL'];;
-		$soap_data['numberphone'] = $data['USER_PHONE'];;
+		$soap_data['email'] = $data['USER_EMAIL'];
+		$soap_data['numberphone'] = $data['USER_PHONE'];
 		
 		try {
 			$response = $client->createcustomer(['customer'=>$soap_data]);

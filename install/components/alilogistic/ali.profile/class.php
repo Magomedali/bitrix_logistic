@@ -13,6 +13,7 @@ use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
 use Ali\Logistic\soap\clients\CheckINN;
 use Ali\Logistic\helpers\ArrayHelper;
+use Ali\Logistic\soap\clients\Sverka1C;
 
 
 class AliProfile extends CBitrixComponent
@@ -387,7 +388,14 @@ class AliProfile extends CBitrixComponent
         $deal = array();
         $routes = array();
         if($request->isPost() && isset($request['DEAL'])){
-            $deal = $request['DEAL'];
+            
+            $deal = array();
+            if(isset($request['DEAL']['ID'])){
+                $deal = Deals::getDeals((int)$request['DEAL']['ID']);
+                if(!isset($deal['ID'])) LocalRedirect($this->getUrl("deals"));
+            }
+            $deal = array_merge($deal,$request['DEAL']);
+
             $contrs_company = ArrayHelper::map($contractors,'ID','COMPANY_ID');
             $contrs_uuids = ArrayHelper::map($contractors,'ID','INTEGRATED_ID');
 
@@ -578,6 +586,43 @@ class AliProfile extends CBitrixComponent
 
 
 
+
+
+
+
+    public function reportAction(){
+
+        $contractors = User::getCurrentUserIntegratedContractors();
+
+        if(!is_array($contractors) || !count($contractors)){
+            LocalRedirect($this->getUrl());
+        }
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        $contrs_uuids = ArrayHelper::map($contractors,'ID','INTEGRATED_ID');
+        $parameters = array();
+        if($request->isPost() && isset($request['dateFrom']) && isset($request['dateTo']) && $request['dateFrom'] && $request['dateTo'] && isset($request['contractor']) && array_key_exists($request['contractor'], $contrs_uuids)){
+
+            
+            $parameters['with_nds'] = isset($request['with_nds']);
+            $parameters['contractor'] = $contrs_uuids[$request['contractor']];
+            $parameters['dateFrom'] = date("Y-m-d H:i",strtotime($request['dateFrom']));
+            $parameters['dateTo'] = date("Y-m-d H:i",strtotime($request['dateTo']));
+
+
+            $report = Sverka1C::get($parameters);
+            
+        }
+
+        $this->arResult = [
+            'contractors'=>$contractors,
+            'parameters'=>$parameters
+        ];
+
+        return "report";
+    }
 
 
 }

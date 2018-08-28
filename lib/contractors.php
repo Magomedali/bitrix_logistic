@@ -19,7 +19,7 @@ class Contractors
 
     public static function defaultSelect(){
         return array(
-            'ID','OWNER_ID','NAME','LEGAL_ADDRESS',
+            'ID','OWNER_ID','INTEGRATED_ID','NAME','LEGAL_ADDRESS',
             'PHYSICAL_ADDRESS','ENTITY_TYPE','INN',
             'KPP','OGRN','BANK_NAME','BANK_BIK','CHECKING_ACCOUNT',
             'CORRESPONDENT_ACCOUNT'

@@ -46,6 +46,9 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<tr>	
 					<td>Корреспондентский счет</td><td><?php echo $org['CORRESPONDENT_ACCOUNT']?></td>
 				</tr>
+				<tr>	
+					<td>Интегрирован в 1С</td><td><?php echo $org['INTEGRATED_ID'] ? "Да" : "Нет";?></td>
+				</tr>
 			</tbody>
 			<tfoot>
 				

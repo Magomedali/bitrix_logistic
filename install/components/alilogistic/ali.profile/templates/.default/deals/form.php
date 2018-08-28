@@ -264,10 +264,12 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 					<?php if($deal && isset($deal['ID']) && $deal['ID']){?>
 						<input type="hidden" name="DEAL[ID]" value="<?php echo $deal['ID']?>">
 						<input type="submit" value="Сохранить" class="btn btn-primary">
-						<input type="submit" value="Сохранить как черновик" name="how_draft" class="btn btn-primary">
+						<?php if(boolval($deal['IS_DRAFT'])){?>
+							<input type="submit" value="Сохранить как черновик" name="how_draft" class="btn btn-default">
+						<?php } ?>
 					<?php }else{?>
 						<input type="submit" value="Сохранить" class="btn btn-primary">
-						<input type="submit" value="Сохранить как черновик" name="how_draft" class="btn btn-primary">
+						<input type="submit" value="Сохранить как черновик" name="how_draft" class="btn btn-default">
 					<?php } ?>
 				</div>
 			</div>

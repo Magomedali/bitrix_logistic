@@ -35,7 +35,7 @@ class Deal
     function __construct($data)
     {
         $this->uuid = isset($data['uuid']) ? $data['uuid'] : null;
-        $this->number = isset($data['number']) ? $data['number'] : "228352172612048";
+        $this->number = isset($data['number']) ? $data['number'] : "228359172612048";
         $this->datedoc = $data['datedoc'];
         $this->uuidcustomer = $data['uuidcustomer'];
         $this->namecargo = $data['namecargo'];
