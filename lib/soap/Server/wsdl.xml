@@ -25,7 +25,7 @@
         			<xs:sequence>
         				<xs:element name="success" type="xs:boolean"/>
         				<xs:element name="error" type="xs:string" nillable="true"/>
-        				<xs:element name="errorMessage" type="xs:string" nillable="true"/>
+        				<xs:element name="errorMessages" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
         			</xs:sequence>
         		</xs:complexType>
         </xs:schema>

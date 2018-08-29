@@ -4,6 +4,9 @@ namespace Ali\Logistic\soap\Types;
 
 use Ali\Logistic\Dictionary\ContractorsType;
 use Ali\Logistic\Schemas\ContractorsSchemaTable;
+use Ali\Logistic\soap\Types\Route;
+use Ali\Logistic\soap\Types\DealCost;
+
 
 class Deal 
 {
@@ -31,6 +34,10 @@ class Deal
     public $width;
     public $method;
     public $routes = array();
+    public $costs = array();
+    public $driver;
+    public $vehicle;
+    public $status;
 
     function __construct($data)
     {
@@ -57,10 +64,19 @@ class Deal
         $this->width = $data['width'];
         $this->height = $data['height'];
         $this->method = $data['method'];
+        $this->driver = $data['driver'];
+        $this->vehicle = $data['vehicle'];
+        $this->status = $data['status'];
 
         if(isset($data['routes']) && is_array($data['routes']) && count($data['routes'])){
             foreach ($data['routes'] as $r) {
                 array_push($this->routes, new Route($r));
+            }
+        }
+
+        if(isset($data['costs']) && is_array($data['costs']) && count($data['costs'])){
+            foreach ($data['costs'] as $c) {
+                array_push($this->routes, new DealCost($c));
             }
         }
     }
@@ -73,7 +89,8 @@ class Deal
     	$data['IS_INTEGRATED']=true;
     	$data['INTEGRATED_ID']=$this->uuid;
     	
-        $data['NAME']=$this->name;
+        $data['NAME']=$this->namecargo;
+        
     	$data['LEGAL_ADDRESS']=$this->address;
     	$data['ENTITY_TYPE']=ContractorsType::getCode($this->type);
     	$data['INN']=$this->inn;

@@ -1,6 +1,7 @@
 <?php
 namespace Ali\Logistic\soap\Server;
 
+use Ali\Logistic\soap\Types\Customer;
 
 class ServerHandler
 {
@@ -17,6 +18,30 @@ class ServerHandler
 
 
 
+	// public function sendContractors($data){
+        
+	// 	$log = $this->log_path."sendContractors.txt";
+	// 	$output = fopen($log, "w");
+
+	// 	$output_line = "\n".date("H:i d.m.Y",time())." Контрагенты: "."\n\n";
+	// 	fwrite($output, $output_line);
+		
+	// 	$ln = json_encode(json_decode(json_encode($data),true));
+	// 	fwrite($output, $ln);
+		
+	// 	fwrite($output, ALI_LOG_PATH);
+		
+		
+	// 	fclose($output);
+
+ //        $response = new \stdClass();
+        
+ //        $response->success = true;
+ //        $response->error = count($data->customers->Struct);
+	// 	return $response;
+	// }
+
+
 	public function sendContractors($data){
         
 		$log = $this->log_path."sendContractors.txt";
@@ -25,23 +50,38 @@ class ServerHandler
 		$output_line = "\n".date("H:i d.m.Y",time())." Контрагенты: "."\n\n";
 		fwrite($output, $output_line);
 		
-		$ln = json_encode(json_decode(json_encode($data),true));
+		$contrs = json_decode(json_encode($data),true); //array
+		$ln = json_encode($contrs);
 		fwrite($output, $ln);
 		
 		fwrite($output, ALI_LOG_PATH);
 		
-		
 		fclose($output);
+		$response = new \stdClass();
+		$response->success = false;
+		if(isset($contrs['customers']) && is_array($contrs['customers']) && count($contrs['customers'])){
+			$c = new Customer($contrs['customers']);
 
-        $response = new \stdClass();
+			if(!empty($c->uuid) && $c->uuid != ''){
+				$res = $c->save();
+				if($res->isSuccess()){
+					$response->success = true;
+				}else{
+					$response->error = "saveError";
+					$response->errorMessages = $res->getErrorMessages();
+				}
+			}else{
+				$response->error = "emptyCustomer";
+			}
+		}else{
+			$response->error = "emptyCustomer";
+		}
         
-        $response->success = true;
-        $response->error = count($data->customers->Struct);
+        
+        
+        
 		return $response;
 	}
-
-
-
 
 
 
