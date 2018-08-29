@@ -2,6 +2,7 @@
 namespace Ali\Logistic\soap\Server;
 
 use Ali\Logistic\soap\Types\Customer;
+use Ali\Logistic\soap\Types\Deal;
 
 class ServerHandler
 {
@@ -99,15 +100,20 @@ class ServerHandler
 		$output_line = "\n".date("H:i d.m.Y",time())." Заявка: "."\n\n";
 		fwrite($output, $output_line);
 		
-		$ln = json_encode(json_decode(json_encode($deal),true));
+		$deal = json_decode(json_encode($deal),true); //array
+		$ln = json_encode($deal);
 		fwrite($output, $ln);
 		
 		fclose($output);
-
         $response = new \stdClass();
-        
-        $response->success = true;
-        $response->request = $deal;
+        $response->success = false;
+
+        if(isset($deal['uuid']) && !empty($deal['uuid']) && $deal['uuid'] != ""){
+        	$dealObject = new Deal($deal);
+        }else{
+        	$response->error = "emptyDealUuid";
+        }
+
 		return $response;
 	}
 

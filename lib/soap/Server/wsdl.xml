@@ -106,6 +106,7 @@
     
     		<xs:complexType name="route">
     			<xs:sequence>
+    				<xs:element name="uuid" type="xs:string"/>
     				<xs:element name="typeshipment" type="xs:boolean"/>
     				<xs:element name="datefrom" type="xs:dateTime"/>
     				<xs:element name="dateby" type="xs:dateTime"/>
@@ -119,6 +120,7 @@
     		
     		<xs:complexType name="costs">
     			<xs:sequence>
+    				<xs:element name="uuid" type="xs:string"/>
     				<xs:element name="servicetype" type="xs:string"/>
     				<xs:element name="cost" type="xs:float"/>
     				<xs:element name="quantity" type="xs:integer"/>

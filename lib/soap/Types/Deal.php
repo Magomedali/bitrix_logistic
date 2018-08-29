@@ -3,10 +3,15 @@
 namespace Ali\Logistic\soap\Types;
 
 use Ali\Logistic\Dictionary\ContractorsType;
+use Ali\Logistic\Schemas\DealsSchemaTable;
 use Ali\Logistic\Schemas\ContractorsSchemaTable;
 use Ali\Logistic\soap\Types\Route;
 use Ali\Logistic\soap\Types\DealCost;
-
+use Ali\Logistic\Dictionary\WayOfTransportation;
+use Ali\Logistic\Dictionary\DealStates;
+use Bitrix\Main\Type\DateTime;
+use Bitrix\Main\Result;
+use Bitrix\Main\Error;
 
 class Deal 
 {
@@ -90,16 +95,52 @@ class Deal
     	$data['INTEGRATED_ID']=$this->uuid;
     	
         $data['NAME']=$this->namecargo;
+        $data['DOCUMENT_NUMBER']=$this->number;
+
         
-    	$data['LEGAL_ADDRESS']=$this->address;
-    	$data['ENTITY_TYPE']=ContractorsType::getCode($this->type);
-    	$data['INN']=$this->inn;
-    	$data['KPP']=$this->kpp;
-    	$data['OGRN']=$this->ogrn;
-    	$data['BANK_BIK']=$this->bik;
-    	$data['BANK_NAME']=$this->namebank;
-    	$data['CHECKING_ACCOUNT']=$this->bankaccount;
-    	$data['CORRESPONDENT_ACCOUNT']=$this->corraccount;
+
+    	$data['WEIGHT']=$this->weight;
+    	$data['SPACE']=$this->size;
+
+    	$data['WIDTH']=$this->width;
+    	$data['HEIGHT']=$this->height;
+    	$data['LENGTH']=$this->length;
+
+    	$data['TYPE_OF_VEHICLE']= is_array($this->ts) ? implode(";", $this->ts) : $this->ts;
+    	$data['LOADING_METHOD']=is_array($this->method) ? implode(";", $this->method) : $this->method;
+
+    	$data['WAY_OF_TRANSPORTATION'] = WayOfTransportation::DEDICATED_TRANSPORT;
+    	$data['REQUIRES_LOADER'] = boolval($this->countloaders);
+        $data['COUNT_LOADERS'] = $this->countloaders;
+        $data['COUNT_HOURS'] = $this->quantityofhours;
+        $data['REQUIRES_INSURANCE'] = boolval($this->insurance);
+        $data['REQUIRES_TEMPERATURE_FROM'] = $this->temperaturefrom;
+        $data['REQUIRES_TEMPERATURE_TO'] = $this->temperatureto;
+
+        $data['SUPPORT_REQUIRED'] = boolval($this->escort);
+        $data['ADDITIONAL_EQUIPMENT'] = is_array($this->additionalequipment) ? implode(";", $this->additionalequipment) : $this->additionalequipment;
+        $data['REQUIRED_DOCUMENTS'] = is_array($this->documentation) ? implode(";", $this->documentation) : $this->documentation;
+        $data['WITH_NDS'] = boolval($this->nds);
+
+        $data['STATE'] = DealStates::getCode($this->status);
+        $data['CREATED_AT'] = DateTime::createFromTimestamp(strtotime($this->datedoc));
+
+
+        //Определяем контрагента
+
+
+
+        $data['COMPANY_ID'];
+        $data['CONTRACTOR_ID'];
+        $contr = ContractorsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$this->uuidcustomer)));
+
+        if(!isset($contr['ID']) || empty($contr['ID']) || $contr['ID']=''){
+            $res = new Result();
+            $res->addError(new Error("Контрагент с uuid ".$this->uuidcustomer." не найден!",1));
+        }
+
+
+        $data['CONTRACTOR_ID'] = $contr['ID'];
 
     	$row = DealsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$this->uuid)));
 
