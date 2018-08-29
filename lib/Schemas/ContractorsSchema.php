@@ -167,10 +167,13 @@ class ContractorsSchemaTable extends Entity\DataManager
                                 return "Неправильный формат ИНН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
                             }
 
-                            $state = \Ali\Logistic\soap\clients\CheckINN::check($value);
-                            if(!$state['success']){
-                                return $state['msg'];
+                            if(!isset($row['INTEGRATED_ID']) && empty($row['INTEGRATED_ID']) && $row['INTEGRATED_ID'] == ''){
+                                $state = \Ali\Logistic\soap\clients\CheckINN::check($value);
+                                if(!$state['success']){
+                                    return $state['msg'];
+                                }
                             }
+                                
 
                             return true;
                         },
@@ -197,20 +200,23 @@ class ContractorsSchemaTable extends Entity\DataManager
                         function($value,$primary,$row,$field){
                             $validLeng = 9;
                             $len = strlen($value);
-                            $type = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::IP;
+                            if($len){
+                                $type = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::IP;
                             
-                            if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::IP && $len > 0){
-                                return "У ИП должен отсутствовать код КПП";
-                            }
+                                if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::IP && $len > 0){
+                                    return "У ИП должен отсутствовать код КПП";
+                                }
 
-                            if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL && $len != $validLeng){
-                                return "Код КПП должен состоять из ".$validLeng." цифр";
-                            }
+                                if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL && $len != $validLeng){
+                                    return "Код КПП должен состоять из ".$validLeng." цифр";
+                                }
 
-                            if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL){
-                                //Для юр лиц обязателен и должен быть уникальным
-                                //$field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким КПП зарегистрирован на сайте'));
+                                if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL){
+                                    //Для юр лиц обязателен и должен быть уникальным
+                                    //$field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким КПП зарегистрирован на сайте'));
+                                }
                             }
+                            
 
                             return true;
                         }
@@ -234,15 +240,19 @@ class ContractorsSchemaTable extends Entity\DataManager
                     return array(
                         function($value,$primary,$row,$field){
                             $length = strlen($value);
-                            $validLeng = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::IP ? 15 : 13; 
-                            if($length != $validLeng){
-                                $msg = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL ? "Юр.лицо" : "ИП";
-                                return "Неправильный формат ОГРН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
+                            if($length){
+                                $validLeng = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::IP ? 15 : 13; 
+                                if($length != $validLeng){
+                                    $msg = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL ? "Юр.лицо" : "ИП";
+                                    return "Неправильный формат ОГРН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
+                                }
+
+                                $field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким OGRN зарегистрирован на сайте'));
                             }
+                            
 
                             return true;
                         },
-                        new Entity\Validator\Unique('Организация с таким OGRN зарегистрирован на сайте'),
                     );
                 },
                 'save_data_modification'=>function(){

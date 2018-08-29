@@ -1,0 +1,4 @@
+
+08:38 29.08.2018 Контрагенты: 
+
+{"customers":[{"uuid":"a56ebe9c-a652-11e8-9c9d-58f184a472dd","inn":"7725826872","kpp":null,"name":"\u043f\u043e soap2","type":"\u044e\u0440\u043b\u0438\u0446\u043e","address":"asdasd","ogrn":null,"bik":null,"namebank":null,"bankaccount":null,"corraccount":null,"namecontact":null,"email":null,"numberphone":null},{"uuid":"a56ebe9c-a652-11e8-9c9d-58f184a472dqw","inn":"7777777777","kpp":null,"name":"\u043f\u043e soap2","type":"\u044e\u0440\u043b\u0438\u0446\u043e","address":"asdasd","ogrn":null,"bik":null,"namebank":null,"bankaccount":null,"corraccount":null,"namecontact":null,"email":null,"numberphone":null}]}D:/OpenServer/OpenServer/domains/localhost/rus/bitrix/modules/ali.logistic/lib/soap/Server/output/

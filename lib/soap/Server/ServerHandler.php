@@ -17,31 +17,6 @@ class ServerHandler
 	}
 
 
-
-	// public function sendContractors($data){
-        
-	// 	$log = $this->log_path."sendContractors.txt";
-	// 	$output = fopen($log, "w");
-
-	// 	$output_line = "\n".date("H:i d.m.Y",time())." Контрагенты: "."\n\n";
-	// 	fwrite($output, $output_line);
-		
-	// 	$ln = json_encode(json_decode(json_encode($data),true));
-	// 	fwrite($output, $ln);
-		
-	// 	fwrite($output, ALI_LOG_PATH);
-		
-		
-	// 	fclose($output);
-
- //        $response = new \stdClass();
-        
- //        $response->success = true;
- //        $response->error = count($data->customers->Struct);
-	// 	return $response;
-	// }
-
-
 	public function sendContractors($data){
         
 		$log = $this->log_path."sendContractors.txt";
@@ -60,19 +35,43 @@ class ServerHandler
 		$response = new \stdClass();
 		$response->success = false;
 		if(isset($contrs['customers']) && is_array($contrs['customers']) && count($contrs['customers'])){
-			$c = new Customer($contrs['customers']);
+			if(!isset($contrs['customers']['uuid'])){
+				foreach ($contrs['customers'] as $c_data) {
+					$c = new Customer($c_data);
 
-			if(!empty($c->uuid) && $c->uuid != ''){
-				$res = $c->save();
-				if($res->isSuccess()){
-					$response->success = true;
-				}else{
-					$response->error = "saveError";
-					$response->errorMessages = $res->getErrorMessages();
+					if(!empty($c->uuid) && $c->uuid != ''){
+						$res = $c->save();
+						if($res->isSuccess()){
+							$response->success = true;
+							$response->error = "";
+							$response->errorMessages = "";
+						}else{
+							$response->success = false;
+							$response->error = "saveError";
+							$response->errorMessages = $res->getErrorMessages();
+							break;
+						}
+					}else{
+						$response->error = "emptyCustomer";
+					}
 				}
 			}else{
-				$response->error = "emptyCustomer";
+				$c = new Customer($contrs['customers']);
+
+				if(!empty($c->uuid) && $c->uuid != ''){
+					$res = $c->save();
+					if($res->isSuccess()){
+						$response->success = true;
+					}else{
+						$response->error = "saveError";
+						$response->errorMessages = $res->getErrorMessages();
+					}
+				}else{
+					$response->error = "emptyCustomer";
+				}
 			}
+
+			
 		}else{
 			$response->error = "emptyCustomer";
 		}
