@@ -13,7 +13,7 @@ use Ali\Logistic\Dictionary\TypeOfVehicle;
 use Ali\Logistic\Dictionary\LoadingMethod;
 use Ali\Logistic\Dictionary\AdditionalEquipment;
 use Ali\Logistic\Dictionary\Documents;
-
+use Ali\Logistic\helpers\ArrayHelper;
 
 class Deals{
 
@@ -92,8 +92,8 @@ class Deals{
     public static function getDeals($id = null,$parameters = array()){
         global $USER;
         
-        $company_id = Companies::getCurrentUserCompany();
-        if(!$company_id){
+        $contractors = User::getCurrentUserIntegratedContractors();
+        if(empty($contractors) || is_array($contractors) || !count($contractors)){
 
             //Проверка на присоединение к компании в таблице ali_logistic_company_employee
             return array();
@@ -104,7 +104,8 @@ class Deals{
         );
         $params = array_merge($local_params,$parameters);
         
-        $params['filter']['COMPANY_ID']=$company_id;
+        $contractors = ArrayHelper::map($contractors,['ID','ID']);
+        $params['filter']['CONTRACTOR_ID'] = $contractors;
         
         if($id){
             

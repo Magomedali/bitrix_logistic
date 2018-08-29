@@ -3,6 +3,7 @@ namespace Ali\Logistic\soap\Server;
 
 use Ali\Logistic\soap\Types\Customer;
 use Ali\Logistic\soap\Types\Deal;
+use Ali\Logistic\soap\Types\Route;
 
 class ServerHandler
 {
@@ -110,6 +111,51 @@ class ServerHandler
 
         if(isset($deal['uuid']) && !empty($deal['uuid']) && $deal['uuid'] != ""){
         	$dealObject = new Deal($deal);
+
+        	$res = $dealObject->save();
+        	if(!$res->isSuccess() || !$res->getId()){
+        		$response->error = "saveDealError";
+				$response->errorMessages = $res->getErrorMessages();
+        	}else{
+        		$deal_id = $res->getId();
+        		$response->success = true;
+        		
+        		if($deal_id && is_array($dealObject->routes) && count($dealObject->routes)){
+        			
+        			Route::deleteDealRoutes($deal_id);
+
+        			foreach ($dealObject->routes as $r) {
+        				$route = new Route($r,$deal_id);
+        				$res = $route->save();
+
+        				if(!$res->isSuccess()){
+        					$response->success = false;
+							$response->error = "saveRouteError";
+							$response->errorMessages = $res->getErrorMessages();
+							break;
+        				}
+        			}
+        		}
+
+
+        		if($deal_id && is_array($dealObject->costs) && count($dealObject->costs)){
+        			
+        			Costs::deleteDealCosts($deal_id);
+
+        			foreach ($dealObject->costs as $c) {
+        				$cost = new Costs($c,$deal_id);
+        				$res = $cost->save();
+
+        				if(!$res->isSuccess()){
+        					$response->success = false;
+							$response->error = "saveCostError";
+							$response->errorMessages = $res->getErrorMessages();
+							break;
+        				}
+        			}
+        		}
+        		
+        	}
         }else{
         	$response->error = "emptyDealUuid";
         }

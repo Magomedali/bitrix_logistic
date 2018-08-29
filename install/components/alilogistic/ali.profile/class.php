@@ -396,14 +396,13 @@ class AliProfile extends CBitrixComponent
             }
             $deal = array_merge($deal,$request['DEAL']);
 
-            $contrs_company = ArrayHelper::map($contractors,'ID','COMPANY_ID');
+            
             $contrs_uuids = ArrayHelper::map($contractors,'ID','INTEGRATED_ID');
 
-            if(!isset($deal['CONTRACTOR_ID']) || !array_key_exists($deal['CONTRACTOR_ID'], $contrs_company)){
+            if(!isset($deal['CONTRACTOR_ID']) || !array_key_exists($deal['CONTRACTOR_ID'], $contrs_uuids)){
                 LocalRedirect($this->getUrl());
             }
 
-            $deal['COMPANY_ID'] = $contrs_company[$deal['CONTRACTOR_ID']];
             $user_id = CUser::GetID();
             $deal['OWNER_ID'] = $user_id;
             $deal['IS_DRAFT'] = isset($request['how_draft']);

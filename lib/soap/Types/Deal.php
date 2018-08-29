@@ -47,7 +47,7 @@ class Deal
     function __construct($data)
     {
         $this->uuid = isset($data['uuid']) ? $data['uuid'] : null;
-        $this->number = isset($data['number']) ? $data['number'] : "228359172612048";
+        $this->number = isset($data['number']) ? $data['number'] : null;
         $this->datedoc = $data['datedoc'];
         $this->uuidcustomer = $data['uuidcustomer'];
         $this->namecargo = $data['namecargo'];
@@ -130,15 +130,14 @@ class Deal
 
 
 
-        $data['COMPANY_ID'];
-        $data['CONTRACTOR_ID'];
+        
         $contr = ContractorsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$this->uuidcustomer)));
 
         if(!isset($contr['ID']) || empty($contr['ID']) || $contr['ID']=''){
             $res = new Result();
             $res->addError(new Error("Контрагент с uuid ".$this->uuidcustomer." не найден!",1));
+            return $res;
         }
-
 
         $data['CONTRACTOR_ID'] = $contr['ID'];
 
@@ -152,6 +151,11 @@ class Deal
 
     	return $res;
     }
+
+
+
+
+
 
 }
 ?>
