@@ -4,7 +4,16 @@ define("ALI_MODULE_NAME","ali.logistic");
 define("ALI_COMPONENTS_NS","alilogistic");
 
 define("ALI_FILE_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/");
-define("ALI_LOG_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/lib/soap/Server/output/");
+
+define("ALI_FILE_BILLS_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/bills/");
+define("ALI_FILE_INVOICES_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/invoices/");
+define("ALI_FILE_ACTS_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/acts/");
+define("ALI_FILE_CONTRACTS_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/contracts/");
+define("ALI_FILE_DRIVER_ATTORNEY_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/driver_attorney/");
+define("ALI_FILE_PRINT_FORM_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/print_form/");
+
+
+define("ALI_LOG_SOAP_SERVER_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/lib/soap/Server/output/");
 
 //Количество сообщении на страницу(на загрузку)
 define("MESSAGE_LIMIT", 15);

@@ -97,7 +97,7 @@
     				<xs:element name="height" type="xs:float" nillable="true"/>
     				<xs:element name="method" type="xs:string" nillable="true"/>
     				<xs:element name="routes" type="tns:route" minOccurs="0" maxOccurs="unbounded"/>
-    				<xs:element name="costs" type="tns:route" minOccurs="0" maxOccurs="unbounded"/>
+    				<xs:element name="costs" type="tns:cost" minOccurs="0" maxOccurs="unbounded"/>
     				<xs:element name="driver" type="xs:string" nillable="true"/>
     				<xs:element name="vehicle" type="xs:string" nillable="true"/>
     				<xs:element name="status" type="xs:string"/>
@@ -106,7 +106,7 @@
     
     		<xs:complexType name="route">
     			<xs:sequence>
-    				<xs:element name="uuid" type="xs:string"/>
+    				<xs:element name="uuid" type="xs:string" nillable="true"/>
     				<xs:element name="typeshipment" type="xs:boolean"/>
     				<xs:element name="datefrom" type="xs:dateTime"/>
     				<xs:element name="dateby" type="xs:dateTime"/>
@@ -118,9 +118,9 @@
     			</xs:sequence>
     		</xs:complexType>
     		
-    		<xs:complexType name="costs">
+    		<xs:complexType name="cost">
     			<xs:sequence>
-    				<xs:element name="uuid" type="xs:string"/>
+    				<xs:element name="uuid" type="xs:string" nillable="true"/>
     				<xs:element name="servicetype" type="xs:string"/>
     				<xs:element name="cost" type="xs:float"/>
     				<xs:element name="quantity" type="xs:integer"/>
@@ -186,6 +186,12 @@
     		<xs:element name="sendFileBillRequest" type="xs4:fileRequest"/>
 			
     		<xs:element name="sendFileBillResponse" type="xs1:response"/>
+
+
+
+    		<xs:element name="sendFileRequest" type="xs4:fileRequest"/>
+			
+    		<xs:element name="sendFileResponse" type="xs1:response"/>
     		
 			
 		</xs:schema>
@@ -215,6 +221,14 @@
     	<part name="parameters" element="tns:sendFileBillResponse"/>
     </message>
 
+    <message name="sendFileRequestMsg">
+    	<part name="parameters" element="tns:sendFileRequest"/>
+    </message>
+    
+    <message name="sendFileResponseMsg">
+    	<part name="parameters" element="tns:sendFileResponse"/>
+    </message>
+
 	<portType name="rusexeditorPortType">
 		<operation name="sendContractors">
 			<input message="tns:sendContractorsRequestMsg"/>
@@ -229,6 +243,31 @@
 		<operation name="sendFileBill">
 			<input message="tns:sendFileBillRequestMsg"/>
 			<output message="tns:sendFileBillResponseMsg"/>
+		</operation>
+
+		<operation name="sendFileAct">
+			<input message="tns:sendFileRequestMsg"/>
+			<output message="tns:sendFileResponseMsg"/>
+		</operation>
+
+		<operation name="sendFileInvoice">
+			<input message="tns:sendFileRequestMsg"/>
+			<output message="tns:sendFileResponseMsg"/>
+		</operation>
+
+		<operation name="sendFileContract">
+			<input message="tns:sendFileRequestMsg"/>
+			<output message="tns:sendFileResponseMsg"/>
+		</operation>
+
+		<operation name="sendFileDriverAttorney">
+			<input message="tns:sendFileRequestMsg"/>
+			<output message="tns:sendFileResponseMsg"/>
+		</operation>
+
+		<operation name="sendFilePrintForm">
+			<input message="tns:sendFileRequestMsg"/>
+			<output message="tns:sendFileResponseMsg"/>
 		</operation>
 	</portType>
 	
@@ -265,6 +304,55 @@
 			</output>
 		</operation>
 		
+		<operation name="sendFileAct">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileInvoice">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileContract">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileDriverAttorney">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFilePrintForm">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
 	</binding>
 	
 	<binding name="rusexeditorSoap12Binding"
@@ -292,6 +380,56 @@
 		</operation>
 		
 		<operation name="sendFileBill">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileAct">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileInvoice">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileContract">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileDriverAttorney">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFilePrintForm">
 			<soap12bind:operation style="document" soapAction=""/>
 			<input>
 				<soap12bind:body use="literal"/>

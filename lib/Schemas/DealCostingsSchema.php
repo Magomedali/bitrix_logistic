@@ -25,7 +25,19 @@ class DealCostingsSchemaTable extends Entity\DataManager
                 'autocomplete' => true
             )),
             
-            new Entity\StringField('INTEGRATED_ID'),
+            new Entity\StringField('INTEGRATED_ID',array(
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : '';
+                        }
+                    );
+                }
+            )),
 
             new Entity\IntegerField('DEAL_ID'),
 
@@ -51,6 +63,19 @@ class DealCostingsSchemaTable extends Entity\DataManager
 
             new Entity\FloatField('COST',array(
                 'title'=>'Цена',
+                'default_value'=>function(){
+                    return 0;
+                },
+                'required'=>true,
+                'validation'=>function(){
+                    return array(
+                        function($v,$pr,$row,$f){
+                            
+
+                            return true;
+                        }
+                    );
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){

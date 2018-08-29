@@ -17,7 +17,7 @@ class Route
 	public $uuid;
 	public $typeshipment;
 	public $datefrom;
-	public $timeby;
+	public $dateby;
 	public $location;
 	public $shipper;
 	public $contactname;
@@ -29,17 +29,21 @@ class Route
 	{
 		$this->typeshipment = $route['typeshipment'];
 		$this->datefrom = $route['datefrom'];
-		$this->timeby = $route['timeby'];
+		$this->dateby = $route['dateby'];
 		$this->location = $route['location'];
 		$this->shipper = $route['shipper'];
 		$this->contactname = $route['contactname'];
 		$this->numberphone = $route['numberphone'];
 		$this->comment = $route['comment'];
+		
+		$this->uuid = isset($route['uuid']) ? $route['uuid'] : null;
 
 		$this->deal_id = $deal_id ? $deal_id : null;
 	}
 
-
+	public function setDealId($deal_id){
+		$this->deal_id = $deal_id ? $deal_id : null;
+	}
 	
 	public static function deleteDealRoutes($deal_id){
 		if($deal_id){
@@ -63,9 +67,9 @@ class Route
 		$data['IS_INTEGRATED']=true;
     	$data['INTEGRATED_ID']=$this->uuid;
     	
-        $data['KIND'] = RoutesKind::getCode($this->typeshipment);
+        $data['KIND'] = boolval($this->typeshipment) ? RoutesKind::LOADING : RoutesKind::UNLOADING;
         $data['START_AT']=DateTime::createFromTimestamp(strtotime($this->datefrom));
-    	$data['FINISH_AT']=DateTime::createFromTimestamp(strtotime($this->timeby));
+    	$data['FINISH_AT']=DateTime::createFromTimestamp(strtotime($this->dateby));
 
     	$data['ADDRESS'] = $this->location;
     	$data['COMMENT'] = $this->comment;
@@ -74,7 +78,15 @@ class Route
     	$data['PHONE'] = $this->numberphone;
     	$data['DEAL_ID'] = $this->deal_id;
 
-
-    	return RoutesSchemaTable::add($data);
+    	try {
+    		$res = RoutesSchemaTable::add($data);
+            return $res;
+        
+        } catch (\Exception $e) {
+            $res = new Result();
+            $res->addError(new Error($e->getMessage(),$e->getCode()));
+            return $res;
+        }
+    	
 	}
 }

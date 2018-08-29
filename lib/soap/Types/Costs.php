@@ -32,6 +32,10 @@ class Costs
 	}
 
 
+	public function setDealId($deal_id){
+		$this->deal_id = $deal_id ? $deal_id : null;
+	}
+
 	
 	public static function deleteDealCosts($deal_id){
 		if($deal_id){
@@ -61,7 +65,15 @@ class Costs
     	$data['QUANTITY'] = $this->quantity;
     	$data['AMOUNT'] = $this->sum;
 
-
-    	return DealCostingsSchemaTable::add($data);
+    	try {
+    		$res = DealCostingsSchemaTable::add($data);
+            return $res;
+        
+        } catch (\Exception $e) {
+            $res = new Result();
+            $res->addError(new Error($e->getMessage(),$e->getCode()));
+            return $res;
+        }
+    	
 	}
 }

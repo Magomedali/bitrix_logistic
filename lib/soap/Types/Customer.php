@@ -61,13 +61,21 @@ class Customer
 
     	$row = ContractorsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$this->uuid)));
 
-    	if(is_array($row) && isset($row['ID']) && (int)$row['ID']){
-    		$res = ContractorsSchemaTable::update((int)$row['ID'],$data);
-    	}else{
-    		$res = ContractorsSchemaTable::add($data);
-    	}
+        try {
+            if(is_array($row) && isset($row['ID']) && (int)$row['ID']){
+                $res = ContractorsSchemaTable::update((int)$row['ID'],$data);
+            }else{
+                $res = ContractorsSchemaTable::add($data);
+            }
+            return $res;
+        } catch (\Exception $e) {
+            $res = new Result();
+            $res->addError(new Error($e->getMessage(),$e->getCode()));
+            return $res;
+        }
+    	
 
-    	return $res;
+    	
     }
 
 }

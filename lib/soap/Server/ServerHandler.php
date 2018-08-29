@@ -4,6 +4,7 @@ namespace Ali\Logistic\soap\Server;
 use Ali\Logistic\soap\Types\Customer;
 use Ali\Logistic\soap\Types\Deal;
 use Ali\Logistic\soap\Types\Route;
+use Ali\Logistic\soap\Types\Costs;
 
 class ServerHandler
 {
@@ -14,7 +15,7 @@ class ServerHandler
 
 	public function __construct(){
 
-		$this->log_path = ALI_LOG_PATH;
+		$this->log_path = ALI_LOG_SOAP_SERVER_PATH;
 		$this->file_path = $this->log_path."/files/";
 	}
 
@@ -30,8 +31,6 @@ class ServerHandler
 		$contrs = json_decode(json_encode($data),true); //array
 		$ln = json_encode($contrs);
 		fwrite($output, $ln);
-		
-		fwrite($output, ALI_LOG_PATH);
 		
 		fclose($output);
 		$response = new \stdClass();
@@ -119,13 +118,19 @@ class ServerHandler
         	}else{
         		$deal_id = $res->getId();
         		$response->success = true;
-        		
+
         		if($deal_id && is_array($dealObject->routes) && count($dealObject->routes)){
         			
         			Route::deleteDealRoutes($deal_id);
 
         			foreach ($dealObject->routes as $r) {
-        				$route = new Route($r,$deal_id);
+        				if($r instanceof Route){
+        					$r->setDealId($deal_id);
+        					$route = $r;
+        				}else{
+        					$route = new Route($r,$deal_id);
+        				}
+
         				$res = $route->save();
 
         				if(!$res->isSuccess()){
@@ -143,7 +148,13 @@ class ServerHandler
         			Costs::deleteDealCosts($deal_id);
 
         			foreach ($dealObject->costs as $c) {
-        				$cost = new Costs($c,$deal_id);
+        				if($c instanceof Costs){
+        					$c->setDealId($deal_id);
+        					$cost = $c;
+        				}else{
+        					$cost = new Costs($c,$deal_id);
+        				}
+
         				$res = $cost->save();
 
         				if(!$res->isSuccess()){
@@ -190,12 +201,22 @@ class ServerHandler
 		fwrite($pdf, $data->binaryFile);
 
 		fclose($pdf);
-		
-		$success = file_exists($path_file);
+		//-----------------------//
+		$uuid = $data->dealUuid;
+		$fileNumber = $data->fileNumber;
+		$response = new \stdClass();
 
-        $response = new \stdClass();
-        $response->success = $success;
-        $response->error = $success ? "Файл загружен" : "Файл не загружен";
+		$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+		
+		if(!$res->isSuccess()){
+			$response->success = false;
+			$response->error = "errorSendFileBill";
+			$response->errorMessages = $res->getErrorMessages();
+		}else{
+			$response->success = true;
+		}
+
+        
 		return $response;
 	}
 }

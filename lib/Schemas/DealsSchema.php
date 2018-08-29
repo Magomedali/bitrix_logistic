@@ -197,6 +197,13 @@ class DealsSchemaTable extends Entity\DataManager{
                             return true;
                         }
                     );
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : "";
+                        }
+                    );
                 }
             )),
 
@@ -219,13 +226,20 @@ class DealsSchemaTable extends Entity\DataManager{
                             return true;
                         }
                     );
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : "";
+                        }
+                    );
                 }
             )),
 
 
             new Entity\IntegerField('WAY_OF_TRANSPORTATION',array(
                 'title'=>'Способ перевозки',
-                'required'=>true,
+                'required'=>false,
                 'default_value'=>function(){
                     return 0;
                 },
@@ -305,6 +319,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\TextField('ADDITIONAL_EQUIPMENT',array(
                 'title'=>'Требуются дополнительные оборудования',
+                'required'=>false,
                 'default_value'=>function(){
                     return "";
                 },
@@ -320,6 +335,13 @@ class DealsSchemaTable extends Entity\DataManager{
                             return true;
                         }
                     );
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : "";
+                        }
+                    );
                 }
             )),
 
@@ -328,8 +350,9 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\TextField('REQUIRED_DOCUMENTS',array(
                 'title'=>'Требуется документы',
+                'required'=>false,
                 'default_value'=>function(){
-                    return "";
+                    return false;
                 },
                 'validation'=>function(){
                     return array(
@@ -341,6 +364,13 @@ class DealsSchemaTable extends Entity\DataManager{
                             // }
 
                             return true;
+                        }
+                    );
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : "";
                         }
                     );
                 }
@@ -366,7 +396,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
                             $types = \Ali\Logistic\Dictionary\DealStates::getLabels();
                             if(array_key_exists($v, $types) == false){
-                                return "Недопустимое значение типа!";
+                                return "Недопустимое значение Статуса!";
                             }
 
                             return true;

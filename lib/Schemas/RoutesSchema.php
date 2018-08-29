@@ -32,7 +32,19 @@ class RoutesSchemaTable extends Entity\DataManager
                 }
             )),
             
-            new Entity\StringField('INTEGRATED_ID'),
+            new Entity\StringField('INTEGRATED_ID',array(
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : '';
+                        }
+                    );
+                }
+            )),
 
             new Entity\IntegerField('DEAL_ID'),
 
@@ -45,7 +57,7 @@ class RoutesSchemaTable extends Entity\DataManager
 
 
             new Entity\IntegerField('KIND',array(
-                'title'=>'Тип',
+                'title'=>'Тип маршрута',
                 'required'=>true,
                 'default_value'=>function(){
                     return \Ali\Logistic\Dictionary\RoutesKind::LOADING;
@@ -56,7 +68,7 @@ class RoutesSchemaTable extends Entity\DataManager
 
                             $types = \Ali\Logistic\Dictionary\RoutesKind::getLabels();
                             if(array_key_exists($v, $types) == false){
-                                return "Недопустимое значение типа!";
+                                return "Недопустимое значение 'Тип маршрута' ".$v.". Возможные значения(".implode(",", $types).")!";
                             }
 
                             return true;

@@ -36,13 +36,29 @@ class DealFilesSchemaTable extends Entity\DataManager
             ),
 
 
-            new Entity\StringField('INTEGRATED_ID'),
+            new Entity\StringField('INTEGRATED_ID',array(
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : '';
+                        }
+                    );
+                }
+            )),
+
+
+
+            new Entity\IntegerField('FILE_NUMBER'),
 
 
             new Entity\IntegerField('FILE_TYPE',array(
                 'title'=>'Тип файла',
                 'default_value'=>function(){
-                    return \Ali\Logistic\Dictionary\DealFileType::CREATED;
+                    return \Ali\Logistic\Dictionary\DealFileType::FILE_BILL;
                 },
                 'validation'=>function(){
                     return array(

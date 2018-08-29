@@ -6,7 +6,7 @@ use Ali\Logistic\Dictionary\ContractorsType;
 use Ali\Logistic\Schemas\DealsSchemaTable;
 use Ali\Logistic\Schemas\ContractorsSchemaTable;
 use Ali\Logistic\soap\Types\Route;
-use Ali\Logistic\soap\Types\DealCost;
+use Ali\Logistic\soap\Types\Costs;
 use Ali\Logistic\Dictionary\WayOfTransportation;
 use Ali\Logistic\Dictionary\DealStates;
 use Bitrix\Main\Type\DateTime;
@@ -74,14 +74,25 @@ class Deal
         $this->status = $data['status'];
 
         if(isset($data['routes']) && is_array($data['routes']) && count($data['routes'])){
-            foreach ($data['routes'] as $r) {
-                array_push($this->routes, new Route($r));
+            
+            if(isset($data['routes']['typeshipment'])){
+                $this->routes = array(new Route($data['routes']));
+            }else{
+                foreach ($data['routes'] as $r) {
+                    array_push($this->routes, new Route($r));
+                } 
             }
+
+            
         }
 
         if(isset($data['costs']) && is_array($data['costs']) && count($data['costs'])){
-            foreach ($data['costs'] as $c) {
-                array_push($this->routes, new DealCost($c));
+            if(isset($data['costs']['servicetype'])){
+                $this->costs = array(new Costs($data['costs']));
+            }else{
+                foreach ($data['costs'] as $c) {
+                    array_push($this->costs, new Costs($c));
+                }
             }
         }
     }
@@ -123,19 +134,17 @@ class Deal
         $data['WITH_NDS'] = boolval($this->nds);
 
         $data['STATE'] = DealStates::getCode($this->status);
+        
+        $data['IS_ACTIVE'] = true;
+        
         $data['CREATED_AT'] = DateTime::createFromTimestamp(strtotime($this->datedoc));
 
-
         //Определяем контрагента
-
-
-
-        
         $contr = ContractorsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$this->uuidcustomer)));
 
-        if(!isset($contr['ID']) || empty($contr['ID']) || $contr['ID']=''){
+        if(!isset($contr['ID']) || empty($contr['ID']) || $contr['ID'] == ''){
             $res = new Result();
-            $res->addError(new Error("Контрагент с uuid ".$this->uuidcustomer." не найден!",1));
+            $res->addError(new Error("Контрагент с uuid '".$this->uuidcustomer."' не найден!",1));
             return $res;
         }
 
@@ -143,17 +152,38 @@ class Deal
 
     	$row = DealsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$this->uuid)));
 
-    	if(is_array($row) && isset($row['ID']) && (int)$row['ID']){
-    		$res = DealsSchemaTable::update((int)$row['ID'],$data);
-    	}else{
-    		$res = DealsSchemaTable::add($data);
-    	}
+    	
+        try {
+            if(is_array($row) && isset($row['ID']) && (int)$row['ID']){
+                $res = DealsSchemaTable::update((int)$row['ID'],$data);
+            }else{
+                $res = DealsSchemaTable::add($data);
+            }
+            
+            return $res;
 
-    	return $res;
+        } catch (\Exception $e) {
+            $res = new Result();
+            $res->addError(new Error($e->getMessage(),$e->getCode()));
+            return $res;
+        }
     }
 
 
 
+
+    public static function saveFileBill($dealUuid,$fNumber,$file){
+
+
+        $row = DealsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$dealUuid)));
+        if(!isset($row['ID']) || empty($row['ID']) || $row['ID'] == ''){
+            $res = new Result();
+            $res->addError(new Error("Заявка не найдена",1));
+            return $res;
+        }
+
+        return \Ali\Logistic\DealFiles::saveFileBill($row['ID'],$fNumber,$file);
+    }
 
 
 
