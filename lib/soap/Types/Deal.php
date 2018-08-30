@@ -32,6 +32,7 @@ class Deal
     public $temperaturefrom;
     public $temperatureto;
     public $additionalequipment;
+    public $wayoftransportation;
     public $escort;
     public $documentation;
     public $size;
@@ -62,6 +63,7 @@ class Deal
         $this->temperaturefrom = $data['temperaturefrom'];
         $this->temperatureto = $data['temperatureto'];
         $this->additionalequipment = $data['additionalequipment'];
+        $this->wayoftransportation = $data['wayoftransportation'];
         $this->escort = $data['escort'];
         $this->documentation = $data['documentation'];
         $this->size = $data['size'];
@@ -120,7 +122,7 @@ class Deal
     	$data['TYPE_OF_VEHICLE']= is_array($this->ts) ? implode(";", $this->ts) : $this->ts;
     	$data['LOADING_METHOD']=is_array($this->method) ? implode(";", $this->method) : $this->method;
 
-    	$data['WAY_OF_TRANSPORTATION'] = WayOfTransportation::DEDICATED_TRANSPORT;
+    	$data['WAY_OF_TRANSPORTATION'] = WayOfTransportation::getCode($this->wayoftransportation);
     	$data['REQUIRES_LOADER'] = boolval($this->countloaders);
         $data['COUNT_LOADERS'] = $this->countloaders;
         $data['COUNT_HOURS'] = $this->quantityofhours;
@@ -172,17 +174,72 @@ class Deal
 
 
 
-    public static function saveFileBill($dealUuid,$fNumber,$file){
 
-
+    public static function checkDealExists($dealUuid){
+        $res = new Result();
         $row = DealsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$dealUuid)));
         if(!isset($row['ID']) || empty($row['ID']) || $row['ID'] == ''){
-            $res = new Result();
             $res->addError(new Error("Заявка не найдена",1));
-            return $res;
         }
+        return $res;
+    } 
 
+
+
+    public static function saveFileBill($dealUuid,$fNumber,$file){
+        $res = self::checkDealExists($dealUuid);
+        if(!$res->isSuccess()) return $res;
         return \Ali\Logistic\DealFiles::saveFileBill($row['ID'],$fNumber,$file);
+    }
+
+
+
+
+    public static function saveFileAct($dealUuid,$fNumber,$file){
+        $res = self::checkDealExists($dealUuid);
+        if(!$res->isSuccess()) return $res;
+
+        return \Ali\Logistic\DealFiles::saveFileAct($row['ID'],$fNumber,$file);
+    }
+
+
+
+
+    public static function sendFileInvoice($dealUuid,$fNumber,$file){
+        $res = self::checkDealExists($dealUuid);
+        if(!$res->isSuccess()) return $res;
+
+        return \Ali\Logistic\DealFiles::sendFileInvoice($row['ID'],$fNumber,$file);
+    }
+
+
+
+
+    public static function sendFileContract($dealUuid,$fNumber,$file){
+        $res = self::checkDealExists($dealUuid);
+        if(!$res->isSuccess()) return $res;
+
+        return \Ali\Logistic\DealFiles::sendFileContract($row['ID'],$fNumber,$file);
+    }
+
+
+
+
+    public static function sendFileDriverAttorney($dealUuid,$fNumber,$file){
+        $res = self::checkDealExists($dealUuid);
+        if(!$res->isSuccess()) return $res;
+
+        return \Ali\Logistic\DealFiles::sendFileDriverAttorney($row['ID'],$fNumber,$file);
+    }
+
+
+
+
+    public static function sendFilePrintForm($dealUuid,$fNumber,$file){
+        $res = self::checkDealExists($dealUuid);
+        if(!$res->isSuccess()) return $res;
+
+        return \Ali\Logistic\DealFiles::sendFilePrintForm($row['ID'],$fNumber,$file);
     }
 
 

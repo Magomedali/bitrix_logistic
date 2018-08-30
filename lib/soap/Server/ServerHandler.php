@@ -6,6 +6,9 @@ use Ali\Logistic\soap\Types\Deal;
 use Ali\Logistic\soap\Types\Route;
 use Ali\Logistic\soap\Types\Costs;
 
+use Bitrix\Main\Result;
+use Bitrix\Main\Error;
+
 class ServerHandler
 {
 	public $log_path = "output/";
@@ -180,10 +183,7 @@ class ServerHandler
 
 
 
-
-
-
-	public function sendFileBill($data){
+	public function integrateFile($data,$type){
 		$log = $this->log_path."sendFileBill.txt";
 		$output = fopen($log, "w");
 
@@ -206,7 +206,32 @@ class ServerHandler
 		$fileNumber = $data->fileNumber;
 		$response = new \stdClass();
 
-		$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+		switch ($type) {
+			case 1:
+				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				break;
+			case 2:
+				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				break;
+			case 3:
+				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				break;
+			case 4:
+				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				break;
+			case 5:
+				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				break;
+			case 6:
+				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				break;
+			
+			default:
+				$res = new Result();
+	            $res->addError(new Error("Неправильный тип файла",1));
+				break;
+		}
+		
 		
 		if(!$res->isSuccess()){
 			$response->success = false;
@@ -215,9 +240,33 @@ class ServerHandler
 		}else{
 			$response->success = true;
 		}
-
         
 		return $response;
+	}
+
+
+	public function sendFileBill($data){
+		return $this->integrateFile($data,1);
+	}
+
+	public function sendFileAct($data){
+		return $this->integrateFile($data,2);
+	}
+
+	public function sendFileInvoice($data){
+		return $this->integrateFile($data,3);
+	}
+
+	public function sendFileContract($data){
+		return $this->integrateFile($data,4);
+	}
+
+	public function sendFileDriverAttorney($data){
+		return $this->integrateFile($data,5);
+	}
+
+	public function sendFilePrintForm($data){
+		return $this->integrateFile($data,6);
 	}
 }
 ?>
