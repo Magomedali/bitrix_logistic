@@ -20,7 +20,7 @@ if($request->isPost() && isset($request['startload'])){
 	$log = Contractors1C::loadContractors();
 
 	if(!is_array($log)){
-		$errors = "Cервису 1С не отвечает";
+		$errors = "Cервис 1С не отвечает";
 	}
 }
 

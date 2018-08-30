@@ -46,7 +46,7 @@ class Contractors1C extends Client1C
 
 				return $res->isSuccess();
 			}else{
-				$res = ContractorsSchemaTable::update($params['ID'],['INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$integrator->error_msg]);
+				$res = ContractorsSchemaTable::update($data['ID'],['INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$integrator->error_msg]);
 
 				return $res->isSuccess();
 			}
@@ -111,7 +111,7 @@ class Contractors1C extends Client1C
 				if($res->isSuccess()){
 					$log['success_log'][] = $c_data['name']." - ".$c_data['inn'];
 				}else{
-					$log['error_log'][] = $c_data['name']." - ".$c_data['inn'];
+					$log['error_log'][] = $c_data['name']." - ".$c_data['inn']."Ошибки:[".implode(", ", $res->getErrorMessages());
 				}
 			}
 		}
