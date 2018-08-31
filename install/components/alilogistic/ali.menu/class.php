@@ -17,14 +17,14 @@ class AliMenu extends CBitrixComponent
 	public $menu_items = array(
 		array(
 		    "Личный кабинет",
-		    "/personal/",
+		    "/alk/",
 		    array(),
 		    "",
 		    ""
 		),
         array(
             "Мои организации",
-            "/personal/index.php?r=organisations",
+            "/alk/index.php?r=organisations",
             array(),
             "",
             ""
@@ -35,42 +35,42 @@ class AliMenu extends CBitrixComponent
     public $protected_menu = array(
         array(
             "Создать заявку",
-            "/personal/index.php?r=dealform",
+            "/alk/index.php?r=dealform",
             array(),
             "",
             ""
         ),
         array(
             "Текущие заявки",
-            "/personal/index.php?r=deals",
+            "/alk/index.php?r=deals",
             array(),
             "",
             ""
         ),
         array(
             "Выполненые заявки",
-            "/personal/index.php?r=completeddeals",
+            "/alk/index.php?r=completeddeals",
             array(),
             "",
             ""
         ),
         array(
             "Поиск заявок",
-            "/personal/index.php?r=searchdeals",
+            "/alk/index.php?r=searchdeals",
             array(),
             "",
             ""
         ),
         array(
             "Черновики",
-            "/personal/index.php?r=draftdeals",
+            "/alk/index.php?r=draftdeals",
             array(),
             "",
             ""
         ),
         array(
             "Архив",
-            "/personal/index.php?r=archive",
+            "/alk/index.php?r=archive",
             array(),
             "",
             ""
@@ -78,7 +78,7 @@ class AliMenu extends CBitrixComponent
 
         array(
             "Счета",
-            "/personal/index.php?r=bills",
+            "/alk/index.php?r=bills",
             array(),
             "",
             ""
@@ -87,21 +87,21 @@ class AliMenu extends CBitrixComponent
 
         array(
             "Акты",
-            "/personal/index.php?r=acts",
+            "/alk/index.php?r=acts",
             array(),
             "",
             ""
         ),
         array(
             "Акты сверок",
-            "/personal/index.php?r=report",
+            "/alk/index.php?r=report",
             array(),
             "",
             ""
         ),
         array(
             "Счета-фактуры",
-            "/personal/index.php?r=invoices",
+            "/alk/index.php?r=invoices",
             array(),
             "",
             ""
@@ -109,7 +109,7 @@ class AliMenu extends CBitrixComponent
 
         array(
             "Товаро-транспортные документы",
-            "/personal/index.php?r=tth",
+            "/alk/index.php?r=tth",
             array(),
             "",
             ""
@@ -117,7 +117,7 @@ class AliMenu extends CBitrixComponent
 
         array(
             "Договоры",
-            "/personal/index.php?r=docs",
+            "/alk/index.php?r=docs",
             array(),
             "",
             ""

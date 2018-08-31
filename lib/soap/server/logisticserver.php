@@ -11,7 +11,7 @@ class LogisticServer{
 
 		
 		// $server = new \SoapServer($_SERVER['HTTP_HOST']."/alklogistic/wsdl.php");
-		$server = new \SoapServer("https://rusexpeditor.ru/alklogistic/wsdl.php");
+		$server = new \SoapServer("https://rusexpeditor.ru/alkserver/wsdl.php");
 
 		return $server;
 	} 

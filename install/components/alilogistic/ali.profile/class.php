@@ -19,7 +19,7 @@ use Ali\Logistic\soap\clients\Sverka1C;
 class AliProfile extends CBitrixComponent
 {
 
-    protected $pageName = "personal";
+    protected $pageName = "alk";
     
     public function getPageName(){
         return $this->pageName;
