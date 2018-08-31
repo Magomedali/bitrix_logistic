@@ -54,7 +54,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-6">
 					<p>
 						<label for="org_physical_address" class="form-label">Физический адрес</label>
-						<input type="text" name="ORG[PHYSICAL_ADDRESS]" id="org_physical_address" value="<?php echo $org ? $org['PHYSICAL_ADDRESS'] : null;?>" class="form-control" required>
+						<input type="text" name="ORG[PHYSICAL_ADDRESS]" id="org_physical_address" value="<?php echo $org ? $org['PHYSICAL_ADDRESS'] : null;?>" class="form-control">
 					</p>
 				</div>
 				<div class="col-xs-6">
@@ -92,7 +92,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="org_inn" class="form-label">ИНН</label>
-						<input type="number" name="ORG[INN]" id="org_inn" value="<?php echo $org ? $org['INN'] : null;?>" class="form-control" required>
+						<input type="number" name="ORG[INN]" id="org_inn" value="<?php echo $org ? $org['INN'] : null;?>" class="form-control">
 					</p>
 				</div>
 			</div>
@@ -110,7 +110,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="org_ogrn" class="form-label">ОГРН</label>
-						<input type="number" name="ORG[OGRN]" id="org_ogrn" value="<?php echo $org ? $org['OGRN'] : null;?>" class="form-control" required>
+						<input type="number" name="ORG[OGRN]" id="org_ogrn" value="<?php echo $org ? $org['OGRN'] : null;?>" class="form-control">
 					</p>
 				</div>
 			</div>
@@ -119,7 +119,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="bank_bik" class="form-label">Бик Банка</label>
-						<input type="number" name="ORG[BANK_BIK]" id="bank_bik" value="<?php echo $org ? $org['BANK_BIK'] : null;?>" class="form-control" required>
+						<input type="number" name="ORG[BANK_BIK]" id="bank_bik" value="<?php echo $org ? $org['BANK_BIK'] : null;?>" class="form-control">
 					</p>
 				</div>
 			</div>
@@ -128,7 +128,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="bank_name" class="form-label">Наименование Банка</label>
-						<input type="text" name="ORG[BANK_NAME]" id="bank_name" value="<?php echo $org ? $org['BANK_NAME'] : null;?>" class="form-control" required>
+						<input type="text" name="ORG[BANK_NAME]" id="bank_name" value="<?php echo $org ? $org['BANK_NAME'] : null;?>" class="form-control">
 					</p>
 				</div>
 			</div>
@@ -137,7 +137,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="checking_account" class="form-label">Расчетный счет</label>
-						<input type="text" name="ORG[CHECKING_ACCOUNT]" id="checking_account" value="<?php echo $org ? $org['CHECKING_ACCOUNT'] : null;?>" class="form-control" required>
+						<input type="text" name="ORG[CHECKING_ACCOUNT]" id="checking_account" value="<?php echo $org ? $org['CHECKING_ACCOUNT'] : null;?>" class="form-control">
 					</p>
 				</div>
 			</div>
@@ -146,7 +146,7 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 				<div class="col-xs-12">
 					<p>
 						<label for="correspondent_account" class="form-label">Корреспондентский счет</label>
-						<input type="text" name="ORG[CORRESPONDENT_ACCOUNT]" id="correspondent_account" value="<?php echo $org ? $org['CORRESPONDENT_ACCOUNT'] : null;?>" class="form-control" required>
+						<input type="text" name="ORG[CORRESPONDENT_ACCOUNT]" id="correspondent_account" value="<?php echo $org ? $org['CORRESPONDENT_ACCOUNT'] : null;?>" class="form-control">
 					</p>
 				</div>
 			</div>

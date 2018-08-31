@@ -405,6 +405,37 @@ class DealsSchemaTable extends Entity\DataManager{
                 }
             )),
 
+            new Entity\StringField('DRIVER_INFO',array(
+                'title'=>'Водитель',
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return trim(strip_tags($value));
+                        }
+                    );
+                }
+            )),
+
+
+            new Entity\StringField('VEHICLE',array(
+                'title'=>'Транспортное средство',
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return trim(strip_tags($value));
+                        }
+                    );
+                }
+            )),
+
 
             new Entity\BooleanField('IS_DELETED',array(
                 'title'=>'В архиве',

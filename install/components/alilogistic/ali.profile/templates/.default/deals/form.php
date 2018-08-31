@@ -164,7 +164,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 				</div>
 				<div class="col-xs-4">
 					<p>
-						<label for="deal_req_temp_to" class="form-label">Темп. от</label>
+						<label for="deal_req_temp_to" class="form-label">Темп. до</label>
 						<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_TO]",$deal['REQUIRES_TEMPERATURE_TO'],['id'=>'deal_req_temp_to','class'=>'form-control']);?>
 					</p>
 				</div>

@@ -14,7 +14,7 @@ use Bitrix\Main\Entity\Result;
 use Ali\Logistic\soap\clients\CheckINN;
 use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\soap\clients\Sverka1C;
-
+use Ali\Logistic\Schemas\DealsSchemaTable;
 
 class AliProfile extends CBitrixComponent
 {
@@ -391,7 +391,7 @@ class AliProfile extends CBitrixComponent
             
             $deal = array();
             if(isset($request['DEAL']['ID'])){
-                $deal = Deals::getDeals((int)$request['DEAL']['ID']);
+                $deal = DealsSchemaTable::getRow(['select'=>['*'],'filter'=>['ID'=>(int)$request['DEAL']['ID']]]);
                 if(!isset($deal['ID'])) LocalRedirect($this->getUrl("deals"));
             }
             $deal = array_merge($deal,$request['DEAL']);
@@ -447,9 +447,13 @@ class AliProfile extends CBitrixComponent
                             $deal['ROUTES']=$routes;
 
                             $deal['CONTRACTOR_INTEGRATED_ID'] = $contrs_uuids[$deal['CONTRACTOR_ID']];
-                            Deals::integrateDealTo1C($deal);
+                            $res = Deals::integrateDealTo1C($deal);
 
-                            LocalRedirect($this->getUrl("deals"));
+                            if($res->isSuccess()){
+                                LocalRedirect($this->getUrl("deals"));
+                            }else{
+                                LocalRedirect($this->getUrl("draftdeals"));
+                            }
                         }
                         
                     }
@@ -523,7 +527,8 @@ class AliProfile extends CBitrixComponent
         $deals = Deals::getDeals(null,$params);
 
         $this->arResult = [
-            'deals'=>$deals
+            'deals'=>$deals,
+            'type'=>'IS_ACTIVE',
         ];
 
 
@@ -540,7 +545,8 @@ class AliProfile extends CBitrixComponent
         $deals = Deals::getDeals(null,$params);
 
         $this->arResult = [
-            'deals'=>$deals
+            'deals'=>$deals,
+            'type'=>'IS_DRAFT'
         ];
 
 

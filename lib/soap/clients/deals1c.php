@@ -5,10 +5,13 @@ namespace Ali\Logistic\soap\clients;
 
 use Ali\Logistic\Dictionary\RoutesKind;
 use Ali\Logistic\Dictionary\DealStates;
+use Ali\Logistic\Dictionary\WayOfTransportation;
 use Ali\Logistic\soap\Types\Deal;
 use Ali\Logistic\Schemas\DealsSchemaTable;
 use Bitrix\Main\Type\DateTime;
 
+use Bitrix\Main\Result;
+use Bitrix\Main\Error;
 /**
 * 
 */
@@ -17,12 +20,20 @@ class Deals1C extends Client1C
 	
 	
 
+
+	/**
+	* @return Result object
+	*/
 	public static function save($params){
       	
+		$result = new Result;
 
       	$client = self::init();
 
-		if(!$client) return false;
+		if(!$client){
+			$result->addError(new Error("Сервер 1С не доступен",404));
+			return $result;
+		} 
 
         $data['uuid'] = $params['INTEGRATED_ID'];
 		$data['datedoc'] = $params['CREATED_AT'] instanceof DateTime ? $params['CREATED_AT']->format("Y-m-d H:i") : $params['CREATED_AT'] ;
@@ -32,13 +43,13 @@ class Deals1C extends Client1C
 
 		$data['ts'] = $params['TYPE_OF_VEHICLE'];
 
-		$data['comments'] = "";
+		$data['comments'] = null;
 		$data['nds'] = $params['WITH_NDS'];
 		$data['countloaders'] = $params['COUNT_LOADERS'];
 		$data['quantityofhours'] = $params['COUNT_HOURS'];
 		$data['insurance'] = $params['REQUIRES_INSURANCE'];
 		
-		//$data['sum'] = $params['CONTRACTOR_ID'];
+		$data['sum'] = 0;
 		
 		$data['temperaturefrom'] = $params['REQUIRES_TEMPERATURE_FROM'];
 		$data['temperatureto'] = $params['REQUIRES_TEMPERATURE_TO'];
@@ -50,7 +61,7 @@ class Deals1C extends Client1C
 		$data['width'] = $params['WIDTH'];
 		$data['height'] = $params['HEIGHT'];
 		$data['methodofloading'] = $params['LOADING_METHOD'];
-		$data['methodoftransportation'] = $params['WAY_OF_TRANSPORTATION'];
+		$data['methodoftransportation'] = WayOfTransportation::getLabels($params['WAY_OF_TRANSPORTATION']);
       	$data['routes'] = array();
 
 
@@ -59,7 +70,7 @@ class Deals1C extends Client1C
 				$route = array();
 				$route['typeshipment'] = RoutesKind::getLabels($r['KIND']);
 				$route['datefrom'] = date("Y-m-d H:i",strtotime($r['START_AT']));
-				$route['timeby'] = date("Y-m-d H:i",strtotime($r['FINISH_AT']));
+				$route['dateby'] = date("Y-m-d H:i",strtotime($r['FINISH_AT']));
 				$route['location'] = $r['ADDRESS'];
 				$route['shipper'] = $r['ORGANISATION'];
 				$route['contactname'] = $r['PERSON'];
@@ -78,27 +89,30 @@ class Deals1C extends Client1C
 			$request->application = $dealObject;
 			$response = $client->uploadapplication($request);
 
-
 			$integrator = new self();
 			$integrator->parseResponce($response);
 
 			if($integrator->success  && $integrator->uuid){
-				$res = DealsSchemaTable::update($params['ID'],['IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid,'INTEGRATE_ERROR'=>false,'INTEGRATE_ERROR_MSG'=>"",'STATE'=>DealStates::IN_CONFIRMING,'DOCUMENT_NUMBER'=>$integrator->doc_number]);
+				$res = DealsSchemaTable::update($params['ID'],['IS_DRAFT'=>false,'IS_ACTIVE'=>true,'IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid,'INTEGRATE_ERROR'=>false,'INTEGRATE_ERROR_MSG'=>"",'STATE'=>DealStates::IN_CONFIRMING,'DOCUMENT_NUMBER'=>$integrator->doc_number]);
 
-				return $res->isSuccess();
+				return $res;
 			}else{
-				$res = DealsSchemaTable::update($params['ID'],['INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$integrator->error_msg]);
+				$res = DealsSchemaTable::update($params['ID'],['IS_DRAFT'=>true,'IS_ACTIVE'=>false,'IS_INTEGRATED'=>false,'INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$integrator->error_msg]);
 
-				return $res->isSuccess();
+				$result->addError(new Error($integrator->error_msg,500));
+				return $result;
 			}
 
 		} catch (\Exception $e) {
-			$res = DealsSchemaTable::update($params['ID'],['INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$e->getMessage()]);
+			
+			DealsSchemaTable::update($params['ID'],['IS_DRAFT'=>true,'IS_ACTIVE'=>false,'IS_INTEGRATED'=>false,'INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$e->getMessage()]);
 
-			return false;
+			$result->addError(new Error("Произошла ошибка при интеграции заявки в 1С. Пожалуйста обратитесь в тех. поддержку",500));
+			return $result;
 		}
 
-		return false;
+		$result->addError(new Error("Произошла ошибка при интеграции заявки в 1С. Пожалуйста обратитесь в тех. поддержку",500));
+		return $result;
 	}
 
 

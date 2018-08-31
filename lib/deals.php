@@ -57,6 +57,7 @@ class Deals{
         $data['SUPPORT_REQUIRED'] = isset($data['SUPPORT_REQUIRED']);
         $data['WITH_NDS'] = isset($data['WITH_NDS']) && (int)$data['WITH_NDS'];
 
+        $data['IS_ACTIVE']=false;
 
         if(!isset($data['CREATED_AT']))
             $data['CREATED_AT'] = new \Bitrix\Main\Type\DateTime();
@@ -68,7 +69,7 @@ class Deals{
        
         $data = self::normalizeData($data); 
         
-        $data['IS_ACTIVE'] = !$data['IS_DRAFT'];
+        
 
         $primary = isset($data['ID']) ? ['ID'=>$data['ID']] : null;
         if($primary){
@@ -77,8 +78,6 @@ class Deals{
             $result = DealsSchemaTable::add($data);
         }
         
-
-
         // if($result->isSuccess() && !$data['IS_DRAFT']){
         //     $data['ID']=$result->getId();
         // }
@@ -99,8 +98,14 @@ class Deals{
             return array();
         } 
 
+
+        $select = self::defaultSelect();
+        $select = array_merge($select,[
+            'CONTRACTOR_NAME'=>"CONTRACTOR.NAME"
+        ]);
+
         $local_params = array(
-            'select'=>self::defaultSelect()
+            'select'=>$select
         );
         $params = array_merge($local_params,$parameters);
         

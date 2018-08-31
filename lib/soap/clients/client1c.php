@@ -63,6 +63,8 @@ abstract class Client1C
 	        'password'=>self::$password
         );
 		try {
+			header('Cache-Control: no-store, no-cache');
+			ini_set("soap.wsdl_cache_enabled", "0"); 
 			$client = new \SoapClient(self::$wsdl_url,$option);
 			
 			return $client;

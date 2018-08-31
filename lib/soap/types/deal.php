@@ -137,6 +137,10 @@ class Deal
 
         $data['STATE'] = DealStates::getCode($this->status);
         
+        $data['DRIVER_INFO'] = $this->driver;
+        
+        $data['VEHICLE'] = $this->vehicle;
+
         $data['IS_ACTIVE'] = true;
         
         $data['CREATED_AT'] = DateTime::createFromTimestamp(strtotime($this->datedoc));
