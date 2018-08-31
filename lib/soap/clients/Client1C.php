@@ -16,7 +16,21 @@ abstract class Client1C
 	public $success = false;
 	public $uuid;
 	public $error_msg = null;
+	public $doc_number = null;
 
+
+
+	public $log_path = "logs/";
+
+	public function log($tag,$msg){
+		$l = "log.log";
+		$f = fopen($l, "w");
+		
+		fwrite($f, "\n\n--".$tag."--".date("H:i d.m.Y",time()));
+		fwrite($f, "\n\n--".$msg);
+
+		fclose($f);
+	}
 
 	public function parseResponce($response){
 
@@ -34,7 +48,11 @@ abstract class Client1C
 			$this->error_msg = $response->return->error;
 		}
 
+		if(isset($response->return) && isset($response->return->number) && $response->return->number != null){
+			$this->doc_number = $response->return->number;
+		}
 
+		$this->log("responce",json_encode($response));
 	}
 
 	public function init(){

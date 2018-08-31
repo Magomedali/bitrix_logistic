@@ -162,6 +162,7 @@ class ContractorsSchemaTable extends Entity\DataManager
                         function($value,$primary,$row,$field){
                             $length = strlen($value);
                             $validLeng = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::IP ? 12 : 10; 
+                            
                             if($length != $validLeng){
                                 $msg = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL ? "Юр.лицо" : "ИП";
                                 return "Неправильный формат ИНН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
@@ -172,12 +173,13 @@ class ContractorsSchemaTable extends Entity\DataManager
                                 if(!$state['success']){
                                     return $state['msg'];
                                 }
+
+                                $field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким ИНН зарегистрирован на сайте'));
                             }
                                 
 
                             return true;
-                        },
-                        new Entity\Validator\Unique('Организация с таким ИНН зарегистрирован на сайте'),
+                        }
                     );
                 },
                 'save_data_modification'=>function(){

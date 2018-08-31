@@ -49,7 +49,8 @@ class Deals1C extends Client1C
 		$data['length'] = $params['LENGTH'];
 		$data['width'] = $params['WIDTH'];
 		$data['height'] = $params['HEIGHT'];
-		$data['method'] = $params['LOADING_METHOD'];
+		$data['methodofloading'] = $params['LOADING_METHOD'];
+		$data['methodoftransportation'] = $params['WAY_OF_TRANSPORTATION'];
       	$data['routes'] = array();
 
 
@@ -69,7 +70,7 @@ class Deals1C extends Client1C
 			}
 		}
 
-		
+
 		$dealObject = new Deal($data);
 		
      	try {
@@ -77,13 +78,12 @@ class Deals1C extends Client1C
 			$request->application = $dealObject;
 			$response = $client->uploadapplication($request);
 
+
 			$integrator = new self();
 			$integrator->parseResponce($response);
 
-			// print_r($response);
-			// exit;
 			if($integrator->success  && $integrator->uuid){
-				$res = DealsSchemaTable::update($params['ID'],['IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid,'INTEGRATE_ERROR'=>false,'INTEGRATE_ERROR_MSG'=>"",'STATE'=>DealStates::IN_CONFIRMING]);
+				$res = DealsSchemaTable::update($params['ID'],['IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid,'INTEGRATE_ERROR'=>false,'INTEGRATE_ERROR_MSG'=>"",'STATE'=>DealStates::IN_CONFIRMING,'DOCUMENT_NUMBER'=>$integrator->doc_number]);
 
 				return $res->isSuccess();
 			}else{
@@ -93,6 +93,8 @@ class Deals1C extends Client1C
 			}
 
 		} catch (\Exception $e) {
+			$res = DealsSchemaTable::update($params['ID'],['INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$e->getMessage()]);
+
 			return false;
 		}
 

@@ -52,6 +52,8 @@ class Contractors1C extends Client1C
 			}
 
 		} catch (\Exception $e) {
+			$res = ContractorsSchemaTable::update($data['ID'],['INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$e->getMessage()]);
+
 			return false;
 		}
 		
@@ -103,9 +105,11 @@ class Contractors1C extends Client1C
 		if(is_array($data)){
 
 			$count = count($data);
-			//foreach ($data as $i => $row) {
-			$i=366;
-			$row = $data[366];
+			foreach ($data as $i => $row) {
+			// $i=386;
+			// $row = $data[$i];
+			// print_r($row);
+			// exit;
 				$c_data = json_decode(json_encode($row),true);
 				
 				$c = new Customer($c_data);
@@ -117,7 +121,7 @@ class Contractors1C extends Client1C
 				}else{
 					$log['error_log'][] = $i."/".$count." ".$c_data['name']." - ".$c_data['inn']." uuid - ".$c_data['uuid']." Ошибки:[".implode(", ", $res->getErrorMessages())."]";
 				}
-			//}
+			}
 		}
 
 		return $log;

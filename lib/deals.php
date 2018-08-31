@@ -93,8 +93,8 @@ class Deals{
         global $USER;
         
         $contractors = User::getCurrentUserIntegratedContractors();
-        if(empty($contractors) || is_array($contractors) || !count($contractors)){
-
+        
+        if(empty($contractors) || (is_array($contractors) && !count($contractors))){
             //Проверка на присоединение к компании в таблице ali_logistic_company_employee
             return array();
         } 
@@ -104,15 +104,16 @@ class Deals{
         );
         $params = array_merge($local_params,$parameters);
         
-        $contractors = ArrayHelper::map($contractors,['ID','ID']);
+        $contractors = ArrayHelper::map($contractors,'ID','ID');
         $params['filter']['CONTRACTOR_ID'] = $contractors;
         
+        
         if($id){
-            
-            $local_params['filter']['ID']=$id;
+            $params['filter']['ID']=$id;
 
             return DealsSchemaTable::getRow($params);
         }else{
+
             return DealsSchemaTable::getList($params)->fetchAll();
         }
 

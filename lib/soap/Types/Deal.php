@@ -32,13 +32,13 @@ class Deal
     public $temperaturefrom;
     public $temperatureto;
     public $additionalequipment;
-    public $wayoftransportation;
+    public $methodoftransportation;
     public $escort;
     public $documentation;
     public $size;
     public $length;
     public $width;
-    public $method;
+    public $methodofloading;
     public $routes = array();
     public $costs = array();
     public $driver;
@@ -63,14 +63,14 @@ class Deal
         $this->temperaturefrom = $data['temperaturefrom'];
         $this->temperatureto = $data['temperatureto'];
         $this->additionalequipment = $data['additionalequipment'];
-        $this->wayoftransportation = $data['wayoftransportation'];
+        $this->methodoftransportation = $data['methodoftransportation'];
         $this->escort = $data['escort'];
         $this->documentation = $data['documentation'];
         $this->size = $data['size'];
         $this->length = $data['length'];
         $this->width = $data['width'];
         $this->height = $data['height'];
-        $this->method = $data['method'];
+        $this->methodofloading = $data['methodofloading'];
         $this->driver = $data['driver'];
         $this->vehicle = $data['vehicle'];
         $this->status = $data['status'];
@@ -120,9 +120,9 @@ class Deal
     	$data['LENGTH']=$this->length;
 
     	$data['TYPE_OF_VEHICLE']= is_array($this->ts) ? implode(";", $this->ts) : $this->ts;
-    	$data['LOADING_METHOD']=is_array($this->method) ? implode(";", $this->method) : $this->method;
+    	$data['LOADING_METHOD']=is_array($this->methodofloading) ? implode(";", $this->methodofloading) : $this->methodofloading;
 
-    	$data['WAY_OF_TRANSPORTATION'] = WayOfTransportation::getCode($this->wayoftransportation);
+    	$data['WAY_OF_TRANSPORTATION'] = WayOfTransportation::getCode($this->methodoftransportation);
     	$data['REQUIRES_LOADER'] = boolval($this->countloaders);
         $data['COUNT_LOADERS'] = $this->countloaders;
         $data['COUNT_HOURS'] = $this->quantityofhours;

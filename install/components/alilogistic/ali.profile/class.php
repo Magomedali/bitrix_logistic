@@ -417,10 +417,11 @@ class AliProfile extends CBitrixComponent
 
                     
                 }else{
-                    $deal['ID']=$res->getId();
+                    $deal['ID']= $res->getId();
                     
                     if(count($routes)){
                         $tmpRoute = array();
+
                         foreach ($routes as $key => $rData) {
                             $rData['DEAL_ID'] = $deal['ID'];
                             $rData['OWNER_ID'] = $user_id;
@@ -463,7 +464,6 @@ class AliProfile extends CBitrixComponent
         }elseif(isset($request['id'])){
             $deal = Deals::getDeals((int)$request['id']);
             $routes = Routes::getRoutes((int)$request['id']);
-
         }
 
         $this->arResult = [

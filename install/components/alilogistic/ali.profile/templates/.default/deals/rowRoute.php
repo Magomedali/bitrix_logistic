@@ -20,12 +20,12 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 	</td>
 	<td>
 		<?php
-			echo Html::input("datetime-local","ROUTES[{$number}][START_AT]",$route && isset($route['START_AT']) ? date("Y-m-d\TH:i",strtotime($route['START_AT'])) : null,['class'=>'form-control']);
+			echo Html::input("datetime-local","ROUTES[{$number}][START_AT]",$route && isset($route['START_AT']) ? date("Y-m-d\TH:i",strtotime($route['START_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control']);
 		?>
 	</td>
 	<td>
 		<?php
-			echo Html::input("datetime-local","ROUTES[{$number}][FINISH_AT]",$route && isset($route['FINISH_AT']) ? date("Y-m-d\TH:i",strtotime($route['FINISH_AT'])) : null,['class'=>'form-control']);
+			echo Html::input("datetime-local","ROUTES[{$number}][FINISH_AT]",$route && isset($route['FINISH_AT']) ? date("Y-m-d\TH:i",strtotime($route['FINISH_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control']);
 		?>
 	</td>
 	<td>
