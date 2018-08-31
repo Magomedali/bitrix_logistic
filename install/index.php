@@ -13,6 +13,8 @@ Class ali_logistic extends CModule
 {
     var $exclusionAdminFiles;
     var $errors = array();
+    var $pages = array();
+
 	function __construct()
 	{
 		$arModuleVersion = array();
@@ -26,6 +28,11 @@ Class ali_logistic extends CModule
             'task_description.php',
             'top.php',
             'bottom.php',
+        );
+
+        $this->pages = array(
+            'alkserver',
+            'alk'
         );
 
         $this->MODULE_ID = 'ali.logistic';
@@ -228,8 +235,15 @@ Class ali_logistic extends CModule
 	{
         
 
-        \Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/alilogistic/');
-        \Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/alklogistic/');
+        
+
+        foreach ($this->pages as $page) {
+           \Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . "/bitrix/components/{$page}/");
+            \Bitrix\Main\IO\Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . "/{$page}/");
+        }
+        
+
+        
 
         if (\Bitrix\Main\IO\Directory::isDirectoryExists($path = $this->GetPath() . '/admin')) {
             DeleteDirFiles($_SERVER["DOCUMENT_ROOT"] . $this->GetPath() . '/install/admin/', $_SERVER["DOCUMENT_ROOT"] . '/bitrix/admin');
