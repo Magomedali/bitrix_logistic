@@ -21,7 +21,7 @@ if(CModule::IncludeModule('ali.logistic')){
 	$server = LogisticServer::init();
 	
 	//Регистрируем класс обработчик
-	$server->setClass("\Ali\Logistic\soap\Server\ServerHandler");
+	$server->setClass("\Ali\Logistic\Soap\Server\ServerHandler");
 	
 	//Запускаем сервер
 	$server->handle();
