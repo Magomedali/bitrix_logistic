@@ -101,7 +101,11 @@ class Contractors1C extends Client1C
 
 		$log = array();
 		if(is_array($data)){
-			foreach ($data as $key => $row) {
+
+			$count = count($data);
+			//foreach ($data as $i => $row) {
+			$i=366;
+			$row = $data[366];
 				$c_data = json_decode(json_encode($row),true);
 				
 				$c = new Customer($c_data);
@@ -109,11 +113,11 @@ class Contractors1C extends Client1C
 				$res = $c->save();
 
 				if($res->isSuccess()){
-					$log['success_log'][] = $c_data['name']." - ".$c_data['inn'];
+					$log['success_log'][] = $i."/".$count." ".$c_data['name']." - ".$c_data['inn'];
 				}else{
-					$log['error_log'][] = $c_data['name']." - ".$c_data['inn']."Ошибки:[".implode(", ", $res->getErrorMessages());
+					$log['error_log'][] = $i."/".$count." ".$c_data['name']." - ".$c_data['inn']." uuid - ".$c_data['uuid']." Ошибки:[".implode(", ", $res->getErrorMessages())."]";
 				}
-			}
+			//}
 		}
 
 		return $log;

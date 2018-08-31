@@ -246,11 +246,8 @@ class ContractorsSchemaTable extends Entity\DataManager
                                     $msg = $row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL ? "Юр.лицо" : "ИП";
                                     return "Неправильный формат ОГРН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
                                 }
-
-                                $field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким OGRN зарегистрирован на сайте'));
                             }
                             
-
                             return true;
                         },
                     );
