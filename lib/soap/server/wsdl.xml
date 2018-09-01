@@ -102,7 +102,7 @@
     				<xs:element name="driver" type="xs:string" nillable="true"/>
     				<xs:element name="vehicle" type="xs:string" nillable="true"/>
     				<xs:element name="status" type="xs:string"/>
-    				<xs:element name="printForm" type="xs:base64Binary"/>
+    				<xs:element name="printForm" type="xs:base64Binary" nillable="true"/>
     			</xs:sequence>
     		</xs:complexType>
     
