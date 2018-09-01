@@ -44,6 +44,7 @@ class Deal
     public $driver;
     public $vehicle;
     public $status;
+    public $printForm;
 
     function __construct($data)
     {
@@ -74,6 +75,7 @@ class Deal
         $this->driver = $data['driver'];
         $this->vehicle = $data['vehicle'];
         $this->status = $data['status'];
+        $this->printForm = $data['printForm'] ? $data['printForm'] : null;
 
         if(isset($data['routes']) && is_array($data['routes']) && count($data['routes'])){
             
