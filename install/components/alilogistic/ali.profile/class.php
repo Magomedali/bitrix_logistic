@@ -614,6 +614,48 @@ class AliProfile extends CBitrixComponent
 
 
 
+    public function completeddealsAction(){
+
+        $id = CUser::GetID();
+
+        $params['filter']['COMPLETED'] = true;
+        $deals = Deals::getDeals(null,$params);
+
+        $this->arResult = [
+            'deals'=>$deals,
+            'type'=>'COMPLETED'
+        ];
+
+
+        return "deals/deals";
+    }
+
+
+
+
+
+    public function archiveAction(){
+
+        $id = CUser::GetID();
+
+        $params['filter']['IS_DELETED'] = true;
+        $deals = Deals::getDeals(null,$params);
+
+        $this->arResult = [
+            'deals'=>$deals,
+            'type'=>'IS_DELETED'
+        ];
+
+
+        return "deals/deals";
+    }
+
+
+
+
+
+
+
 
     public function viewdealAction(){
         $context = Application::getInstance()->getContext();
@@ -646,6 +688,19 @@ class AliProfile extends CBitrixComponent
 
 
 
+    public function searchdealsAction(){
+
+        $params = [];
+        $deals = Deals::getDeals(null,$params);
+
+        $this->arResult = [
+            'deals'=>$deals,
+            'type'=>'IS_DELETED'
+        ];
+
+
+        return "deals/search";
+    }
 
 
 

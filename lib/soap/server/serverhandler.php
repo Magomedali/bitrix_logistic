@@ -3,6 +3,7 @@ namespace Ali\Logistic\soap\Server;
 
 use Ali\Logistic\soap\Types\Customer;
 use Ali\Logistic\soap\Types\Deal;
+use Ali\Logistic\soap\Types\DealFiles;
 use Ali\Logistic\soap\Types\Route;
 use Ali\Logistic\soap\Types\Costs;
 
@@ -184,58 +185,47 @@ class ServerHandler
 
 
 	public function integrateFile($data,$type){
-		$log = $this->log_path."sendFileBill.txt";
-		$output = fopen($log, "w");
-
-		$uuid = $data->dealUuid;
-		$fileNumber = $data->fileNumber;
-		$file_name = $uuid."__".$fileNumber."_file_bill.pdf";
-
-		$output_line = "\n".date("H:i d.m.Y",time())." Файл счет: ".$file_name;
-		fwrite($output, $output_line);
-		fclose($output);
-
-		$path_file = $this->file_path.$file_name;
-		$pdf = fopen($path_file, "w");
 		
-		fwrite($pdf, $data->binaryFile);
+		$d['dealUuid'] = $data->dealUuid;
+		$d['fileNumber'] = $data->fileNumber;
+		$d['fileDate'] = $data->fileDate;
+		$d['binaryFile'] = $data->binaryFile;
 
-		fclose($pdf);
-		//-----------------------//
-		$uuid = $data->dealUuid;
-		$fileNumber = $data->fileNumber;
-		$response = new \stdClass();
-
-		switch ($type) {
-			case 1:
-				$res = Deal::sendFileBill($uuid,$fileNumber,$data->binaryFile);
-				break;
-			case 2:
-				$res = Deal::sendFileAct($uuid,$fileNumber,$data->binaryFile);
-				break;
-			case 3:
-				$res = Deal::sendFileInvoice($uuid,$fileNumber,$data->binaryFile);
-				break;
-			case 4:
-				$res = Deal::sendFileContract($uuid,$fileNumber,$data->binaryFile);
-				break;
-			case 5:
-				$res = Deal::sendFileDriverAttorney($uuid,$fileNumber,$data->binaryFile);
-				break;
-			case 6:
-				$res = Deal::sendFilePrintForm($uuid,$fileNumber,$data->binaryFile);
-				break;
-			case 7:
-				$res = Deal::sendFileTTH($uuid,$fileNumber,$data->binaryFile);
-				break;
-			
-			default:
-				$res = new Result();
-	            $res->addError(new Error("Неправильный тип файла",1));
-				break;
+		$dealFile = new DealFiles($d);
+		$res = $dealFile->checkDealExists();
+		if($res->isSuccess()){
+			switch ($type) {
+				case 1:
+					$res = Deal::sendFileBill($dealFile);
+					break;
+				case 2:
+					$res = Deal::sendFileAct($dealFile);
+					break;
+				case 3:
+					$res = Deal::sendFileInvoice($dealFile);
+					break;
+				case 4:
+					$res = Deal::sendFileContract($dealFile);
+					break;
+				case 5:
+					$res = Deal::sendFileDriverAttorney($dealFile);
+					break;
+				case 6:
+					$res = Deal::sendFilePrintForm($dealFile);
+					break;
+				case 7:
+					$res = Deal::sendFileTTH($dealFile);
+					break;
+				
+				default:
+					$res = new Result();
+		            $res->addError(new Error("Неправильный тип файла",1));
+					break;
+			}
 		}
 		
 		
+		$response = new \stdClass();
 		if(!$res->isSuccess()){
 			$response->success = false;
 			$response->error = "errorSendFileBill";
@@ -253,11 +243,39 @@ class ServerHandler
 	}
 
 	public function sendFileAct($data){
-		return $this->integrateFile($data,2);
+		$response = new \stdClass();
+		$response->success = false;
+		$response->error = "errorSendFileAct";
+		return $response;
+		//return $this->integrateFile($data,2);
 	}
 
 	public function sendFileInvoice($data){
-		return $this->integrateFile($data,3);
+		// $d['dealUuid'] = $data->dealUuid;
+		// $d['fileNumber'] = $data->fileNumber;
+		// $d['fileDate'] = $data->fileDate;
+		// $d['binaryFile'] = $data->binaryFile;
+
+		// $dealFile = new DealFiles($d);
+		// $res = $dealFile->checkDealExists();
+		// if($res->isSuccess()){
+		// 	$res = Deal::sendFileInvoice($dealFile);
+		// }
+
+
+		$response = new \stdClass();
+		$response->success = false;
+		$response->error = "errorSendFileInvoice";
+		
+		// if(!$res->isSuccess()){
+		// 	$response->success = false;
+		// 	$response->error = "errorSendFileInvoice";
+		// 	$response->errorMessages = $res->getErrorMessages();
+		// }else{
+		// 	$response->success = true;
+		// }
+        
+		return $response;
 	}
 
 	public function sendFileContract($data){

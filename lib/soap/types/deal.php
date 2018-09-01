@@ -7,6 +7,7 @@ use Ali\Logistic\Schemas\DealsSchemaTable;
 use Ali\Logistic\Schemas\ContractorsSchemaTable;
 use Ali\Logistic\soap\Types\Route;
 use Ali\Logistic\soap\Types\Costs;
+use Ali\Logistic\soap\Types\DealFiles;
 use Ali\Logistic\Dictionary\WayOfTransportation;
 use Ali\Logistic\Dictionary\DealStates;
 use Bitrix\Main\Type\DateTime;
@@ -192,68 +193,48 @@ class Deal
 
 
 
-    public static function sendFileBill($dealUuid,$fNumber,$file){
-        $res = self::checkDealExists($dealUuid);
-        if(!$res->isSuccess()) return $res;
-        return \Ali\Logistic\DealFiles::sendFileBill($row['ID'],$fNumber,$file);
+    public static function sendFileBill(DealFiles $DealFiles){
+        return \Ali\Logistic\DealFiles::sendFileBill($DealFiles);
     }
 
 
 
 
-    public static function sendFileAct($dealUuid,$fNumber,$file){
-        $res = self::checkDealExists($dealUuid);
-        if(!$res->isSuccess()) return $res;
-
-        return \Ali\Logistic\DealFiles::sendFileAct($row['ID'],$fNumber,$file);
+    public static function sendFileAct(DealFiles $DealFiles){
+        return \Ali\Logistic\DealFiles::sendFileAct($DealFiles);
     }
 
 
 
 
-    public static function sendFileInvoice($dealUuid,$fNumber,$file){
-        $res = self::checkDealExists($dealUuid);
-        if(!$res->isSuccess()) return $res;
-
-        return \Ali\Logistic\DealFiles::sendFileInvoice($row['ID'],$fNumber,$file);
+    public static function sendFileInvoice(DealFiles $DealFiles){
+        return \Ali\Logistic\DealFiles::sendFileInvoice($DealFiles);
     }
 
 
 
 
-    public static function sendFileContract($dealUuid,$fNumber,$file){
-        $res = self::checkDealExists($dealUuid);
-        if(!$res->isSuccess()) return $res;
-
-        return \Ali\Logistic\DealFiles::sendFileContract($row['ID'],$fNumber,$file);
+    public static function sendFileContract(DealFiles $DealFiles){
+        return \Ali\Logistic\DealFiles::sendFileContract($DealFiles);
     }
 
 
 
 
-    public static function sendFileDriverAttorney($dealUuid,$fNumber,$file){
-        $res = self::checkDealExists($dealUuid);
-        if(!$res->isSuccess()) return $res;
-
-        return \Ali\Logistic\DealFiles::sendFileDriverAttorney($row['ID'],$fNumber,$file);
+    public static function sendFileDriverAttorney(DealFiles $DealFiles){
+        return \Ali\Logistic\DealFiles::sendFileDriverAttorney($DealFiles);
     }
 
 
 
 
-    public static function sendFilePrintForm($dealUuid,$fNumber,$file){
-        $res = self::checkDealExists($dealUuid);
-        if(!$res->isSuccess()) return $res;
-
-        return \Ali\Logistic\DealFiles::sendFilePrintForm($row['ID'],$fNumber,$file);
+    public static function sendFilePrintForm(DealFiles $DealFiles){
+        return \Ali\Logistic\DealFiles::sendFilePrintForm($DealFiles);
     }
 
 
-    public static function sendFileTTH($dealUuid,$fNumber,$file){
-        $res = self::checkDealExists($dealUuid);
-        if(!$res->isSuccess()) return $res;
-
-        return \Ali\Logistic\DealFiles::sendFileTTH($row['ID'],$fNumber,$file);
+    public static function sendFileTTH(DealFiles $DealFiles){
+        return \Ali\Logistic\DealFiles::sendFileTTH($DealFiles);
     }
 
 

@@ -6,22 +6,6 @@ use Ali\Logistic\Dictionary\DealStates;
 $deals = is_array($arResult['deals']) && count($arResult['deals']) ? $arResult['deals'] : null;
 $type = isset($arResult['type']) ? $arResult['type'] : 'IS_ACTIVE';
 
-// switch ($type) {
-// 	case 'IS_ACTIVE':
-// 		$type = "Текущие заявки";
-// 		break;
-
-// 	case 'IS_DRAFT':
-// 		$type = "Черновики";
-// 		break;
-// 	COMPLETED
-// 	default:
-// 		$type = "Текущие заявки";
-// 		break;
-// }
-
-
-// $APPLICATION->SetTitle($type);
 ?>
 
 

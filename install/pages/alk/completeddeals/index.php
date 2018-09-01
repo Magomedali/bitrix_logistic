@@ -3,11 +3,9 @@ define("NEED_AUTH", true);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
-// $APPLICATION->SetTitle("Личный кабинет");
+$APPLICATION->SetTitle("Выполненые заявки");
 $dir_name = basename(__DIR__);
-?>
 
-<?php
 
 if($USER->IsAuthorized()) {
     

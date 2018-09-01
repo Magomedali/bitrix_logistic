@@ -168,13 +168,40 @@ class ContractorsSchemaTable extends Entity\DataManager
                                 return "Неправильный формат ИНН для ".$msg.". Номер должен состоять из ".$validLeng." цифр";
                             }
 
-                            if(!isset($row['INTEGRATED_ID']) && empty($row['INTEGRATED_ID']) && $row['INTEGRATED_ID'] == ''){
+                            if(!isset($row['INTEGRATED_ID']) || empty($row['INTEGRATED_ID']) || $row['INTEGRATED_ID'] == ''){
+                                
                                 $state = \Ali\Logistic\soap\clients\CheckINN::check($value);
                                 if(!$state['success']){
                                     return $state['msg'];
                                 }
 
-                                $field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким ИНН зарегистрирован на сайте'));
+                                //Проверка на уникальность ИНН и КПП
+                                if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL){
+                                    
+                                    if($primary){
+                                        $id = is_array($primary) ? reset($primary) : (int)$primary;
+                                        $c = ContractorsSchemaTable::getRow(['select'=>['ID'],'filter'=>['INN'=>$row['INN'],'KPP'=>$row['KPP'],'!=ID'=>$id]]);
+                                    }else{
+                                        $c = ContractorsSchemaTable::getRow(['select'=>['ID'],'filter'=>['INN'=>$row['INN'],'KPP'=>$row['KPP']]]);
+                                    }
+
+                                    if(isset($c['ID']) && $c['ID']){
+                                        return 'Юр. лицо с таким ИНН и КПП зарегистрирован на сайте';
+                                    }
+                                }else{
+
+                                    if($primary){
+                                        $id = is_array($primary) ? reset($primary) : (int)$primary;
+                                        $c = ContractorsSchemaTable::getRow(['select'=>['ID'],'filter'=>['INN'=>$row['INN'],'!=ID'=>$row['ID']]]);
+                                    }else{
+                                        $c = ContractorsSchemaTable::getRow(['select'=>['ID'],'filter'=>['INN'=>$row['INN']]]);
+                                    }
+                                    
+                                    if(isset($c['ID']) && $c['ID']){
+                                        return 'ИП с таким ИНН зарегистрирован на сайте';
+                                    }
+                                }
+                                
                             }
                                 
 

@@ -5,13 +5,13 @@ define("ALI_COMPONENTS_NS","alilogistic");
 
 define("ALI_FILE_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/");
 
-define("ALI_FILE_BILLS_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/bills/");
-define("ALI_FILE_INVOICES_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/invoices/");
-define("ALI_FILE_ACTS_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/acts/");
-define("ALI_FILE_CONTRACTS_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/contracts/");
-define("ALI_FILE_DRIVER_ATTORNEY_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/driver_attorney/");
-define("ALI_FILE_PRINT_FORM_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/print_form/");
-define("ALI_FILE_TTH_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/tth/");
+define("ALI_FILE_BILLS_PATH", 			ALI_FILE_PATH."/bills/");
+define("ALI_FILE_INVOICES_PATH", 		ALI_FILE_PATH."/invoices/");
+define("ALI_FILE_ACTS_PATH", 			ALI_FILE_PATH."/acts/");
+define("ALI_FILE_CONTRACTS_PATH", 		ALI_FILE_PATH."/contracts/");
+define("ALI_FILE_DRIVER_ATTORNEY_PATH", ALI_FILE_PATH."/driver_attorney/");
+define("ALI_FILE_PRINT_FORM_PATH", 		ALI_FILE_PATH."/print_form/");
+define("ALI_FILE_TTH_PATH", 			ALI_FILE_PATH."/tth/");
 
 
 define("ALI_LOG_SOAP_SERVER_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/lib/soap/Server/output/");

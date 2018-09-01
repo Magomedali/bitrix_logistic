@@ -3,7 +3,7 @@ define("NEED_AUTH", true);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
-// $APPLICATION->SetTitle("Личный кабинет");
+$APPLICATION->SetTitle("Текущие заявки");
 $dir_name = basename(__DIR__);
 ?>
 
