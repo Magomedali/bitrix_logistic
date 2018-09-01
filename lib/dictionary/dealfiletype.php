@@ -15,7 +15,7 @@ class DealFileType extends \Ali\Logistic\Dictionary\Dictionary{
 	const FILE_CONTRACT = 4;
 	const FILE_DRIVER_ATTORNEY = 5;
 	const FILE_PRINT_FORM = 6;
-	const FILE_TTH = 6;
+	const FILE_TTH = 7;
 
 
 	protected static $labels = array(

@@ -243,39 +243,11 @@ class ServerHandler
 	}
 
 	public function sendFileAct($data){
-		$response = new \stdClass();
-		$response->success = false;
-		$response->error = "errorSendFileAct";
-		return $response;
-		//return $this->integrateFile($data,2);
+		return $this->integrateFile($data,2);
 	}
 
 	public function sendFileInvoice($data){
-		// $d['dealUuid'] = $data->dealUuid;
-		// $d['fileNumber'] = $data->fileNumber;
-		// $d['fileDate'] = $data->fileDate;
-		// $d['binaryFile'] = $data->binaryFile;
-
-		// $dealFile = new DealFiles($d);
-		// $res = $dealFile->checkDealExists();
-		// if($res->isSuccess()){
-		// 	$res = Deal::sendFileInvoice($dealFile);
-		// }
-
-
-		$response = new \stdClass();
-		$response->success = false;
-		$response->error = "errorSendFileInvoice";
-		
-		// if(!$res->isSuccess()){
-		// 	$response->success = false;
-		// 	$response->error = "errorSendFileInvoice";
-		// 	$response->errorMessages = $res->getErrorMessages();
-		// }else{
-		// 	$response->success = true;
-		// }
-        
-		return $response;
+		return $this->integrateFile($data,3);
 	}
 
 	public function sendFileContract($data){

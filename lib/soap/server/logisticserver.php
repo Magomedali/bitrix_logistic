@@ -9,10 +9,7 @@ class LogisticServer{
 
 	public static function init(){
 
-		
-		// $server = new \SoapServer($_SERVER['HTTP_HOST']."/alklogistic/wsdl.php");
-		$server = new \SoapServer("https://rusexpeditor.ru/alkserver/wsdl.php");
-
+		$server = new \SoapServer("http:\\\\".$_SERVER['HTTP_HOST']."/alkserver/wsdl.php");
 		return $server;
 	} 
 }
