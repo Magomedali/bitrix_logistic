@@ -10,6 +10,9 @@ abstract class Dictionary{
 	protected static $labels = array();
 	protected static $delimiter=";";
 
+    public static function getDelimiter(){
+        return self::$delimiter;
+    }
 
 	public static function getLabels($code){
         if(array_key_exists($code, static::$labels))

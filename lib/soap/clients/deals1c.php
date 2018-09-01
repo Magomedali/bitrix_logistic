@@ -6,6 +6,11 @@ namespace Ali\Logistic\soap\clients;
 use Ali\Logistic\Dictionary\RoutesKind;
 use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Dictionary\WayOfTransportation;
+use Ali\Logistic\Dictionary\TypeOfVehicle;
+use Ali\Logistic\Dictionary\AdditionalEquipment;
+use Ali\Logistic\Dictionary\Documents;
+use Ali\Logistic\Dictionary\LoadingMethod;
+
 use Ali\Logistic\soap\Types\Deal;
 use Ali\Logistic\Schemas\DealsSchemaTable;
 use Bitrix\Main\Type\DateTime;
@@ -41,7 +46,7 @@ class Deals1C extends Client1C
 		$data['namecargo'] = $params['NAME'];
 		$data['weight'] = $params['WEIGHT'];
 
-		$data['ts'] = $params['TYPE_OF_VEHICLE'];
+		$data['ts'] = is_array($params['TYPE_OF_VEHICLE']) ? $params['TYPE_OF_VEHICLE'] : explode(TypeOfVehicle::getDelimiter(), $params['TYPE_OF_VEHICLE']);
 
 		$data['comments'] = null;
 		$data['nds'] = $params['WITH_NDS'];
@@ -53,14 +58,17 @@ class Deals1C extends Client1C
 		
 		$data['temperaturefrom'] = $params['REQUIRES_TEMPERATURE_FROM'];
 		$data['temperatureto'] = $params['REQUIRES_TEMPERATURE_TO'];
-		$data['additionalequipment'] = $params['ADDITIONAL_EQUIPMENT'];
+		$data['additionalequipment'] = is_array($params['ADDITIONAL_EQUIPMENT']) ? $params['ADDITIONAL_EQUIPMENT'] : explode(AdditionalEquipment::getDelimiter(), $params['ADDITIONAL_EQUIPMENT']);
+
 		$data['escort'] = $params['SUPPORT_REQUIRED'];
-		$data['documentation'] = $params['REQUIRED_DOCUMENTS'];
+		$data['documentation'] = is_array($params['REQUIRED_DOCUMENTS']) ? $params['REQUIRED_DOCUMENTS'] : explode(Documents::getDelimiter(), $params['REQUIRED_DOCUMENTS']);
 		$data['size'] = $params['SPACE'];
 		$data['length'] = $params['LENGTH'];
 		$data['width'] = $params['WIDTH'];
 		$data['height'] = $params['HEIGHT'];
-		$data['methodofloading'] = $params['LOADING_METHOD'];
+		
+		$data['methodofloading'] = is_array($params['LOADING_METHOD']) ? $params['LOADING_METHOD'] : explode(LoadingMethod::getDelimiter(), $params['LOADING_METHOD']);
+
 		$data['methodoftransportation'] = WayOfTransportation::getLabels($params['WAY_OF_TRANSPORTATION']);
       	$data['routes'] = array();
 
