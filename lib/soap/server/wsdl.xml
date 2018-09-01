@@ -468,10 +468,10 @@
 		    <documentation>
 				<wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1"/>
 			</documentation>
-			<soapbind:address location="https://rusexpeditor.ru/alklogistic/index.php"/>
+			<soapbind:address location="https://rusexpeditor.ru/alkserver/index.php"/>
 		</port>
 		<port name="rusexeditorSoap12" binding="tns:rusexeditorSoap12Binding">
-			<soap12bind:address location="https://rusexpeditor.ru/alklogistic/index.php"/>
+			<soap12bind:address location="https://rusexpeditor.ru/alkserver/index.php"/>
 		</port>
 	</service>
 </definitions>
