@@ -1,4 +1,5 @@
 <?php
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Ali\Logistic\Dictionary\ContractorsType;
 
@@ -6,18 +7,14 @@ $types = ContractorsType::getLabels();
 
 $errors = is_array($arResult['errors']) && count($arResult['errors']) ? $arResult['errors'] : null;
 $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] : null;
+
+$title = $org ? "Организация ".$org['NAME'] : "Новая организация";
+
+$APPLICATION->SetTitle($title);
+
 ?>
 
 <div class="row form-org-page">
-	<div class="row">
-		<div class="col-xs-6">
-			<?php if($org){?>
-				<h3>Организация <?php echo $org['NAME']?></h3>
-			<?php }else{ ?>
-				<h3>Новая организация</h3>
-			<?php } ?>
-		</div>
-	</div>
 	<?php 
 		if($errors){
 	?>

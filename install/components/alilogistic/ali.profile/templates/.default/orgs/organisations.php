@@ -1,7 +1,9 @@
 <?php
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 $orgs = is_array($arResult['orgs']) && count($arResult['orgs']) ? $arResult['orgs'] : null;
 
+$APPLICATION->SetTitle("Мои организации");
 ?>
 
 

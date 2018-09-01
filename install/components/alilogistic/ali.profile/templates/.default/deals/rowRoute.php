@@ -1,4 +1,5 @@
 <?php
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Ali\Logistic\helpers\Html;
 use Ali\Logistic\helpers\ArrayHelper;
@@ -6,6 +7,8 @@ use Ali\Logistic\Dictionary\RoutesKind;
 
 $routeKinds = RoutesKind::getLabels();
 
+
+$replicate = isset($arResult['replicate']) && boolval($arResult['replicate']) ? true : false;
 $number = isset($arResult['number']) && (int)$arResult['number'] ? (int)$arResult['number'] : 0;
 $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : null;
 
@@ -55,9 +58,9 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 	</td>
 	<td>
 		<?php
-			if(isset($route['ID'])){
+			if(!$replicate && isset($route['ID'])){
 				echo Html::hiddenInput("ROUTES[{$number}][ID]",$route['ID']);
-				echo Html::a("X",$component->getUrl("rmroute",['id'=>$route['ID']]),['class'=>'btn btn-danger rmRoute']);
+				echo Html::a("X",$component->getActionUrl("rmroute",['id'=>$route['ID']]),['class'=>'btn btn-danger rmRoute']);
 			}else{
 				echo Html::a("X",null,['class'=>'btn btn-danger rmRouteForm']);
 			}

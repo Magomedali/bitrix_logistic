@@ -1,4 +1,5 @@
 <?php
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Ali\Logistic\helpers\Html;
 use Ali\Logistic\helpers\ArrayHelper;
@@ -8,12 +9,10 @@ use Ali\Logistic\Dictionary\WayOfTransportation;
 
 $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['deal'] : null;
 $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResult['routes'] : array();
+
+$APPLICATION->SetTitle($deal['NAME']);
 ?>
-<div class="row">
-	<div class="col-xs-12">
-		<h2>Заявка <?php echo Html::encode($deal['NAME']);?></h2>
-	</div>
-</div>
+
 
 <div class="row">
 	<div class="col-xs-4">

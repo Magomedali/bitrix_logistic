@@ -26,10 +26,33 @@ class AliProfile extends CBitrixComponent
     }
 
 
-    public function getUrl($action = null, $params = array()){
+    public function getUrl($subpage = null,$params = array()){
+
+        $page = $subpage ? $this->pageName."/".$subpage : $this->pageName;
+
+        
+        if(!empty($params) && is_array($params) && count($params)){
+            $url = "/".$page."/";
+            $arr_q = array();
+            foreach ($params as $key => $value) {
+                $arr_q[] = $key."=".$value;
+            }
+            if(count($arr_q)){
+                $query_string = implode("&", $arr_q);
+                $url .="?".$query_string; 
+            }
+        }else{
+            $url = "/".$page."/";
+        }
+        
+        return $url;
+    }
+
+    public function getActionUrl($action=null,$params = array()){
+        $page = $this->pageName;
 
         if($action != null || !empty($action)){
-            $url = "/".$this->pageName."/index.php?r=".$action;
+            $url = "/".$page."/index.php?r=".$action;
             if(!empty($params) && is_array($params) && count($params)){
                 $arr_q = array();
                 foreach ($params as $key => $value) {
@@ -41,11 +64,13 @@ class AliProfile extends CBitrixComponent
                 }
             }
         }else{
-            $url = "/".$this->pageName."/";
+            $url = "/".$page."/";
         }
         
         return $url;
     }
+
+
 
     protected function checkModules()
     {
@@ -64,9 +89,14 @@ class AliProfile extends CBitrixComponent
         $context = Application::getInstance()->getContext();
         $request = $context->getRequest();
 
-        if(isset($request['r'])){
 
-            $action = strtolower(trim(strip_tags($request['r'])))."Action";
+        $route = isset($this->arParams['route']) ? $this->arParams['route'] : null;
+
+       
+        if(isset($request['r']) || $route){
+
+            $route = isset($request['r']) ? $request['r'] : $route;
+            $action = strtolower(trim(strip_tags($route)))."Action";
 
             if(method_exists($this, $action)){
                 return $this->$action();
@@ -138,6 +168,10 @@ class AliProfile extends CBitrixComponent
         $this->arResult['user'] = $user;
 
         return $this->arResult;
+    }
+
+    public function alkAction(){
+        return $this->defaultAction();
     }
 
 
@@ -310,10 +344,6 @@ class AliProfile extends CBitrixComponent
             LocalRedirect($this->getUrl("organisations"));
         }
 
-        
-        // Contractors::integrateTo1C($org);
-        // exit;
-        
 
         $this->arResult = [
             'org'=>$org
@@ -387,6 +417,7 @@ class AliProfile extends CBitrixComponent
         $errors = array();
         $deal = array();
         $routes = array();
+        $replicate = false;
         if($request->isPost() && isset($request['DEAL'])){
             
             $deal = array();
@@ -468,13 +499,19 @@ class AliProfile extends CBitrixComponent
         }elseif(isset($request['id'])){
             $deal = Deals::getDeals((int)$request['id']);
             $routes = Routes::getRoutes((int)$request['id']);
+        }elseif(isset($request['replicate'])){
+            $deal = Deals::getDeals((int)$request['replicate']);
+            unset($deal['ID']);
+            $routes = Routes::getRoutes((int)$request['replicate']);
+            $replicate = true;
         }
 
         $this->arResult = [
             'errors'=>$errors,
             'deal'=>$deal,
             'contractors'=>$contractors,
-            'routes'=>$routes
+            'routes'=>$routes,
+            'replicate'=>$replicate
         ];
 
         return "deals/form";

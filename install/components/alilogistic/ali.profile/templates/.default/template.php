@@ -15,13 +15,10 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 /** @var CBitrixComponent $component */
 use \Bitrix\Main\Localization\Loc;
 
-$APPLICATION->SetTitle(getMessage("ALI_PROFILE_TITLE"));
-
-
+$APPLICATION->SetTitle('Личный кабинет');
 
 $user = is_array($arResult['user']) && count($arResult['user']) ? $arResult['user'] : null;
 
-// print_r($user);
 ?>
 <?php if(!empty($user)){ ?>
 

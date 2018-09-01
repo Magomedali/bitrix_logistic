@@ -1,4 +1,5 @@
 <?php
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Ali\Logistic\Dictionary\LoadingMethod;
 use Ali\Logistic\Dictionary\TypeOfVehicle;
@@ -14,25 +15,24 @@ $WayOfTransportation = WayOfTransportation::getLabels();
 $AdditionalEquipment = AdditionalEquipment::getLabels();
 $Documents = Documents::getLabels();
 
+$replicate = isset($arResult['replicate']) && boolval($arResult['replicate']) ? true : false;
 $errors = is_array($arResult['errors']) && count($arResult['errors']) ? $arResult['errors'] : null;
 $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['deal'] : null;
 $contractors = is_array($arResult['contractors']) && count($arResult['contractors']) ? $arResult['contractors'] : array();
 $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResult['routes'] : array();
 
 
+$title = $deal 
+			? $replicate ? "Копирование заявки ".$deal['NAME'] : $deal['NAME']
+			: 'Новая Заявка';
+
+
+$APPLICATION->SetTitle($title);
 
 ?>
 
 <div class="row form-deal-page">
-	<div class="row">
-		<div class="col-xs-6">
-			<?php if($deal){?>
-				<h3>Организация <?php echo $deal['NAME']?></h3>
-			<?php }else{ ?>
-				<h3>Новая Заявка</h3>
-			<?php } ?>
-		</div>
-	</div>
+
 	<?php 
 		if($errors){
 	?>
@@ -219,7 +219,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 			<div class="row">
 				<div class="col-xs-12">
 					<h4>Маршрут</h4>
-					<a href="<?php echo $component->getUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-success'>Добаить</a>
+					<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-success'>Добаить</a>
 					<table class="table table-bordered table-hover" id="formRoutesTable">
 						<thead>
 							<tr>
@@ -261,7 +261,7 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 			
 			<div class="row">
 				<div class="col-xs-6">
-					<?php if($deal && isset($deal['ID']) && $deal['ID']){?>
+					<?php if(!$replicate && $deal && isset($deal['ID']) && $deal['ID']){?>
 						<input type="hidden" name="DEAL[ID]" value="<?php echo $deal['ID']?>">
 						<input type="submit" value="Сохранить" class="btn btn-primary">
 						<?php if(boolval($deal['IS_DRAFT'])){?>

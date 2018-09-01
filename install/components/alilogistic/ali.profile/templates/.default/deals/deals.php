@@ -1,4 +1,5 @@
 <?php
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Ali\Logistic\Dictionary\DealStates;
 
@@ -18,14 +19,12 @@ switch ($type) {
 		$type = "Текущие заявки";
 		break;
 }
-$APPLICATION->SetTitle($title);
+
+
+$APPLICATION->SetTitle($type);
 ?>
 
-<div class="row">
-	<div class="col-xs-12">
-		<h2><?php echo $title; ?></h2>
-	</div>
-</div>
+
 <div class="organisations-page">
 	<div class="panel">
 		<a href="<?php echo $component->getUrl('dealform')?>">Создать заявку</a>
@@ -71,7 +70,7 @@ $APPLICATION->SetTitle($title);
 								<td>
 									<a href="<?php echo $component->getUrl('viewdeal',['id'=>$o['ID']])?>">Подробнее</a>
 									<a href="<?php echo $component->getUrl('dealform',['id'=>$o['ID']])?>">Редактировать</a>
-									<a href="<?php echo $component->getUrl('dealform',['copy_id'=>$o['ID']])?>">Копировать</a>
+									<a href="<?php echo $component->getUrl('dealform',['replicate'=>$o['ID']])?>">Копировать</a>
 								</td>
 							</tr>
 

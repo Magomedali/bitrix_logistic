@@ -1,7 +1,10 @@
 <?php
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] : null;
 
+
+$APPLICATION->SetTitle("Подтверждение удаления организации!");
 ?>
 
 <div class="row">
