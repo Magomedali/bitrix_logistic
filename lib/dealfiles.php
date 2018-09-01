@@ -314,4 +314,51 @@ class DealFiles{
         return $res;
     }
 
+
+    public static function sendFileTTH($deal_id,$fNumber,$fileBinary){
+
+        $fPath = ALI_FILE_TTH_PATH;
+        $typeFile = DealFileType::FILE_TTH;
+
+        $res = new Result();
+
+        $row = DealFilesSchemaTable::getRow(array("select"=>['ID','FILE_NUMBER','FILE','DEAL_ID'],'filter'=>['FILE_NUMBER'=>$fNumber,'DEAL_ID'=>$deal_id,'FILE_TYPE'=>$typeFile]));
+
+        $file_id = 0;
+        $fName = "id#".$deal_id."__num".$fNumber."_file_tth.pdf";
+        if(isset($row['ID']) && $row['ID']){
+            $file_id  = $row['ID'];
+            $fName = isset($row['FILE']) && file_exists($fPath.$row['FILE']) ? $row['FILE'] : $fName ;
+        }
+        
+
+        $file = $fPath.$fName;
+        $pdf = fopen($file, "w");
+        fwrite($pdf, $fileBinary);
+        fclose($pdf);
+
+        if(file_exists($file)){
+            $data = array();
+            $data['DEAL_ID'] = $deal_id;
+            $data['FILE_TYPE'] = $typeFile;
+            $data['FILE_NUMBER'] = $fNumber;
+            $data['FILE']=$fName;
+
+            try {
+                if($file_id){
+                    $res = DealFilesSchemaTable::update($row['ID'],$data);
+                }else{
+                    $res = DealFilesSchemaTable::add($data);
+                }
+            } catch (\Exception $e) {
+                unlink($file);
+                $res->addError(new Error($e->getMessage(),$e->getCode()));
+            }
+        }else{
+            $res->addError(new Error('Не удалось загрузить сайт на сервер сайта!',2));
+        }
+
+        return $res;
+    }
+
 }

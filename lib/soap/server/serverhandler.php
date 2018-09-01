@@ -208,22 +208,25 @@ class ServerHandler
 
 		switch ($type) {
 			case 1:
-				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				$res = Deal::sendFileBill($uuid,$fileNumber,$data->binaryFile);
 				break;
 			case 2:
-				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				$res = Deal::sendFileAct($uuid,$fileNumber,$data->binaryFile);
 				break;
 			case 3:
-				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				$res = Deal::sendFileInvoice($uuid,$fileNumber,$data->binaryFile);
 				break;
 			case 4:
-				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				$res = Deal::sendFileContract($uuid,$fileNumber,$data->binaryFile);
 				break;
 			case 5:
-				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				$res = Deal::sendFileDriverAttorney($uuid,$fileNumber,$data->binaryFile);
 				break;
 			case 6:
-				$res = Deal::saveFileBill($uuid,$fileNumber,$data->binaryFile);
+				$res = Deal::sendFilePrintForm($uuid,$fileNumber,$data->binaryFile);
+				break;
+			case 7:
+				$res = Deal::sendFileTTH($uuid,$fileNumber,$data->binaryFile);
 				break;
 			
 			default:
@@ -267,6 +270,10 @@ class ServerHandler
 
 	public function sendFilePrintForm($data){
 		return $this->integrateFile($data,6);
+	}
+
+	public function sendFileTTH($data){
+		return $this->integrateFile($data,7);
 	}
 }
 ?>

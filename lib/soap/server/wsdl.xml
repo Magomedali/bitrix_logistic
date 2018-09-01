@@ -262,8 +262,12 @@
 			<input message="tns:sendFileRequestMsg"/>
 			<output message="tns:sendFileResponseMsg"/>
 		</operation>
-
+		
 		<operation name="sendFilePrintForm">
+			<input message="tns:sendFileRequestMsg"/>
+			<output message="tns:sendFileResponseMsg"/>
+		</operation>
+		<operation name="sendFileTTH">
 			<input message="tns:sendFileRequestMsg"/>
 			<output message="tns:sendFileResponseMsg"/>
 		</operation>
@@ -303,52 +307,62 @@
 		</operation>
 		
 		<operation name="sendFileAct">
-			<soap12bind:operation style="document" soapAction=""/>
+			<soapbind:operation style="document" soapAction=""/>
 			<input>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</input>
 			<output>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</output>
 		</operation>
 
 		<operation name="sendFileInvoice">
-			<soap12bind:operation style="document" soapAction=""/>
+			<soapbind:operation style="document" soapAction=""/>
 			<input>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</input>
 			<output>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</output>
 		</operation>
 
 		<operation name="sendFileContract">
-			<soap12bind:operation style="document" soapAction=""/>
+			<soapbind:operation style="document" soapAction=""/>
 			<input>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</input>
 			<output>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</output>
 		</operation>
 
 		<operation name="sendFileDriverAttorney">
-			<soap12bind:operation style="document" soapAction=""/>
+			<soapbind:operation style="document" soapAction=""/>
 			<input>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</input>
 			<output>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</output>
 		</operation>
 
 		<operation name="sendFilePrintForm">
-			<soap12bind:operation style="document" soapAction=""/>
+			<soapbind:operation style="document" soapAction=""/>
 			<input>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
 			</input>
 			<output>
-				<soap12bind:body use="literal"/>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileTTH">
+			<soapbind:operation style="document" soapAction=""/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
 			</output>
 		</operation>
 	</binding>
@@ -428,6 +442,16 @@
 		</operation>
 
 		<operation name="sendFilePrintForm">
+			<soap12bind:operation style="document" soapAction=""/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+
+		<operation name="sendFileTTH">
 			<soap12bind:operation style="document" soapAction=""/>
 			<input>
 				<soap12bind:body use="literal"/>

@@ -179,16 +179,36 @@ class AliProfile extends CBitrixComponent
 
 
 
+    public function profileformAction(){
+        
+        $id = (int)CUser::GetID();
+        if(!$id) LocalRedirect($this->getUrl());
 
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
 
+        $errors = array();
 
+        $user = UserTable::getRow(['select'=>['*'],'filter'=>['ID'=>$id]]);
 
+        if($request->isPost() && isset($request['USER']) && is_array($request['USER']) && count($request['USER'])){
+            $user = $request['USER'];
+            
+            $CUser =  new CUser;
 
-    public function personalAction(){
-        $id = CUser::GetID();
+            if($CUser->Update($id,$user)){
+                LocalRedirect($this->getUrl());
+            }else{
+                $errors = [$CUser->LAST_ERROR];
+            }
+        }
 
+        $this->arResult = [
+            'user' => $user,
+            'errors'=>$errors
+        ];
 
-        return "personal/data";
+        return "personal/form";
     }
 
 
@@ -209,8 +229,6 @@ class AliProfile extends CBitrixComponent
     public function organisationsAction(){
         
         $id = CUser::GetID();
-
-
 
         $orgs = Contractors::getOrgs(null,$params);
 
@@ -645,6 +663,7 @@ class AliProfile extends CBitrixComponent
 
         $contrs_uuids = ArrayHelper::map($contractors,'ID','INTEGRATED_ID');
         $parameters = array();
+        
         if($request->isPost() && isset($request['dateFrom']) && isset($request['dateTo']) && $request['dateFrom'] && $request['dateTo'] && isset($request['contractor']) && array_key_exists($request['contractor'], $contrs_uuids)){
 
             

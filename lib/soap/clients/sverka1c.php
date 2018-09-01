@@ -2,7 +2,8 @@
 
 namespace Ali\Logistic\soap\clients;
 
-
+use Bitrix\Main\Result;
+use Bitrix\Main\Error;
 
 /**
 * 
@@ -14,15 +15,20 @@ class Sverka1C extends Client1C
 
 	public static function get($data){
 		
+		$result = new Result();
 
 		$client = self::init();
 
-		if(!$client) return false;
+		if(!$client){
+			$result->addError(new Error("Сервер 1С не доступен",404));
+			return $result;
+		}
 		
 		$soap_data['organizationsnds'] = $data['with_nds'] && true;
-		$soap_data['customeruuid'] = $data['contractor'];
+		$soap_data['customeruuid'] = "10f36d90-6fea-11e4-bebb-d43d7ef75401";//$data['contractor'];
 		$soap_data['datefrom'] = date("Y-m-d",strtotime($data['dateFrom']));
 		$soap_data['dateby'] = date("Y-m-d",strtotime($data['dateTo']));
+		
 		
 		try {
 
@@ -30,36 +36,35 @@ class Sverka1C extends Client1C
 			$request->parametrs = $soap_data;
 			$response = $client->reconciliationreport($request);
 
-			$f = fopen("sverka.pdf", "w");
+			$f = fopen(__DIR__."/sverka.pdf", "w");
+
+			$tf = fopen(__DIR__."/sverka.txt", "w");
 			fwrite($f, $response);
+			fwrite($tf, $response);
 			fclose($f);
+			fclose($tf);
 			exit;
-
-			$integrator = new self();
-			$integrator->parseResponce($response);
-
-			if($integrator->success  && $integrator->uuid){
-				$res = ContractorsSchemaTable::update($data['ID'],['IS_INTEGRATED'=>true,'INTEGRATED_ID'=>$integrator->uuid,'INTEGRATE_ERROR'=>false,'INTEGRATE_ERROR_MSG'=>""]);
-
-				return $res->isSuccess();
-			}else{
-				$res = ContractorsSchemaTable::update($params['ID'],['INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$integrator->error_msg]);
-
-				return $res->isSuccess();
-			}
-
 		}catch(\SoapFault $e){
 			
 			print_r($e->getMessage());
 			exit;
-			return false;
+			
+			$result->addError(new Error($e->getMessage(),$e->getCode()));
+			return $result;
+			
 		}catch (\Exception $e) {
-			return false;
+
+			print_r($e->getMessage());
+			exit;
+			
+			$result->addError(new Error($e->getMessage(),$e->getCode()));
+			return $result;
 		}
 		
 
 		
-		return false;
+		$result->addError(new Error("Сервер 1С не доступен",404));
+		return $result;
 	}
 
 

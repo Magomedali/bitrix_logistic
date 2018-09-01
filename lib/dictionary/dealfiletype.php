@@ -15,6 +15,7 @@ class DealFileType extends \Ali\Logistic\Dictionary\Dictionary{
 	const FILE_CONTRACT = 4;
 	const FILE_DRIVER_ATTORNEY = 5;
 	const FILE_PRINT_FORM = 6;
+	const FILE_TTH = 6;
 
 
 	protected static $labels = array(
@@ -24,6 +25,7 @@ class DealFileType extends \Ali\Logistic\Dictionary\Dictionary{
 		self::FILE_CONTRACT=>"Договор",
 		self::FILE_DRIVER_ATTORNEY=>"Доверенность на водителя",
 		self::FILE_PRINT_FORM=>"Печатная форма заявки",
+		self::FILE_TTH=>"Товаро-транспортные документы",
 	); 
 
 }

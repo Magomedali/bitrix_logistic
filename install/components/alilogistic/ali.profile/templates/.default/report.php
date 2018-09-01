@@ -35,13 +35,13 @@ $parameters = is_array($arResult['parameters']) && count($arResult['parameters']
 				<div class="col-xs-3">
 					<label>С</label>
 					<?php
-						echo Html::input("date",'dateFrom',$parameters && isset($parameters['dateFrom']) ? date("Y-m-d\TH:i",strtotime($parameters['dateFrom'])) : null,['class'=>'form-control']);
+						echo Html::input("date",'dateFrom',$parameters && isset($parameters['dateFrom']) ? date("Y-m-d\TH:i",strtotime($parameters['dateFrom'])) : date("Y-m-01",time()),['class'=>'form-control']);
 					?>
 				</div>
 				<div class="col-xs-3">
 					<label>По</label>
 					<?php
-						echo Html::input("date",'dateTo',$parameters && isset($parameters['dateTo']) ? date("Y-m-d\TH:i",strtotime($parameters['dateTo'])) : null,['class'=>'form-control']);
+						echo Html::input("date",'dateTo',$parameters && isset($parameters['dateTo']) ? date("Y-m-d\TH:i",strtotime($parameters['dateTo'])) : date("Y-m-30",time()),['class'=>'form-control']);
 					?>
 				</div>
 				<div class="col-xs-3">

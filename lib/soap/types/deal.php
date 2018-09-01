@@ -190,20 +190,20 @@ class Deal
 
 
 
-    public static function saveFileBill($dealUuid,$fNumber,$file){
+    public static function sendFileBill($dealUuid,$fNumber,$file){
         $res = self::checkDealExists($dealUuid);
         if(!$res->isSuccess()) return $res;
-        return \Ali\Logistic\DealFiles::saveFileBill($row['ID'],$fNumber,$file);
+        return \Ali\Logistic\DealFiles::sendFileBill($row['ID'],$fNumber,$file);
     }
 
 
 
 
-    public static function saveFileAct($dealUuid,$fNumber,$file){
+    public static function sendFileAct($dealUuid,$fNumber,$file){
         $res = self::checkDealExists($dealUuid);
         if(!$res->isSuccess()) return $res;
 
-        return \Ali\Logistic\DealFiles::saveFileAct($row['ID'],$fNumber,$file);
+        return \Ali\Logistic\DealFiles::sendFileAct($row['ID'],$fNumber,$file);
     }
 
 
@@ -244,6 +244,14 @@ class Deal
         if(!$res->isSuccess()) return $res;
 
         return \Ali\Logistic\DealFiles::sendFilePrintForm($row['ID'],$fNumber,$file);
+    }
+
+
+    public static function sendFileTTH($dealUuid,$fNumber,$file){
+        $res = self::checkDealExists($dealUuid);
+        if(!$res->isSuccess()) return $res;
+
+        return \Ali\Logistic\DealFiles::sendFileTTH($row['ID'],$fNumber,$file);
     }
 
 

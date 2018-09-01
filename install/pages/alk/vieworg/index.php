@@ -24,7 +24,9 @@ if($USER->IsAuthorized()) {
 	"alilogistic:ali.profile",
 	"",
 	Array(
-		'route'=>$dir_name
+		'route'=>$dir_name,
+		"ADD_SECTIONS_CHAIN" => "Y",
+		"SET_TITLE" => "Y",
 	)
 	);
 

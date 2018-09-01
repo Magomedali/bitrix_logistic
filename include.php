@@ -11,6 +11,7 @@ define("ALI_FILE_ACTS_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MO
 define("ALI_FILE_CONTRACTS_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/contracts/");
 define("ALI_FILE_DRIVER_ATTORNEY_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/driver_attorney/");
 define("ALI_FILE_PRINT_FORM_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/print_form/");
+define("ALI_FILE_TTH_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/tth/");
 
 
 define("ALI_LOG_SOAP_SERVER_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/lib/soap/Server/output/");
