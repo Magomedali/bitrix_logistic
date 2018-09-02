@@ -839,22 +839,37 @@ class AliProfile extends CBitrixComponent
         $contrs_uuids = ArrayHelper::map($contractors,'ID','INTEGRATED_ID');
         $parameters = array();
         
+        $errors = null;
+        $revice = null;
+        $oldRevises = null;
         if($request->isPost() && isset($request['dateFrom']) && isset($request['dateTo']) && $request['dateFrom'] && $request['dateTo'] && isset($request['contractor']) && array_key_exists($request['contractor'], $contrs_uuids)){
 
             
             $parameters['with_nds'] = isset($request['with_nds']);
             $parameters['contractor'] = $contrs_uuids[$request['contractor']];
+            $parameters['contractor_id']=$request['contractor'];
             $parameters['dateFrom'] = date("Y-m-d H:i",strtotime($request['dateFrom']));
             $parameters['dateTo'] = date("Y-m-d H:i",strtotime($request['dateTo']));
 
+            $oldRevises = ReviseSchemaTable::getList(['select'=>['*'],'filter'=>['CONTRACTOR_ID'=>$request['contractor']]])->fetchAll();
 
-            $report = Sverka1C::get($parameters);
+            $result = Sverka1C::get($parameters);
             
+            if($result->isSuccess()){
+                $revice_id = $result->getId();
+
+                $revice = ReviseSchemaTable::getRow(['select'=>['*'],'filter'=>['CONTRACTOR_ID'=>$request['contractor'],'ID'=>$revice_id]]);
+            }else{
+                $errors = $result->getErrorMessages();
+            }
         }
 
         $this->arResult = [
             'contractors'=>$contractors,
-            'parameters'=>$parameters
+            'parameters'=>$parameters,
+            'errors'=>$errors,
+            'revice'=>$revice,
+            'oldRevises'=>$oldRevises
         ];
 
         return "report";

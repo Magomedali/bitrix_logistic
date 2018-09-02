@@ -4,6 +4,8 @@ namespace Ali\Logistic\soap\clients;
 
 use Bitrix\Main\Result;
 use Bitrix\Main\Error;
+use Bitrix\Main\Type\DateTime;
+use Ali\Logistic\Schemas\ReviseSchemaTable;
 
 /**
 * 
@@ -29,34 +31,47 @@ class Sverka1C extends Client1C
 		$soap_data['datefrom'] = date("Y-m-d",strtotime($data['dateFrom']));
 		$soap_data['dateby'] = date("Y-m-d",strtotime($data['dateTo']));
 		
-		
 		try {
 
 			$request = new \stdClass();
 			$request->parametrs = $soap_data;
 			$response = $client->reconciliationreport($request);
 
-			$f = fopen(__DIR__."/sverka.pdf", "w");
+			if($response){
+				$r['DATE_START'] = DateTime::(strtotime($soap_data['datefrom']));
+				$r['DATE_FINISH'] = DateTime::(strtotime($soap_data['dateby']));
+				$r['CONTRACTOR_ID'] = $data['contractor_id'];
+				$r['CONTRACTOR_UUID'] = $soap_data['customeruuid'];
+				$r['WITH_NDS'] = $soap_data['organizationsnds']  && true;
 
-			$tf = fopen(__DIR__."/sverka.txt", "w");
-			fwrite($f, $response);
-			fwrite($tf, $response);
-			fclose($f);
-			fclose($tf);
-			exit;
+				$file = "revis_".$soap_data['customeruuid']."_".date("YmdHis",time()).".pdf";
+				$path = ALI_REVISES_PATH;
+				$filePath = $path.$file;
+				if($path){
+					$f = fopen($filePath, "w");
+					fwrite($tf, $response);
+					fclose($f);
+				}
+
+				if(file_exists($filePath)){
+					$r['FILE'] = $file;
+
+					$result = ReviseSchemaTable::add($r);
+					return $result;
+				}else{
+					$result->addError(new Error("Сверка не сохранена. Ошибка при сохранении сверки в файл!",404));
+				}
+			}else{
+				$result->addError(new Error("Сверка не получена!",404));
+			}
+
+			
+			
 		}catch(\SoapFault $e){
-			
-			print_r($e->getMessage());
-			exit;
-			
 			$result->addError(new Error($e->getMessage(),$e->getCode()));
 			return $result;
 			
 		}catch (\Exception $e) {
-
-			print_r($e->getMessage());
-			exit;
-			
 			$result->addError(new Error($e->getMessage(),$e->getCode()));
 			return $result;
 		}
