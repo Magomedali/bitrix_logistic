@@ -17,7 +17,7 @@ abstract class Client1C
 	public $uuid;
 	public $error_msg = null;
 	public $doc_number = null;
-
+	public $revise = null;
 
 
 	public $log_path = "logs/";
@@ -52,7 +52,11 @@ abstract class Client1C
 			$this->doc_number = $response->return->number;
 		}
 
-		$this->log("responce",json_encode($response));
+		if(isset($response->return) && isset($response->return->td) && $response->return->td != null){
+			$this->revise = $response->return->td;
+		}
+
+		//$this->log("responce",json_encode($response));
 	}
 
 	public function init(){

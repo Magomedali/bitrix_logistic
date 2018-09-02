@@ -816,11 +816,6 @@ class AliProfile extends CBitrixComponent
         }
         
         LocalRedirect($this->getUrl());
-        $this->arResult=[
-            'files'=>$bills
-        ];
-
-        return 'bills';
     }
 
 
@@ -838,6 +833,7 @@ class AliProfile extends CBitrixComponent
         $request = $context->getRequest();
 
         $contrs_uuids = ArrayHelper::map($contractors,'ID','INTEGRATED_ID');
+        $contrs_ids = ArrayHelper::map($contractors,'ID','ID');
         $parameters = array();
         
         $errors = null;
@@ -852,8 +848,6 @@ class AliProfile extends CBitrixComponent
             $parameters['dateFrom'] = date("Y-m-d H:i",strtotime($request['dateFrom']));
             $parameters['dateTo'] = date("Y-m-d H:i",strtotime($request['dateTo']));
 
-            $oldRevises = ReviseSchemaTable::getList(['select'=>['*'],'filter'=>['CONTRACTOR_ID'=>$request['contractor']]])->fetchAll();
-
             $result = Sverka1C::get($parameters);
             
             if($result->isSuccess()){
@@ -863,6 +857,8 @@ class AliProfile extends CBitrixComponent
             }else{
                 $errors = $result->getErrorMessages();
             }
+        }else{
+            $oldRevises = ReviseSchemaTable::getList(['select'=>['*'],'filter'=>['CONTRACTOR_ID'=>$contrs_ids],'order'=>['CREATED_AT'=>'DESC']])->fetchAll();
         }
 
         $this->arResult = [
@@ -877,4 +873,49 @@ class AliProfile extends CBitrixComponent
     }
 
 
+
+    public function downloadReviceAction(){
+
+
+        $contractors = User::getCurrentUserIntegratedContractors();
+
+        if(!is_array($contractors) || !count($contractors)){
+            LocalRedirect($this->getUrl());
+        }
+        $contrs_ids = ArrayHelper::map($contractors,'ID','ID');
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        if(isset($request['revice']) && (int)$request['revice']){
+            $file = ReviseSchemaTable::getRow(['select'=>['*'],'filter'=>['CONTRACTOR_ID'=>$contrs_ids,'ID'=>(int)$request['revice']]]);
+
+            if(isset($file['ID']) && $file['ID'] && isset($file['FILE'])){
+                $path = ALI_REVISES_PATH;
+               
+                if(file_exists($path.$file['FILE'])){
+
+                    global $APPLICATION;
+                    $APPLICATION->RestartBuffer();
+
+                    header("Content-type; text/pdf; charset='utf-8'");
+                    header("Cache-Control: no-cache");
+                    // header("Content-Description: File Transfer");
+                    // header("Content-Disposition: attachment; filename=АктСверки");
+                    header("Content-Type: application/pdf");
+                    header("Content-Transfer-Encoding: binary");
+                    readfile($path.$file['FILE']);
+                    exit;
+
+                }
+            }
+                
+            $this->arResult=[
+                'error'=>"Файл не найден!"
+            ];
+            return "error";
+        }
+        
+        LocalRedirect($this->getUrl());
+    }
 }

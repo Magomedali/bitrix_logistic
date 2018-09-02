@@ -50,13 +50,13 @@ $file_path = ALI_REVISES_PATH;
 				<div class="col-xs-3">
 					<label>С</label>
 					<?php
-						echo Html::input("date",'dateFrom',$parameters && isset($parameters['dateFrom']) ? date("Y-m-d\TH:i",strtotime($parameters['dateFrom'])) : date("Y-m-01",time()),['class'=>'form-control']);
+						echo Html::input("date",'dateFrom',$parameters && isset($parameters['dateFrom']) ? date("Y-m-d",strtotime($parameters['dateFrom'])) : date("Y-m-01",time()),['class'=>'form-control']);
 					?>
 				</div>
 				<div class="col-xs-3">
 					<label>По</label>
 					<?php
-						echo Html::input("date",'dateTo',$parameters && isset($parameters['dateTo']) ? date("Y-m-d\TH:i",strtotime($parameters['dateTo'])) : date("Y-m-30",time()),['class'=>'form-control']);
+						echo Html::input("date",'dateTo',$parameters && isset($parameters['dateTo']) ? date("Y-m-d",strtotime($parameters['dateTo'])) : date("Y-m-30",time()),['class'=>'form-control']);
 					?>
 				</div>
 				<div class="col-xs-3">
@@ -88,10 +88,12 @@ $file_path = ALI_REVISES_PATH;
 </div>
 <div class="row">
 	<div class="col-xs-12">
-		<?php if($revice && isset($revice['ID']) && isset($revice['FILE']) && file_exists($path.$revice['FILE'])){ ?>
-		<div class="row">
+		<?php 
+
+		if($revice && isset($revice['ID']) && isset($revice['FILE']) && file_exists($file_path.$revice['FILE'])){ ?>
+		<div class="row" style="margin-top: 25px">
 			<div class="col-xs-6">
-				<?php echo Html::a("Сформированная сверка",$component->getAction("downloadRevice",['revice'=>$revice['ID']],['target'=>"_blank"]));?>
+				<?php echo Html::a("Сформированная сверка",$component->getActionUrl("downloadRevice",['revice'=>$revice['ID']]),['target'=>"_blank"]);?>
 			</div>
 		</div>
 		<?php } ?>
@@ -99,7 +101,7 @@ $file_path = ALI_REVISES_PATH;
 </div>
 
 
-<div class="row" style="margin-top: 50px;">
+<div class="row" style="margin-top: 25px;">
 	<div class="col-xs-12">
 		<table class="table table-bordered  table-hover">
 			<thead>
@@ -108,6 +110,7 @@ $file_path = ALI_REVISES_PATH;
 					<th>Дата По</th>
 					<th>Организация</th>
 					<th>C НДС</th>
+					<th>Дата формирования</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -123,6 +126,7 @@ $file_path = ALI_REVISES_PATH;
 								<td><?php echo date("d.m.Y",strtotime($o['DATE_FINISH']));?></td>
 								<td><?php echo array_key_exists($o['CONTRACTOR_ID'], $contrs_name) ? $contrs_name[$o['CONTRACTOR_ID']] : "";?></td>
 								<td><?php echo $o['WITH_NDS'] && 1 ? "Да" : "Нет";?></td>
+								<td><?php echo date("H:i d.m.Y",strtotime($o['CREATED_AT']));?></td>
 								<td>
 									<?php 
 										if(file_exists($file_path.$f['FILE'])){

@@ -27,7 +27,7 @@ class Sverka1C extends Client1C
 		}
 		
 		$soap_data['organizationsnds'] = $data['with_nds'] && true;
-		$soap_data['customeruuid'] = "10f36d90-6fea-11e4-bebb-d43d7ef75401";//$data['contractor'];
+		$soap_data['customeruuid'] = $data['contractor'];//"10f36d90-6fea-11e4-bebb-d43d7ef75401"
 		$soap_data['datefrom'] = date("Y-m-d",strtotime($data['dateFrom']));
 		$soap_data['dateby'] = date("Y-m-d",strtotime($data['dateTo']));
 		
@@ -37,21 +37,25 @@ class Sverka1C extends Client1C
 			$request->parametrs = $soap_data;
 			$response = $client->reconciliationreport($request);
 
-			if($response){
+			$integrator = new self();
+			$integrator->parseResponce($response);
+			if($integrator->success && $integrator->revise){
 				$r['DATE_START'] = DateTime::createFromTimestamp(strtotime($soap_data['datefrom']));
 				$r['DATE_FINISH'] = DateTime::createFromTimestamp(strtotime($soap_data['dateby']));
 				$r['CONTRACTOR_ID'] = $data['contractor_id'];
 				$r['CONTRACTOR_UUID'] = $soap_data['customeruuid'];
 				$r['WITH_NDS'] = $soap_data['organizationsnds']  && true;
 
-				$file = "revis_".$soap_data['customeruuid']."_".date("YmdHis",time()).".pdf";
+				$file = "revise_".$soap_data['customeruuid']."_".date("YmdHis",time()).".pdf";
 				$path = ALI_REVISES_PATH;
 				$filePath = $path.$file;
 				if($path){
+
 					$f = fopen($filePath, "w");
-					fwrite($tf, $response);
+					fwrite($f, $integrator->revise);
 					fclose($f);
 				}
+
 
 				if(file_exists($filePath)){
 					$r['FILE'] = $file;
@@ -63,7 +67,8 @@ class Sverka1C extends Client1C
 					return $result;
 				}
 			}else{
-				$result->addError(new Error("Сверка не получена!",404));
+				$error = $integrator->error ? $integrator->error : "Сверка не получена!";
+				$result->addError(new Error($error, 404));
 				return $result;
 			}
 
