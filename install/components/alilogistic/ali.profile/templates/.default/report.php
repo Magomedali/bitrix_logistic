@@ -91,7 +91,7 @@ $file_path = ALI_REVISES_PATH;
 		<?php if($revice && isset($revice['ID']) && isset($revice['FILE']) && file_exists($path.$revice['FILE'])){ ?>
 		<div class="row">
 			<div class="col-xs-6">
-				<?php echo Html::a("Сформированная сверка",$component->getAction("downloadRevice",['revice'=>$revice['ID']],,['target'=>"_blank"]))?>
+				<?php echo Html::a("Сформированная сверка",$component->getAction("downloadRevice",['revice'=>$revice['ID']],['target'=>"_blank"]));?>
 			</div>
 		</div>
 		<?php } ?>
@@ -99,7 +99,7 @@ $file_path = ALI_REVISES_PATH;
 </div>
 
 
-<div class="row">
+<div class="row" style="margin-top: 50px;">
 	<div class="col-xs-12">
 		<table class="table table-bordered  table-hover">
 			<thead>
@@ -114,7 +114,7 @@ $file_path = ALI_REVISES_PATH;
 			<tbody>
 				<?php
 					if($oldRevises){
-						$contrs_name = ArrayHelper::map($contractors,'ID','NAME')
+						$contrs_name = ArrayHelper::map($contractors,'ID','NAME');
 						foreach ($oldRevises as $o) {
 							?>
 
