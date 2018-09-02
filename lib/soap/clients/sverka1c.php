@@ -38,8 +38,8 @@ class Sverka1C extends Client1C
 			$response = $client->reconciliationreport($request);
 
 			if($response){
-				$r['DATE_START'] = DateTime::(strtotime($soap_data['datefrom']));
-				$r['DATE_FINISH'] = DateTime::(strtotime($soap_data['dateby']));
+				$r['DATE_START'] = DateTime::createFromTimestamp(strtotime($soap_data['datefrom']));
+				$r['DATE_FINISH'] = DateTime::createFromTimestamp(strtotime($soap_data['dateby']));
 				$r['CONTRACTOR_ID'] = $data['contractor_id'];
 				$r['CONTRACTOR_UUID'] = $soap_data['customeruuid'];
 				$r['WITH_NDS'] = $soap_data['organizationsnds']  && true;
@@ -60,9 +60,11 @@ class Sverka1C extends Client1C
 					return $result;
 				}else{
 					$result->addError(new Error("Сверка не сохранена. Ошибка при сохранении сверки в файл!",404));
+					return $result;
 				}
 			}else{
 				$result->addError(new Error("Сверка не получена!",404));
+				return $result;
 			}
 
 			
