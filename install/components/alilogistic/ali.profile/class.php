@@ -17,6 +17,7 @@ use Ali\Logistic\soap\clients\Sverka1C;
 use Ali\Logistic\Schemas\DealsSchemaTable;
 use Ali\Logistic\Dictionary\DealFileType;
 use Ali\Logistic\Dictionary\DealStates;
+use Ali\Logistic\Schemas\ReviseSchemaTable;
 
 class AliProfile extends CBitrixComponent
 {
