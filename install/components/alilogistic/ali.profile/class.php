@@ -15,6 +15,8 @@ use Ali\Logistic\soap\clients\CheckINN;
 use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\soap\clients\Sverka1C;
 use Ali\Logistic\Schemas\DealsSchemaTable;
+use Ali\Logistic\Dictionary\DealFileType;
+use Ali\Logistic\Dictionary\DealStates;
 
 class AliProfile extends CBitrixComponent
 {
@@ -156,6 +158,11 @@ class AliProfile extends CBitrixComponent
     }
 
 
+
+
+
+
+
     public function defaultAction(){
         
         $context = Application::getInstance()->getContext();
@@ -173,6 +180,10 @@ class AliProfile extends CBitrixComponent
     public function alkAction(){
         return $this->defaultAction();
     }
+
+
+
+
 
 
 
@@ -517,6 +528,11 @@ class AliProfile extends CBitrixComponent
         }elseif(isset($request['id'])){
             $deal = Deals::getDeals((int)$request['id']);
             $routes = Routes::getRoutes((int)$request['id']);
+
+            if((int)$deal['STATE'] >= DealStates::IN_PLANNING){
+                LocalRedirect($this->getUrl());
+            } 
+
         }elseif(isset($request['replicate'])){
             $deal = Deals::getDeals((int)$request['replicate']);
             unset($deal['ID']);
@@ -654,9 +670,6 @@ class AliProfile extends CBitrixComponent
 
 
 
-
-
-
     public function viewdealAction(){
         $context = Application::getInstance()->getContext();
         $request = $context->getRequest();
@@ -699,7 +712,114 @@ class AliProfile extends CBitrixComponent
         ];
 
 
-        return "deals/search";
+        return "deals/deals";
+    }
+
+
+
+    public function billsAction(){
+        $files = User::getFiles(DealFileType::FILE_BILL);
+
+        $this->arResult=[
+            'files'=>$files,
+            'type'=>DealFileType::FILE_BILL
+        ];
+
+        return 'bills';
+    }
+
+
+
+    public function actsAction(){
+        $files = User::getFiles(DealFileType::FILE_ACT);
+
+        $this->arResult=[
+            'files'=>$files,
+            'type'=>DealFileType::FILE_ACT
+        ];
+
+        return 'bills';
+    }
+
+
+    public function invoicesAction(){
+        $files = User::getFiles(DealFileType::FILE_INVOICE);
+
+        $this->arResult=[
+            'files'=>$files,
+            'type'=>DealFileType::FILE_INVOICE
+        ];
+
+        return 'bills';
+    }
+
+
+
+    public function tthAction(){
+        $files = User::getFiles(DealFileType::FILE_TTH);
+
+        $this->arResult=[
+            'files'=>$files,
+            'type'=>DealFileType::FILE_TTH
+        ];
+
+        return 'bills';
+    }
+
+
+    public function docsAction(){
+        $files = User::getFiles(DealFileType::FILE_CONTRACT);
+
+        $this->arResult=[
+            'files'=>$files,
+            'type'=>DealFileType::FILE_CONTRACT
+        ];
+
+        return 'bills';
+    }
+
+
+
+    public function downloadFileAction(){
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        if(isset($request['f']) && (int)$request['f']){
+            $file = User::getDealFile($request['f']);
+
+            if(isset($file['ID']) && $file['ID'] && isset($file['FILE'])){
+                $path = DealFileType::getFilePath($file['FILE_TYPE']);
+               
+                if(file_exists($path.$file['FILE'])){
+
+                    global $APPLICATION;
+                    $APPLICATION->RestartBuffer();
+
+                    header("Content-type; text/pdf; charset='utf-8'");
+                    header("Cache-Control: no-cache");
+                    // header("Content-Description: File Transfer");
+                    // header("Content-Disposition: attachment; filename=file");
+                    header("Content-Type: application/pdf");
+                    header("Content-Transfer-Encoding: binary");
+                    readfile($path.$file['FILE']);
+                    exit;
+
+                }
+            }
+                
+            $this->arResult=[
+                'error'=>"Файл не найден!"
+            ];
+            return "error";
+        }
+        
+        LocalRedirect($this->getUrl());
+        $this->arResult=[
+            'files'=>$bills
+        ];
+
+        return 'bills';
     }
 
 

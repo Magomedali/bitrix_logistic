@@ -249,7 +249,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
                             $types = \Ali\Logistic\Dictionary\WayOfTransportation::getLabels();
                             if(array_key_exists($v, $types) == false){
-                                return "Недопустимое значение типа!";
+                                return "Недопустимое значение для 'Способ перевозки'!";
                             }
 
                             return true;

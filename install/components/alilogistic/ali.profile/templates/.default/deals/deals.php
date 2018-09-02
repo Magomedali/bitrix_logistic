@@ -6,22 +6,6 @@ use Ali\Logistic\Dictionary\DealStates;
 $deals = is_array($arResult['deals']) && count($arResult['deals']) ? $arResult['deals'] : null;
 $type = isset($arResult['type']) ? $arResult['type'] : 'IS_ACTIVE';
 
-// switch ($type) {
-// 	case 'IS_ACTIVE':
-// 		$type = "Текущие заявки";
-// 		break;
-
-// 	case 'IS_DRAFT':
-// 		$type = "Черновики";
-// 		break;
-// 	COMPLETED
-// 	default:
-// 		$type = "Текущие заявки";
-// 		break;
-// }
-
-
-// $APPLICATION->SetTitle($type);
 ?>
 
 
@@ -65,8 +49,14 @@ $type = isset($arResult['type']) ? $arResult['type'] : 'IS_ACTIVE';
 								<td><?php ?></td>
 								<td><?php ?></td>
 								<td>
+									<?php 
+										if((int)$o['STATE'] < DealStates::IN_PLANNING){
+											?>
+											<a href="<?php echo $component->getUrl('dealform',['id'=>$o['ID']])?>">Редактировать</a>
+											<?php
+										}
+									?>
 									<a href="<?php echo $component->getUrl('viewdeal',['id'=>$o['ID']])?>">Подробнее</a>
-									<a href="<?php echo $component->getUrl('dealform',['id'=>$o['ID']])?>">Редактировать</a>
 									<a href="<?php echo $component->getUrl('dealform',['replicate'=>$o['ID']])?>">Копировать</a>
 								</td>
 							</tr>

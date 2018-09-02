@@ -28,4 +28,39 @@ class DealFileType extends \Ali\Logistic\Dictionary\Dictionary{
 		self::FILE_TTH=>"Товаро-транспортные документы",
 	); 
 
+
+
+	public static function getFilePath($code){
+
+		$path = null;
+				switch ($code) {
+                   case self::FILE_BILL:
+                        $path = ALI_FILE_BILLS_PATH;
+                        break;
+                    case self::FILE_INVOICE:
+                        $path = ALI_FILE_INVOICES_PATH;
+                        break;
+                    case self::FILE_ACT:
+                        $path = ALI_FILE_ACTS_PATH;
+                        break;
+                    case self::FILE_CONTRACT:
+                        $path = ALI_FILE_CONTRACTS_PATH;
+                        break;
+                    case self::FILE_DRIVER_ATTORNEY:
+                        $path = ALI_FILE_DRIVER_ATTORNEY_PATH;
+                        break;
+                    case self::FILE_PRINT_FORM:
+                        $path = ALI_FILE_PRINT_FORM_PATH;
+                        break;
+                    case self::FILE_TTH:
+                        $path = ALI_FILE_TTH_PATH;
+                        break;
+                    
+                    default:
+                        $path = "";
+                        break;
+                }
+        return $path;
+	}
+
 }

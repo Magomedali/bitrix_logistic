@@ -10,6 +10,10 @@ use \Bitrix\Main\Application;
 use \Bitrix\Main\Entity\Query;
 use Ali\Logistic\Schemas\CompaniesSchemaTable;
 use Ali\Logistic\Schemas\ContractorsSchemaTable;
+use Ali\Logistic\helpers\ArrayHelper;
+use Ali\Logistic\Schemas\DealsSchemaTable;
+use Ali\Logistic\Schemas\DealFilesSchemaTable;
+use Ali\Logistic\Dictionary\DealFileType;
 
 class User
 {   
@@ -52,5 +56,62 @@ class User
 
 
         return $contractors;
+    }
+
+
+    /**
+    * @return array
+    */
+    public static function getFiles($type){
+
+        $files = array();
+        $contractors = self::getCurrentUserIntegratedContractors();
+
+        if(!is_array($contractors) || !count($contractors)){
+            return array();
+        }
+
+        $contrs_uuids = ArrayHelper::map($contractors,'ID','ID');
+        
+        $deals = DealsSchemaTable::getList(['select'=>['ID'],'filter'=>['CONTRACTOR_ID'=>$contrs_uuids]])->fetchAll();
+
+        if(is_array($deals) && count($deals)){
+            $deals_id = ArrayHelper::map($deals,'ID','ID');
+        
+            $files = DealFilesSchemaTable::getList(['select'=>['*'],'filter'=>['DEAL_ID'=>$deals_id,'FILE_TYPE'=>$type]])->fetchAll();
+        }
+
+        return $files;
+    }
+
+
+
+    
+    
+
+
+
+    public static function getDealFile($id){
+
+        $file = array();
+        $contractors = self::getCurrentUserIntegratedContractors();
+
+        if(!is_array($contractors) || !count($contractors)){
+            return array();
+        }
+
+        $contrs_uuids = ArrayHelper::map($contractors,'ID','ID');
+        
+        $deals = DealsSchemaTable::getList(['select'=>['ID'],'filter'=>['CONTRACTOR_ID'=>$contrs_uuids]])->fetchAll();
+
+
+        if(is_array($deals) && count($deals)){
+            $deals_id = ArrayHelper::map($deals,'ID','ID');
+            
+            $file = DealFilesSchemaTable::getRow(['select'=>['*'],'filter'=>['ID'=>$id,'DEAL_ID'=>$deals_id]]);
+        }
+
+
+        return $file;
     }
 }
