@@ -11,6 +11,7 @@ use \Ali\Logistic\Schemas\DealFilesSchemaTable;
 use Ali\Logistic\Dictionary\DealFileType;
 use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\soap\Types\DealFiles as TypeDealFiles;
+use Bitrix\Main\Type\DateTime;
 
 use Bitrix\Main\Error;
 
@@ -21,16 +22,19 @@ class DealFiles{
         $deal_id = $Elementfile->getDealId();
         $fNumber = $Elementfile->fileNumber;
         $fileBinary = $Elementfile->binaryFile;
+
+        $fileDate = $Elementfile->fileDate ? DateTime::createFromTimestamp(strtotime($Elementfile->fileDate)) : DateTime();
         
 
         $res = new Result();
         $row = DealFilesSchemaTable::getRow(array("select"=>['ID','FILE_NUMBER','FILE','DEAL_ID'],'filter'=>['FILE_NUMBER'=>[$fNumber],'DEAL_ID'=>$deal_id,'FILE_TYPE'=>$typeFile]));
 
         $file_id = 0;
-        $fName = "id#".$deal_id."__num".$fNumber."_file_".$endfix.".pdf";
+        $fName = "id#".$deal_id."__num_".date("YmdHis",time())."_file_".$endfix.".pdf";
+        $oldfName = null;
         if(isset($row['ID']) && $row['ID']){
             $file_id  = $row['ID'];
-            $fName = isset($row['FILE']) && file_exists($fPath.$row['FILE']) ? $row['FILE'] : $fName ;
+            $oldfName = isset($row['FILE']) && file_exists($fPath.$row['FILE']) ? $fPath.$row['FILE'] : null ;
         }
         
 
@@ -44,6 +48,7 @@ class DealFiles{
             $data['DEAL_ID'] = $deal_id;
             $data['FILE_TYPE'] = $typeFile;
             $data['FILE_NUMBER'] = $fNumber;
+            $data['FILE_DATE'] = $fileDate;
             $data['FILE']=$fName;
 
             try {
@@ -52,6 +57,11 @@ class DealFiles{
                 }else{
                     $res = DealFilesSchemaTable::add($data);
                 }
+
+                if($res->isSuccess() && $oldfName && file_exists($oldfName)){
+                    unlink($oldfName);
+                }
+
             } catch (\Exception $e) {
                 unlink($file);
                 $res->addError(new Error($e->getMessage(),$e->getCode()));

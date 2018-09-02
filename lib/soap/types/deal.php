@@ -161,7 +161,17 @@ class Deal
 
     	$row = DealsSchemaTable::getRow(array('select'=>array('ID'),'filter'=>array('INTEGRATED_ID'=>$this->uuid)));
 
-    	
+        //Сохранение печатной формы
+    	$path = ALI_DEAL_PRINT_FORM_PATH;
+        $file = "print_form_".$this->uuid.".pdf";
+        $filePath = $path.$file;
+        $f = fopen($filePath, "w");
+        fwrite($f, $this->printForm);
+        fclose($f);
+        if(file_exists($filePath)){
+            $data['PRINT_FORM'] = $file;
+        }
+
         try {
             if(is_array($row) && isset($row['ID']) && (int)$row['ID']){
                 $res = DealsSchemaTable::update((int)$row['ID'],$data);

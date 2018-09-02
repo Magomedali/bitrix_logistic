@@ -52,7 +52,26 @@ class DealFilesSchemaTable extends Entity\DataManager
 
 
 
-            new Entity\IntegerField('FILE_NUMBER'),
+            new Entity\StringField('FILE_NUMBER',array(
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : '';
+                        }
+                    );
+                }
+            )),
+
+
+            new Entity\DatetimeField('FILE_DATE',array(
+                'default_value'=>function(){
+                    return new \Bitrix\Main\Type\DateTime();
+                }
+            )),
 
 
             new Entity\IntegerField('FILE_TYPE',array(
