@@ -116,7 +116,7 @@ class Deals{
         $contractors = ArrayHelper::map($contractors,'ID','ID');
         $params['filter']['CONTRACTOR_ID'] = $contractors;
         
-        
+        $deals = array();
         if($id){
             $params['filter']['ID']=$id;
 
