@@ -126,6 +126,10 @@ class DealFilesSchemaTable extends Entity\DataManager
                     );
                 }
             )),
+
+            new Entity\ExpressionField('COUNT_FILE',
+                'COUNT(1)'
+            )
         );
     }
 

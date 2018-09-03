@@ -8,12 +8,15 @@ use \Bitrix\Main\Type;
 use \Bitrix\Main\UserTable;
 use \Bitrix\Main\Application;
 use \Ali\Logistic\Schemas\DealsSchemaTable;
+use \Ali\Logistic\Schemas\DealFilesSchemaTable;
 use Ali\Logistic\soap\clients\Deals1C;
 use Ali\Logistic\Dictionary\TypeOfVehicle;
 use Ali\Logistic\Dictionary\LoadingMethod;
+use Ali\Logistic\Dictionary\DealFileType;
 use Ali\Logistic\Dictionary\AdditionalEquipment;
 use Ali\Logistic\Dictionary\Documents;
 use Ali\Logistic\helpers\ArrayHelper;
+use Ali\Logistic\Schemas\DealCostingsSchemaTable;
 
 class Deals{
 
@@ -22,7 +25,8 @@ class Deals{
 
 	public static function defaultSelect(){
         return array(
-            '*'
+            '*',
+            ''
         );
     }
 
@@ -116,14 +120,60 @@ class Deals{
         if($id){
             $params['filter']['ID']=$id;
 
-            return DealsSchemaTable::getRow($params);
+            $deals = DealsSchemaTable::getRow($params);
+            if(isset($deals['ID'])){
+                $deals['files'] = self::getDealFiles($deals['ID']);
+            }
         }else{
+            $results = DealsSchemaTable::getList($params)->fetchAll();
 
-            return DealsSchemaTable::getList($params)->fetchAll();
+            foreach ($results as $d) {
+                
+                if(isset($d['ID'])){
+                    $deals[$d['ID']]=$d;
+                    $deals[$d['ID']]['files'] = self::getDealFiles($d['ID']);
+                }
+                
+            }
         }
+
+        return $deals;
 
     }
 
+
+
+    public static function getDealFile($deal_id,$type){
+
+        if(!$deal_id || !$type) return null;
+
+        
+
+        $file = DealFilesSchemaTable::getRow([
+             'select'=>['*'],
+             'filter'=>['DEAL_ID'=>$deal_id,'FILE_TYPE'=>$type],
+             'order'=>['CREATED_AT'=>'DESC']
+        ]);
+
+        return $file;
+    }
+
+
+    public static function getDealFiles($deal_id){
+
+        $files = array();
+
+        $files[DealFileType::FILE_BILL] = self::getDealFile($deal_id,DealFileType::FILE_BILL);
+        $files[DealFileType::FILE_INVOICE] = self::getDealFile($deal_id,DealFileType::FILE_INVOICE);
+        $files[DealFileType::FILE_ACT] = self::getDealFile($deal_id,DealFileType::FILE_ACT);
+        $files[DealFileType::FILE_CONTRACT] = self::getDealFile($deal_id,DealFileType::FILE_CONTRACT);
+        $files[DealFileType::FILE_DRIVER_ATTORNEY] = self::getDealFile($deal_id,DealFileType::FILE_DRIVER_ATTORNEY);
+        $files[DealFileType::FILE_PRINT_FORM] = self::getDealFile($deal_id,DealFileType::FILE_PRINT_FORM);
+        $files[DealFileType::FILE_TTH] = self::getDealFile($deal_id,DealFileType::FILE_TTH);
+
+
+        return $files;
+    }
 
 
     public static function delete($id){

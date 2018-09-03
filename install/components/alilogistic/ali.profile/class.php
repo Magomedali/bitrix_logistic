@@ -9,6 +9,7 @@ use Ali\Logistic\Deals;
 use Ali\Logistic\User;
 use Ali\Logistic\Contractors;
 use Ali\Logistic\Routes;
+use Ali\Logistic\DealCostings;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
 use Ali\Logistic\soap\clients\CheckINN;
@@ -682,6 +683,7 @@ class AliProfile extends CBitrixComponent
         if(isset($request['id'])){
             $deal = Deals::getDeals((int)$request['id']);
             $routes = Routes::getRoutes((int)$request['id']);
+            $costs = DealCostings::getCosts((int)$request['id']);
         }
 
         if(!$deal || !isset($deal['ID']) || $deal['OWNER_ID'] != $user_id){
@@ -692,7 +694,8 @@ class AliProfile extends CBitrixComponent
 
         $this->arResult = [
             'deal'=>$deal,
-            'routes'=>$routes
+            'routes'=>$routes,
+            'costs'=>$costs
         ];
 
         return "deals/view";

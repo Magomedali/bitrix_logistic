@@ -1,11 +1,25 @@
 <?php
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
+use Ali\Logistic\Helpers\Html;
 use Ali\Logistic\Dictionary\DealStates;
+use Ali\Logistic\Dictionary\DealFileType;
 
 $deals = is_array($arResult['deals']) && count($arResult['deals']) ? $arResult['deals'] : null;
 $type = isset($arResult['type']) ? $arResult['type'] : 'IS_ACTIVE';
 
+
+function htmlFilelink($component,$files,$type){
+	if(isset($files[$type]) && is_array($files[$type])){
+		$f = $files[$type];
+		$fPath = DealFileType::getFilePath($type);
+		if(isset($f['FILE']) && file_exists($fPath.$f['FILE'])){
+			return Html::a("Открыть",$component->getActionUrl('downloadFile',['f'=>$f['ID']]),['target'=>'_blank']);
+		}else{
+			return "Файл не найден!";
+		}
+	} 
+}
 ?>
 
 
@@ -43,11 +57,39 @@ $type = isset($arResult['type']) ? $arResult['type'] : 'IS_ACTIVE';
 								<td><?php echo $o['DRIVER_INFO'];?></td>
 								<td><?php echo $o['VEHICLE'];?></td>
 								<td><?php echo DealStates::getLabels($o['STATE']);?></td>
-								<td><?php ?></td>
-								<td><?php ?></td>
-								<td><?php ?></td>
-								<td><?php ?></td>
-								<td><?php ?></td>
+								<td>
+									<?php 
+
+									?>
+								</td>
+								<td>
+									<?php 
+										 if(isset($o['files'])){
+										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_BILL);
+										 }
+									?>
+								</td>
+								<td>
+									<?php 
+										 if(isset($o['files'])){
+										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_ACT);
+										 }
+									?>
+								</td>
+								<td>
+									<?php 
+										 if(isset($o['files'])){
+										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_INVOICE);
+										 }
+									?>
+								</td>
+								<td>
+									<?php 
+										 if(isset($o['files'])){
+										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_TTH);
+										 }
+									?>
+								</td>
 								<td>
 									<?php 
 										if((int)$o['STATE'] < DealStates::IN_PLANNING){
