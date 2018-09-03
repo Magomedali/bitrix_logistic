@@ -121,10 +121,13 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\FloatField('WEIGHT',array(
                 'title'=>'Вес груза',
                 'required'=>false,
+                'default_value'=>function(){
+                    return 0;
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return $value;
+                            return $value ? $value : 0 ;
                         }
                     );
                 }
@@ -133,10 +136,13 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\FloatField('SPACE',array(
                 'title'=>'Объем (куб. м.)',
                 'required'=>false,
+                'default_value'=>function(){
+                    return 0;
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return $value;
+                            return $value ? $value : 0 ;
                         }
                     );
                 }
@@ -145,10 +151,13 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\FloatField('WIDTH',array(
                 'title'=>'Ширина (м)',
                 'required'=>false,
+                'default_value'=>function(){
+                    return 0;
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return $value;
+                            return $value ? $value : 0 ;
                         }
                     );
                 }
@@ -157,10 +166,13 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\FloatField('HEIGHT',array(
                 'title'=>'Высота (м)',
                 'required'=>false,
+                'default_value'=>function(){
+                    return 0;
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return $value;
+                            return $value ? $value : 0 ;
                         }
                     );
                 }
@@ -169,10 +181,13 @@ class DealsSchemaTable extends Entity\DataManager{
             new Entity\FloatField('LENGTH',array(
                 'title'=>'Длина (м)',
                 'required'=>false,
+                'default_value'=>function(){
+                    return 0;
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
-                            return $value;
+                            return $value ? $value : 0 ;
                         }
                     );
                 }
@@ -295,6 +310,13 @@ class DealsSchemaTable extends Entity\DataManager{
                 'title'=>'Темп. от',
                 'default_value'=>function(){
                     return 0;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value ? $value : 0 ;
+                        }
+                    );
                 }
             )),
 
@@ -304,6 +326,13 @@ class DealsSchemaTable extends Entity\DataManager{
                 'title'=>'Темп. до',
                 'default_value'=>function(){
                     return 0;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value ? $value : 0 ;
+                        }
+                    );
                 }
             )),
 
