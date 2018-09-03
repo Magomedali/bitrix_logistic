@@ -67,7 +67,7 @@ class Route
 		$data['IS_INTEGRATED']=true;
     	$data['INTEGRATED_ID']=$this->uuid;
     	
-        $data['KIND'] = boolval($this->typeshipment) ? RoutesKind::LOADING : RoutesKind::UNLOADING;
+        $data['KIND'] = !boolval($this->typeshipment) ? RoutesKind::LOADING : RoutesKind::UNLOADING;
         $data['START_AT']=DateTime::createFromTimestamp(strtotime($this->datefrom));
     	$data['FINISH_AT']=DateTime::createFromTimestamp(strtotime($this->dateby));
 

@@ -66,6 +66,8 @@ class Deals1C extends Client1C
 		$data['length'] = $params['LENGTH'];
 		$data['width'] = $params['WIDTH'];
 		$data['height'] = $params['HEIGHT'];
+
+		$data['comments'] = $params['COMMENTS'];
 		
 		$data['methodofloading'] = is_array($params['LOADING_METHOD']) ? $params['LOADING_METHOD'] : explode(LoadingMethod::getDelimiter(), $params['LOADING_METHOD']);
 
@@ -76,7 +78,7 @@ class Deals1C extends Client1C
 		if(isset($params['ROUTES']) && count($params['ROUTES'])){
 			foreach ($params['ROUTES'] as $r) {
 				$route = array();
-				$route['typeshipment'] = RoutesKind::getLabels($r['KIND']);
+				$route['typeshipment'] = (int)$r['KIND'] != RoutesKind::LOADING;
 				$route['datefrom'] = date("Y-m-d H:i",strtotime($r['START_AT']));
 				$route['dateby'] = date("Y-m-d H:i",strtotime($r['FINISH_AT']));
 				$route['location'] = $r['ADDRESS'];

@@ -68,6 +68,10 @@ function htmlFilelink($component,$files,$type){
 					<td><strong>С НДС</strong></td>
 					<td><?php echo boolval($deal['WITH_NDS'])? "Да" :"Нет";?></td>
 				</tr>
+				<tr>
+					<td><strong>Комментраии</strong></td>
+					<td><?php echo $deal['COMMENTS']?></td>
+				</tr>
 			</thead>
 		</table>
 	</div>
@@ -195,7 +199,7 @@ function htmlFilelink($component,$files,$type){
 				<thead>
 					<tr>
 						<th>Вид услуги</th>
-						<th>Стоимость</th>
+						<th>Цена</th>
 						<th>Количество</th>
 						<th>Сумма</th>
 						<th>Дата</th>

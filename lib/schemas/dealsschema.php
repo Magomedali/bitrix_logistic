@@ -480,6 +480,21 @@ class DealsSchemaTable extends Entity\DataManager{
                 }
             )),
 
+            new Entity\TextField('COMMENTS',array(
+                'title'=>'Комментарии',
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value ? trim(strip_tags($value)) : "";
+                        }
+                    );
+                }
+            )),
+
             new Entity\BooleanField('IS_DELETED',array(
                 'title'=>'В архиве',
                 'default_value'=>function(){

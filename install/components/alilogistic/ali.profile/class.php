@@ -589,19 +589,40 @@ class AliProfile extends CBitrixComponent
 
 
 
+    public function dealFilter($page_params){
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+        $page = 1;
+        $offset =0;
+        $limit = 5;
+        $filters = array();
+
+        if(isset($request['Filter'])){
+
+        }
+
+        if(isset($request['page']) && $request['page'] && (int)$request['page'] > 0){
+            $page = (int)$request['page'];
+            $offset = $page * $limit - $limit;
+        }
+
+        $params = array_merge($filters,$page_params);
+        
+        $total = Deals::getDealsTotal($params);
 
 
-
-    public function dealsAction(){
-
-        $id = CUser::GetID();
-
-        $params['filter']['IS_ACTIVE'] = true;
+        $params['limit']=$limit;
+        $params['offset']=$offset;
         $deals = Deals::getDeals(null,$params);
-
+        
         $this->arResult = [
             'deals'=>$deals,
-            'type'=>'IS_ACTIVE',
+            'total'=>$total,
+            'page'=>$page,
+            'limit'=>$limit,
+            'filters'=>$filters,
+            'pageName'=>'deals'
+
         ];
 
 
@@ -609,21 +630,19 @@ class AliProfile extends CBitrixComponent
     }
 
 
+    public function dealsAction(){
+
+        $params['filter']['IS_ACTIVE'] = true;
+        return $this->dealFilter($params);
+    }
+
+
 
     public function draftdealsAction(){
 
-        $id = CUser::GetID();
 
         $params['filter']['IS_DRAFT'] = true;
-        $deals = Deals::getDeals(null,$params);
-
-        $this->arResult = [
-            'deals'=>$deals,
-            'type'=>'IS_DRAFT'
-        ];
-
-
-        return "deals/deals";
+        return $this->dealFilter($params);
     }
 
 
@@ -634,18 +653,8 @@ class AliProfile extends CBitrixComponent
 
     public function completeddealsAction(){
 
-        $id = CUser::GetID();
-
         $params['filter']['COMPLETED'] = true;
-        $deals = Deals::getDeals(null,$params);
-
-        $this->arResult = [
-            'deals'=>$deals,
-            'type'=>'COMPLETED'
-        ];
-
-
-        return "deals/deals";
+        return $this->dealFilter($params);
     }
 
 
@@ -654,22 +663,17 @@ class AliProfile extends CBitrixComponent
 
     public function archiveAction(){
 
-        $id = CUser::GetID();
 
         $params['filter']['IS_DELETED'] = true;
-        $deals = Deals::getDeals(null,$params);
-
-        $this->arResult = [
-            'deals'=>$deals,
-            'type'=>'IS_DELETED'
-        ];
-
-
-        return "deals/deals";
+        return $this->dealFilter($params);
     }
 
 
+    public function searchdealsAction(){
 
+        $params = [];
+        return $this->dealFilter($params);
+    }
 
 
     public function viewdealAction(){
@@ -678,15 +682,13 @@ class AliProfile extends CBitrixComponent
         $deal = null;
         $user_id = CUser::GetID();
         
-        
-
         if(isset($request['id'])){
             $deal = Deals::getDeals((int)$request['id']);
             $routes = Routes::getRoutes((int)$request['id']);
             $costs = DealCostings::getCosts((int)$request['id']);
         }
 
-        if(!$deal || !isset($deal['ID']) || $deal['OWNER_ID'] != $user_id){
+        if(!$deal || !isset($deal['ID'])){
             LocalRedirect($this->getUrl("deals"));
         }
 
@@ -705,19 +707,7 @@ class AliProfile extends CBitrixComponent
 
 
 
-    public function searchdealsAction(){
-
-        $params = [];
-        $deals = Deals::getDeals(null,$params);
-
-        $this->arResult = [
-            'deals'=>$deals,
-            'type'=>'IS_DELETED'
-        ];
-
-
-        return "deals/deals";
-    }
+    
 
 
 

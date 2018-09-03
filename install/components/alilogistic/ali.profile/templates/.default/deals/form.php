@@ -67,7 +67,7 @@ $APPLICATION->SetTitle($title);
 				<div class="col-xs-3">
 					<p>
 						<label for="deal_weight" class="form-label">Вес груза</label>
-						<input type="number" name="DEAL[WEIGHT]" id="deal_weight" value="<?php echo $deal ? $deal['WEIGHT'] : null;?>" class="form-control" required>
+						<input type="number" name="DEAL[WEIGHT]" id="deal_weight" value="<?php echo $deal ? $deal['WEIGHT'] : null;?>" class="form-control" >
 					</p>
 				</div>
 			</div>
@@ -75,26 +75,26 @@ $APPLICATION->SetTitle($title);
 				<div class="col-xs-3">
 					<p>
 						<label for="deal_width" class="form-label">Ширина (м)</label>
-						<input type="number" name="DEAL[WIDTH]" id="deal_width" value="<?php echo $deal ? $deal['WIDTH'] : null;?>" class="form-control" required>
+						<input type="number" name="DEAL[WIDTH]" id="deal_width" value="<?php echo $deal ? $deal['WIDTH'] : null;?>" class="form-control">
 					</p>
 				</div>
 				<div class="col-xs-3">
 					<p>
 						<label for="deal_height" class="form-label">Высота (м)</label>
-						<input type="number" name="DEAL[HEIGHT]" id="deal_height" value="<?php echo $deal ? $deal['HEIGHT'] : null;?>" class="form-control" required>
+						<input type="number" name="DEAL[HEIGHT]" id="deal_height" value="<?php echo $deal ? $deal['HEIGHT'] : null;?>" class="form-control">
 					</p>
 				</div>
 
 				<div class="col-xs-3">
 					<p>
 						<label for="deal_length" class="form-label">Длина (м)</label>
-						<input type="number" name="DEAL[LENGTH]" id="deal_length" value="<?php echo $deal ? $deal['LENGTH'] : null;?>" class="form-control" required>
+						<input type="number" name="DEAL[LENGTH]" id="deal_length" value="<?php echo $deal ? $deal['LENGTH'] : null;?>" class="form-control">
 					</p>
 				</div>
 				<div class="col-xs-3">
 					<p>
 						<label for="deal_space" class="form-label">Объем (куб. м.)</label>
-						<input type="number" name="DEAL[SPACE]" id="deal_space" value="<?php echo $deal ? $deal['SPACE'] : null;?>" class="form-control" required>
+						<input type="number" name="DEAL[SPACE]" id="deal_space" value="<?php echo $deal ? $deal['SPACE'] : null;?>" class="form-control">
 					</p>
 				</div>
 			</div>
@@ -196,6 +196,12 @@ $APPLICATION->SetTitle($title);
 			</div>
 
 			<div class="row">
+				<div class="col-xs-4">
+					<p>
+						<label>Комментарии</label>
+						<?php echo Html::textarea("DEAL[COMMENTS]",$deal['COMMENTS'],['class'=>'form-control']);?>
+					</p>
+				</div>
 				<div class="col-xs-4">
 					<p>
 						<?php 

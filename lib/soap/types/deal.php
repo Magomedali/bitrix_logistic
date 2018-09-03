@@ -144,6 +144,9 @@ class Deal
         
         $data['VEHICLE'] = $this->vehicle;
 
+
+        $data['COMMENTS'] = $this->comments;
+
         $data['IS_ACTIVE'] = true;
         
         $data['CREATED_AT'] = DateTime::createFromTimestamp(strtotime($this->datedoc));

@@ -142,6 +142,33 @@ class Deals{
     }
 
 
+    public static function getDealsTotal($parameters = array()){
+        global $USER;
+        
+        $contractors = User::getCurrentUserIntegratedContractors();
+        
+        if(empty($contractors) || (is_array($contractors) && !count($contractors))){
+            //Проверка на присоединение к компании в таблице ali_logistic_company_employee
+            return 0;
+        }
+
+        $local_params = array(
+            'select'=>[new Entity\ExpressionField('TOTAL','COUNT(1)')]
+        );
+        $params = array_merge($local_params,$parameters);
+        
+        $contractors = ArrayHelper::map($contractors,'ID','ID');
+        $params['filter']['CONTRACTOR_ID'] = $contractors;
+        
+        $deals = array();
+        
+        $results = DealsSchemaTable::getRow($params);
+
+        return isset($results['TOTAL'])? $results['TOTAL'] : 0;
+
+    }
+
+
 
     public static function getDealFile($deal_id,$type){
 

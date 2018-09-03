@@ -6,8 +6,11 @@ use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Dictionary\DealFileType;
 
 $deals = is_array($arResult['deals']) && count($arResult['deals']) ? $arResult['deals'] : null;
-$type = isset($arResult['type']) ? $arResult['type'] : 'IS_ACTIVE';
+$filters = is_array($arResult['filters']) && count($arResult['filters']) ? $arResult['filters'] : null;
 
+$total = isset($arResult['total']) ? $arResult['total'] : 0;
+$page = isset($arResult['page']) ? $arResult['page'] : 1;
+$limit = isset($arResult['limit']) ? $arResult['limit'] : 20;
 
 function htmlFilelink($component,$files,$type){
 	if(isset($files[$type]) && is_array($files[$type])){
@@ -22,9 +25,21 @@ function htmlFilelink($component,$files,$type){
 }
 ?>
 
-
-<div class="organisations-page">
-	<div class="organisations">
+<div id="filters" class="row">
+	<div class="col-xs-12">
+		<form action="" method="GET">
+			<div class="row">
+				<div class="col-xs-2">
+					<?php
+						//echo Html::submitButton("Найти",null,['class'=>'btn btn-primary']);
+					?>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="deals-page">
+	<div class="deals">
 		<table class="table table-bordered  table-hover">
 			<thead>
 				<tr>
@@ -112,5 +127,11 @@ function htmlFilelink($component,$files,$type){
 				
 			</tfoot>
 		</table>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<?php $this->getComponent()->includeComponentTemplate("helpers/pagination"); ?>
+		</div>
 	</div>
 </div>
