@@ -120,7 +120,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\FloatField('WEIGHT',array(
                 'title'=>'Вес груза',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -132,7 +132,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\FloatField('SPACE',array(
                 'title'=>'Объем (куб. м.)',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -144,7 +144,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\FloatField('WIDTH',array(
                 'title'=>'Ширина (м)',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -156,7 +156,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\FloatField('HEIGHT',array(
                 'title'=>'Высота (м)',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -168,7 +168,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\FloatField('LENGTH',array(
                 'title'=>'Длина (м)',
-                'required'=>true,
+                'required'=>false,
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){
@@ -180,7 +180,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\TextField('TYPE_OF_VEHICLE',array(
                 'title'=>'Тип транспортного средства',
-                'required'=>true,
+                'required'=>false,
                 'default_value'=>function(){
                     return "";
                 },
@@ -210,7 +210,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\TextField('LOADING_METHOD',array(
                 'title'=>'Способ погрузки',
-                'required'=>true,
+                'required'=>false,
                 'default_value'=>function(){
                     return "";
                 },
