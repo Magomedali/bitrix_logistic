@@ -69,6 +69,10 @@ function htmlFilelink($component,$files,$type){
 					<td><?php echo boolval($deal['WITH_NDS'])? "Да" :"Нет";?></td>
 				</tr>
 				<tr>
+					<td><strong>Стоимость Руб.</strong></td>
+					<td><?php echo $deal['SUM'] ? $deal['SUM'] :"";?></td>
+				</tr>
+				<tr>
 					<td><strong>Комментраии</strong></td>
 					<td><?php echo $deal['COMMENTS']?></td>
 				</tr>

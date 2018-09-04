@@ -414,6 +414,21 @@ class DealsSchemaTable extends Entity\DataManager{
                 }
             )),
 
+            new Entity\FloatField('SUM',array(
+                'title'=>'Стоимость',
+                'required'=>false,
+                'default_value'=>function(){
+                    return 0;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value ? $value : 0 ;
+                        }
+                    );
+                }
+            )),
+
             new Entity\IntegerField('STATE',array(
                 'title'=>'Статус',
                 'default_value'=>function(){

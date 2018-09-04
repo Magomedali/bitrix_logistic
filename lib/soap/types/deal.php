@@ -121,6 +121,7 @@ class Deal
     	$data['WIDTH']=$this->width;
     	$data['HEIGHT']=$this->height;
     	$data['LENGTH']=$this->length;
+        $data['SUM']=$this->sum;
 
     	$data['TYPE_OF_VEHICLE']= is_array($this->ts) ? implode(";", $this->ts) : $this->ts;
     	$data['LOADING_METHOD']=is_array($this->methodofloading) ? implode(";", $this->methodofloading) : $this->methodofloading;

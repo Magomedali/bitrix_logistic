@@ -110,6 +110,7 @@ function htmlFilelink($component,$files,$type){
 					<th>Наименование</th>
 					<th>Вес, кг</th>
 					<th>Объем, м3</th>
+					<th>Стоимость Руб.</th>
 					<th>ФИО водителя</th>
 					<th>№ ТС</th>
 					<th>Статус</th>
@@ -132,6 +133,7 @@ function htmlFilelink($component,$files,$type){
 								<td><?php echo $o['NAME'];?></td>
 								<td><?php echo $o['WEIGHT'] ? $o['WEIGHT'] : "";?></td>
 								<td><?php echo $o['SPACE'] ? $o['SPACE'] : "";?></td>
+								<td><?php echo $o['SUM'] ? $o['SUM'] : "";?></td>
 								<td><?php echo $o['DRIVER_INFO'];?></td>
 								<td><?php echo $o['VEHICLE'];?></td>
 								<td><?php echo DealStates::getLabels($o['STATE']);?></td>
