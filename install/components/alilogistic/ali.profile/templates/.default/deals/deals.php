@@ -6,7 +6,7 @@ use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Dictionary\DealFileType;
 
 $deals = is_array($arResult['deals']) && count($arResult['deals']) ? $arResult['deals'] : null;
-$filters = is_array($arResult['filters']) && count($arResult['filters']) ? $arResult['filters'] : null;
+$filtres = is_array($arResult['filtres']) && count($arResult['filtres']) ? $arResult['filtres'] : null;
 
 $total = isset($arResult['total']) ? $arResult['total'] : 0;
 $page = isset($arResult['page']) ? $arResult['page'] : 1;
@@ -25,32 +25,94 @@ function htmlFilelink($component,$files,$type){
 }
 ?>
 
-<div id="filters" class="row">
+<div id="filtres" class="row">
 	<div class="col-xs-12">
 		<form action="" method="GET">
+			<div class="row filters_head">
+				<div class="col-xs-12">
+					<h3>Фильтры</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-3">
+					<label>С</label>
+					<?php echo Html::input("date",'Filter[date_from]',isset($filtres['Filter']['date_from']) && strtotime($filtres['Filter']['date_from']) ? date("Y-m-d",strtotime($filtres['Filter']['date_from'])) : null,['class'=>'form-control']);?>
+				</div>
+				<div class="col-xs-3">
+					<label>По</label>
+					<?php echo Html::input("date",'Filter[date_to]',isset($filtres['Filter']['date_to']) && strtotime($filtres['Filter']['date_to']) ? date("Y-m-d",strtotime($filtres['Filter']['date_to'])) : null,['class'=>'form-control']);?>
+				</div>
+				<div class="col-xs-3">
+					<label>Водитель</label>
+					<?php echo Html::input("text",'Filter[driver]',isset($filtres['Filter']['driver']) ? $filtres['Filter']['driver'] : "",['class'=>'form-control']);?>
+				</div>
+				<div class="col-xs-3">
+					<label>№ ТС</label>
+					<?php echo Html::input("text",'Filter[ts]',isset($filtres['Filter']['ts']) ? $filtres['Filter']['ts'] : "",['class'=>'form-control']);?>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-xs-2">
+					<label>Номер</label>
+					<?php echo Html::input("text",'Filter[number]',isset($filtres['Filter']['number']) ? $filtres['Filter']['number'] : "",['class'=>'form-control']);?>
+				</div>
+
+				<div class="col-xs-2">
+					<label>Наименование</label>
+					<?php echo Html::input("text",'Filter[name]',isset($filtres['Filter']['name']) ? $filtres['Filter']['name'] : "",['class'=>'form-control']);?>
+				</div>
+
+				<div class="col-xs-2">
+					<label>Вес С</label>
+					<?php echo Html::input("number",'Filter[weight_f]',isset($filtres['Filter']['weight_f']) ? $filtres['Filter']['weight_f'] : "",['class'=>'form-control']);?>
+				</div>
+
+
+				<div class="col-xs-2">
+					<label>Вес По</label>
+					<?php echo Html::input("number",'Filter[weight_t]',isset($filtres['Filter']['weight_t']) ? $filtres['Filter']['weight_t'] : "",['class'=>'form-control']);?>
+				</div>
+
+
+				<div class="col-xs-2">
+					<label>Объем С</label>
+					<?php echo Html::input("number",'Filter[space_f]',isset($filtres['Filter']['space_f']) ? $filtres['Filter']['space_f'] : "",['class'=>'form-control']);?>
+				</div>
+
+
+				<div class="col-xs-2">
+					<label>Объем По</label>
+					<?php echo Html::input("number",'Filter[space_t]',isset($filtres['Filter']['space_t']) ? $filtres['Filter']['space_t'] : "",['class'=>'form-control']);?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-3">
+					<label>Статус</label>
+					<?php echo Html::dropDownList('Filter[state]',isset($filtres['Filter']['state']) ? $filtres['Filter']['state'] : null,DealStates::getLabels(),['class'=>'form-control','prompt'=>'Выберите статус']);?>
+				</div>
+				<div class="col-xs-2">
 					<?php
-						//echo Html::submitButton("Найти",null,['class'=>'btn btn-primary']);
+						echo Html::submitButton("Найти",['class'=>'btn btn-primary','style'=>'margin-top:25px;']);
 					?>
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
-<div class="deals-page">
+<div class="deals-page" style="margin-top: 20px;">
+	<p>Количество заявок - <?php echo $total;?></p>
 	<div class="deals">
 		<table class="table table-bordered  table-hover">
 			<thead>
 				<tr>
 					<th>Номер</th>
+					<th>Дата</th>
 					<th>Наименование</th>
 					<th>Вес, кг</th>
 					<th>Объем, м3</th>
 					<th>ФИО водителя</th>
 					<th>№ ТС</th>
 					<th>Статус</th>
-					<th>Стоимость, руб.</th>
 					<th>Cчет</th>
 					<th>Акт</th>
 					<th>Счет фактура</th>
@@ -66,17 +128,13 @@ function htmlFilelink($component,$files,$type){
 
 							<tr>
 								<td><?php echo $o['DOCUMENT_NUMBER']?></td>
+								<td><?php echo date("H:i d.m.Y",strtotime($o['CREATED_AT']))?></td>
 								<td><?php echo $o['NAME'];?></td>
-								<td><?php echo $o['WEIGHT'];?></td>
-								<td><?php echo $o['SPACE'];?></td>
+								<td><?php echo $o['WEIGHT'] ? $o['WEIGHT'] : "";?></td>
+								<td><?php echo $o['SPACE'] ? $o['SPACE'] : "";?></td>
 								<td><?php echo $o['DRIVER_INFO'];?></td>
 								<td><?php echo $o['VEHICLE'];?></td>
 								<td><?php echo DealStates::getLabels($o['STATE']);?></td>
-								<td>
-									<?php 
-
-									?>
-								</td>
 								<td>
 									<?php 
 										 if(isset($o['files'])){

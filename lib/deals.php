@@ -161,9 +161,10 @@ class Deals{
         $params['filter']['CONTRACTOR_ID'] = $contractors;
         
         $deals = array();
-        
+
         $results = DealsSchemaTable::getRow($params);
 
+        
         return isset($results['TOTAL'])? $results['TOTAL'] : 0;
 
     }

@@ -12,6 +12,7 @@ use Ali\Logistic\Routes;
 use Ali\Logistic\DealCostings;
 use \Bitrix\Main\Application;
 use Bitrix\Main\Entity\Result;
+use Bitrix\Main\Error;
 use Ali\Logistic\soap\clients\CheckINN;
 use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\soap\clients\Sverka1C;
@@ -19,6 +20,7 @@ use Ali\Logistic\Schemas\DealsSchemaTable;
 use Ali\Logistic\Dictionary\DealFileType;
 use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Schemas\ReviseSchemaTable;
+use Bitrix\Main\Type\DateTime;
 
 class AliProfile extends CBitrixComponent
 {
@@ -38,8 +40,16 @@ class AliProfile extends CBitrixComponent
         if(!empty($params) && is_array($params) && count($params)){
             $url = "/".$page."/";
             $arr_q = array();
+
+            
             foreach ($params as $key => $value) {
-                $arr_q[] = $key."=".$value;
+                if(is_array($value) && count($value)){
+                    foreach ($value as $key2 => $value2) {
+                        $arr_q[] = $key."[".$key2."]=".$value2;
+                    }
+                }else{
+                   $arr_q[] = $key."=".$value; 
+               }
             }
             if(count($arr_q)){
                 $query_string = implode("&", $arr_q);
@@ -173,8 +183,12 @@ class AliProfile extends CBitrixComponent
         $id = CUser::GetID();
         
         $user = UserTable::getRowById($id);
+        $contractors = User::getCurrentUserIntegratedContractors();
 
+        $hasCompany = is_array($contractors) && count($contractors);
+        
         $this->arResult['user'] = $user;
+        $this->arResult['hasCompany'] = $hasCompany;
 
         return $this->arResult;
     }
@@ -226,9 +240,84 @@ class AliProfile extends CBitrixComponent
 
 
 
+    /**
+     * Проверяем, является ли $password текущим паролем пользователя.
+     *
+     * @param int $userId
+     * @param string $password
+     *
+     * @return bool
+     */
+    function checkPassword($userPassword, $password)
+    {
+        $userData = CUser::GetByID($userId)->Fetch();
 
+        $salt = substr($userPassword, 0, (strlen($userPassword) - 32));
 
+        $realPassword = substr($userPassword, -32);
+        $password = md5($salt.$password);
+        
+        return ($password == $realPassword);
+    }
 
+    public function followAction(){
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+        $errors = array();
+        $id = (int)CUser::GetID();
+        if(!$id) LocalRedirect($this->getUrl());
+
+        $contractors = User::getCurrentUserIntegratedContractors();
+
+        if(is_array($contractors) && count($contractors)){
+            $errors[]="У вас уже есть доступные организации";
+        }
+
+        
+
+        
+        if(!count($errors) && $request->isPost() && isset($request['email']) && trim(strip_tags($request['email'])) && $request['password']){
+            $email = trim(strip_tags($request['email']));
+            $user = UserTable::getRow(['select'=>['*'],'filter'=>['=EMAIL'=>$email]]);
+            $result = new Result();
+            if(!isset($user['PASSWORD']) || !$this->checkPassword($user['PASSWORD'],$request['password'])){
+            
+                $result->addError(new Error("Некорректный логин или пароль!",404));
+            
+            }elseif($user['ID'] == $id){
+            
+                $result->addError(new Error("Введите данные другой учетной записи!",404));
+            
+            }else{
+
+                $company_id = User::getUserCompany($user['ID']);
+                if(!$company_id){
+                    $result->addError(new Error("У пользователя нет организаций!",404));
+                }
+
+                $contractors = Companies::hasComanyContractors($company_id);
+                if(!is_array($contractors) || !count($contractors)){
+                    $result->addError(new Error("У пользователя нет организаций!",404));
+                }
+
+                $result = Companies::registeUser($company_id,$id);
+                
+            }
+
+            if(!$result->isSuccess())
+                $errors = $result->getErrorMessages();
+            else
+                LocalRedirect($this->getUrl());
+
+        }
+
+        $this->arResult = [
+            'errors'=>$errors
+        ]; 
+
+        return "personal/follow";
+    }
 
 
 
@@ -595,21 +684,66 @@ class AliProfile extends CBitrixComponent
         $page = 1;
         $offset =0;
         $limit = 5;
-        $filters = array();
-
+        $filtres = array();
+        $params = array();
+        
         if(isset($request['Filter'])){
+            $filtres=$request['Filter'];
+            
+            
+            if(isset($filtres['date_from']) && strtotime($filtres['date_from']))
+                $params['filter'][">=CREATED_AT"]=DateTime::createFromTimestamp(strtotime($filtres['date_from']));
 
+            if(isset($filtres['date_to']) && strtotime($filtres['date_to']))
+                $params['filter']["<=CREATED_AT"]=DateTime::createFromTimestamp(strtotime($filtres['date_to']));
+
+            if(isset($filtres['number']) && trim(strip_tags($filtres['number'])) != "")
+                $params['filter']["DOCUMENT_NUMBER"]=trim(strip_tags($filtres['number']))."%";
+            
+            if(isset($filtres['driver']) && trim(strip_tags($filtres['driver'])) != "")
+                $params['filter']["DRIVER_INFO"]=trim(strip_tags($filtres['driver']))."%";
+
+            if(isset($filtres['ts']) && trim(strip_tags($filtres['ts'])) != "")
+                $params['filter']["VEHICLE"]=trim(strip_tags($filtres['ts']))."%";
+
+            if(isset($filtres['name']) && trim(strip_tags($filtres['name'])) != "")
+                $params['filter']["NAME"]=trim(strip_tags($filtres['name']))."%";
+
+            if(isset($filtres['weight_f']) && $filtres['weight_f'] > 0)
+                $params['filter'][">=WEIGHT"] = $filtres['weight_f'];
+
+            if(isset($filtres['weight_t']) && $filtres['weight_t'] > 0)
+                $params['filter']["<=WEIGHT"] = $filtres['weight_t'];
+
+            if(isset($filtres['space_f']) && $filtres['space_f'] > 0)
+                $params['filter'][">=SPACE"] = $filtres['space_f'];
+
+            if(isset($filtres['space_t']) && $filtres['space_t'] > 0)
+                $params['filter']["<=SPACE"] = $filtres['space_t'];
+
+            if(isset($filtres['state']) && $filtres['state'] > 0)
+                $params['filter']["=STATE"] = $filtres['state'];
         }
-
+        
         if(isset($request['page']) && $request['page'] && (int)$request['page'] > 0){
             $page = (int)$request['page'];
             $offset = $page * $limit - $limit;
         }
 
-        $params = array_merge($filters,$page_params);
+        if(isset($params['filter']) && isset($page_params['filter'])){
+            $params['filter'] = array_merge($params['filter'],$page_params['filter']);
+        }elseif (isset($page_params['filter'])) {
+            $params['filter'] = $page_params['filter'];
+        }
+
+        if(isset($params['select']) || isset($page_params['select'])){
+            $params['select'] = array_merge($params['select'],$page_params['select']);
+        }
+        
         
         $total = Deals::getDealsTotal($params);
 
+        
 
         $params['limit']=$limit;
         $params['offset']=$offset;
@@ -620,7 +754,7 @@ class AliProfile extends CBitrixComponent
             'total'=>$total,
             'page'=>$page,
             'limit'=>$limit,
-            'filters'=>$filters,
+            'filtres'=>['Filter'=>$filtres],
             'pageName'=>'deals'
 
         ];

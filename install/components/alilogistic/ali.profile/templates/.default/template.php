@@ -18,6 +18,7 @@ use \Bitrix\Main\Localization\Loc;
 $APPLICATION->SetTitle('Личный кабинет');
 
 $user = is_array($arResult['user']) && count($arResult['user']) ? $arResult['user'] : null;
+$hasCompany = isset($arResult['hasCompany'])? $arResult['hasCompany'] : null;
 
 ?>
 <?php if(!empty($user)){ ?>
@@ -50,7 +51,7 @@ $user = is_array($arResult['user']) && count($arResult['user']) ? $arResult['use
 	<div class="col-xs-4">
 		<?php echo Html::a("Редактировать",$component->getUrl("profileform"),['class'=>'btn btn-primary']);?>
 		<br><br>
-		<?php echo Html::a("Присоединиться к другой учетной записи",null,['class'=>'btn btn-default']);?>
+		<?php echo !$hasCompany ? Html::a("Присоединиться к другой учетной записи",$component->getActionUrl("follow"),['class'=>'btn btn-default']) : null;?>
 	</div>
 </div>
 

@@ -13,6 +13,7 @@ use Ali\Logistic\User;
 use Ali\Logistic\Companies;
 use Ali\Logistic\soap\clients\Contractors1C;
 use Ali\Logistic\Schemas\ContractorsSchemaTable;
+use Bitrix\Main\Error;
 
 class Contractors
 {   
@@ -30,13 +31,26 @@ class Contractors
 
     public static function save($data){
         global $USER;
-        if(!($company_id = Companies::hasCurrentUserHasComany())){
-            if(Companies::createCompanyForCurrentUser()){
-                $company_id = Companies::getCurrentUserCompany();
-            }
+
+        $company_id = 0;
+        
+        $companyies = User::getCurrentUserCompany();
+
+        if(!is_array($companyies) || !count($companyies)){
+            Companies::createCompanyForCurrentUser();
+            $company_id = User::getUserCompany($USER::GetId());
+        }else{
+            $company_id = reset($companyies);
+        }
+        
+
+        if(!$company_id){
+            $res = new Result();
+            $res->addError(new Error("Ошибка! Не найдена компания!",404));
+            return $res;
         }
 
-        if(!$company_id) return false;
+        
 
         $data['COMPANY_ID'] = $company_id;
         $data['OWNER_ID'] = $USER::GetId();
@@ -73,8 +87,8 @@ class Contractors
     public static function getOrgs($id = null,$parameters = array()){
         global $USER;
         
-        $company_id = Companies::getCurrentUserCompany();
-        if(!$company_id){
+        $company_ids = User::getCurrentUserCompany();
+        if(!is_array($company_ids) || !count($company_ids)){
 
             //Проверка на присоединение к компании в таблице ali_logistic_company_employee
             return array();
@@ -85,7 +99,7 @@ class Contractors
         );
         $params = array_merge($local_params,$parameters);
         
-        $params['filter']['COMPANY_ID']=$company_id;
+        $params['filter']['COMPANY_ID']=$company_ids;
         
         if($id){
             

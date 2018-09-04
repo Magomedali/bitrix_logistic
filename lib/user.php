@@ -3,25 +3,49 @@
 
 namespace Ali\Logistic;
 
-use \Bitrix\Main\Entity;
-use \Bitrix\Main\Type;
-use \Bitrix\Main\UserTable;
-use \Bitrix\Main\Application;
-use \Bitrix\Main\Entity\Query;
 use Ali\Logistic\Schemas\CompaniesSchemaTable;
 use Ali\Logistic\Schemas\ContractorsSchemaTable;
-use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\Schemas\DealsSchemaTable;
 use Ali\Logistic\Schemas\DealFilesSchemaTable;
-use Ali\Logistic\Dictionary\DealFileType;
+use Ali\Logistic\helpers\ArrayHelper;
+use Ali\Logistic\Companies;
+use Ali\Logistic\CompanyEmployee;
 
 class User
 {   
 
-    public static function hasCompany(){
-        global $USER;
+    public static function hasCompany($id){
+        
+        return self::getUserCompany($id);
 
     }
+
+    
+    public static function getUserContractors($id){
+
+        $contractors = ContractorsSchemaTable::getList(array('select'=>array("ID","COMPANY_ID","NAME","INTEGRATED_ID"),'filter'=>array("OWNER_ID"=>$id,"!=INTEGRATED_ID"=>'')))->fetchAll();
+
+        return $contractors;
+    }
+
+
+
+    public static function getUserCompany($id){
+
+        $company = CompaniesSchemaTable::getRow(array('select'=>array("ID"),'filter'=>array("OWNER_ID"=>$id)));
+
+        
+        return isset($company['ID']) ? $company['ID'] : null;
+    }
+
+
+
+
+
+
+
+
+
 
 
     public static function hasCurrentUserHasComany(){
@@ -33,9 +57,21 @@ class User
     public static function getCurrentUserCompany(){
         global $USER;
 
-        $company = CompaniesSchemaTable::getRow(array('select'=>array("ID"),'filter'=>array("OWNER_ID"=>$USER->GetId())));
+        $companies = array();
 
-        return isset($company['ID']) ? $company['ID'] : null;
+        $results = CompanyEmployee::getUserIsEmployeeCompanies($USER->GetId());
+        
+        if($results && count($results)){
+            foreach ($results as $key => $value) {
+                $companies[] = $value['COMPANY_ID'];
+            }
+        }
+
+        $company = self::getUserCompany($USER->GetId());
+
+        if($company && count($company)) $companies[] = $company;
+
+        return $companies;
     }
 
 
@@ -48,15 +84,46 @@ class User
     }
 
 
+
+
+
+
+
+
+
+
     public static function getCurrentUserIntegratedContractors(){
         global $USER;
 
-        $contractors = ContractorsSchemaTable::getList(array('select'=>array("ID","COMPANY_ID","NAME","INTEGRATED_ID"),'filter'=>array("OWNER_ID"=>$USER->GetId(),"!=INTEGRATED_ID"=>'')))->fetchAll();
+        $companies = self::getCurrentUserCompany();
 
+        if(!is_array($companies) || !count($companies)) return array();
 
+        $contractors = ContractorsSchemaTable::getList(array('select'=>array("ID","COMPANY_ID","NAME","INTEGRATED_ID"),'filter'=>array("COMPANY_ID"=>$companies,"!=INTEGRATED_ID"=>'')))->fetchAll();
 
         return $contractors;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
