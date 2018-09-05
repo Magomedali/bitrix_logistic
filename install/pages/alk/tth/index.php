@@ -3,7 +3,8 @@ define("NEED_AUTH", true);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
-$APPLICATION->SetTitle("Товаро-транспортные документы");
+$APPLICATION->SetTitle(null);
+$APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
 $dir_name = basename(__DIR__);
 ?>
 

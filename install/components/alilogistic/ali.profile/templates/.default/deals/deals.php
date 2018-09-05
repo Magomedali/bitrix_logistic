@@ -11,6 +11,14 @@ $filtres = is_array($arResult['filtres']) && count($arResult['filtres']) ? $arRe
 $total = isset($arResult['total']) ? $arResult['total'] : 0;
 $page = isset($arResult['page']) ? $arResult['page'] : 1;
 $limit = isset($arResult['limit']) ? $arResult['limit'] : 20;
+$pageTitle = isset($arResult['pageTitle']) ? $arResult['pageTitle'] : "Текущие заявки";
+
+$arResult['breadcrumbs'][]=[
+		'title'=>$pageTitle,
+		'link'=>null,
+		'active'=>true
+];
+
 
 function htmlFilelink($component,$files,$type){
 	if(isset($files[$type]) && is_array($files[$type])){
@@ -24,8 +32,8 @@ function htmlFilelink($component,$files,$type){
 	} 
 }
 ?>
-
-<div id="filtres" class="row">
+<?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
+<div class="row" id="filtres">
 	<div class="col-xs-12">
 		<form action="" method="GET">
 			<div class="row filters_head">
@@ -99,9 +107,9 @@ function htmlFilelink($component,$files,$type){
 		</form>
 	</div>
 </div>
-<div class="deals-page" style="margin-top: 20px;">
+<div class="row deals-page" style="margin-top: 20px;">
 	<p>Количество заявок - <?php echo $total;?></p>
-	<div class="deals">
+	<div class="col-xs-12 deals">
 		<table class="table table-bordered  table-hover">
 			<thead>
 				<tr>
@@ -189,9 +197,8 @@ function htmlFilelink($component,$files,$type){
 		</table>
 	</div>
 
-	<div class="row">
-		<div class="col-xs-12">
-			<?php $this->getComponent()->includeComponentTemplate("helpers/pagination"); ?>
-		</div>
+	<div class="col-xs-12">
+		<?php $this->getComponent()->includeComponentTemplate("helpers/pagination"); ?>
 	</div>
+	
 </div>

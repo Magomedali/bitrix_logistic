@@ -17,9 +17,11 @@ use \Bitrix\Main\Localization\Loc;
 use Ali\Logistic\helpers\Html;
 use Ali\Logistic\helpers\ArrayHelper;
 
-$APPLICATION->SetTitle("Акты сверок");
-
-
+$arResult['breadcrumbs'][]=[
+		'title'=>"Акты сверок",
+		'link'=>null,
+		'active'=>true
+];
 
 $contractors = is_array($arResult['contractors']) && count($arResult['contractors']) ? $arResult['contractors'] : array();
 $parameters = is_array($arResult['parameters']) && count($arResult['parameters']) ? $arResult['parameters'] : null;
@@ -31,7 +33,7 @@ $file_path = ALI_REVISES_PATH;
 ?>
 <?php if(!empty($contractors)){ ?>
 
-
+<?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <div id="sverka_page" class="row">
 	<?php if($errors){ ?>
 		<div class="col-xs-12">

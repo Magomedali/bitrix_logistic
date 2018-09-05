@@ -129,10 +129,13 @@ class AliProfile extends CBitrixComponent
         $this->includeComponentLang('class.php');
 
 
-
-
         if($this->checkModules())
         {   
+            
+            //Подключение общих сss и js
+            global $APPLICATION;
+
+            $APPLICATION->SetAdditionalCss($this->__path."/css/profile.css");
             
             $template = $this->executeAction();
 
@@ -230,9 +233,11 @@ class AliProfile extends CBitrixComponent
             }
         }
 
+        $title = "Форма пользователя";
         $this->arResult = [
             'user' => $user,
-            'errors'=>$errors
+            'errors'=>$errors,
+            'pageTitle'=>$title
         ];
 
         return "personal/form";
@@ -335,7 +340,7 @@ class AliProfile extends CBitrixComponent
         $orgs = Contractors::getOrgs(null,$params);
 
         $this->arResult = [
-            'orgs'=>$orgs
+            'orgs'=>$orgs,
         ];
 
 
@@ -650,6 +655,10 @@ class AliProfile extends CBitrixComponent
         $context = Application::getInstance()->getContext();
         $request = $context->getRequest();
 
+        if(!$request->isAjaxRequest()){
+            LocalRedirect($this->getUrl());
+        }
+
         $number = isset($request['number']) && (int)$request['number'] ? (int)$request['number'] : 0;
         $this->arResult = [
             'number'=>$number
@@ -669,6 +678,8 @@ class AliProfile extends CBitrixComponent
             
             $user_id = CUser::GetID();
             $success = Routes::delete((int)$request['id'],$user_id);
+        }else{
+            LocalRedirect($this->getUrl());
         }
 
         $this->arResult = [
@@ -683,7 +694,7 @@ class AliProfile extends CBitrixComponent
         $request = $context->getRequest();
         $page = 1;
         $offset =0;
-        $limit = 5;
+        $limit = 10;
         $filtres = array();
         $params = array();
         
@@ -749,15 +760,15 @@ class AliProfile extends CBitrixComponent
         $params['offset']=$offset;
         $deals = Deals::getDeals(null,$params);
         
-        $this->arResult = [
+        $arResult = [
             'deals'=>$deals,
             'total'=>$total,
             'page'=>$page,
             'limit'=>$limit,
-            'filtres'=>['Filter'=>$filtres],
-            'pageName'=>'deals'
-
+            'filtres'=>['Filter'=>$filtres]
         ];
+
+        $this->arResult = array_merge($this->arResult,$arResult);
 
 
         return "deals/deals";
@@ -767,6 +778,11 @@ class AliProfile extends CBitrixComponent
     public function dealsAction(){
 
         $params['filter']['IS_ACTIVE'] = true;
+
+        $this->arResult=[
+            'pageName'=>'deals',
+            'pageTitle'=>"Текущие заявки"
+        ];
         return $this->dealFilter($params);
     }
 
@@ -776,6 +792,10 @@ class AliProfile extends CBitrixComponent
 
 
         $params['filter']['IS_DRAFT'] = true;
+        $this->arResult=[
+            'pageName'=>'draftdeals',
+            'pageTitle'=>"Черновики"
+        ];
         return $this->dealFilter($params);
     }
 
@@ -787,6 +807,11 @@ class AliProfile extends CBitrixComponent
 
     public function completeddealsAction(){
 
+        $this->arResult=[
+            'pageName'=>'completeddeals',
+            'pageTitle'=>"Выполненые заявки"
+        ];
+
         $params['filter']['COMPLETED'] = true;
         return $this->dealFilter($params);
     }
@@ -797,7 +822,10 @@ class AliProfile extends CBitrixComponent
 
     public function archiveAction(){
 
-
+        $this->arResult=[
+            'pageName'=>'archive',
+            'pageTitle'=>"Архив"
+        ];
         $params['filter']['IS_DELETED'] = true;
         return $this->dealFilter($params);
     }
@@ -805,6 +833,10 @@ class AliProfile extends CBitrixComponent
 
     public function searchdealsAction(){
 
+        $this->arResult=[
+            'pageName'=>'searchdeals',
+            'pageTitle'=>"Поиск заявок"
+        ];
         $params = [];
         return $this->dealFilter($params);
     }
@@ -850,10 +882,11 @@ class AliProfile extends CBitrixComponent
 
         $this->arResult=[
             'files'=>$files,
-            'type'=>DealFileType::FILE_BILL
+            'type'=>DealFileType::FILE_BILL,
+            'pageTitle'=>'Счета'
         ];
 
-        return 'bills';
+        return 'files';
     }
 
 
@@ -863,10 +896,11 @@ class AliProfile extends CBitrixComponent
 
         $this->arResult=[
             'files'=>$files,
-            'type'=>DealFileType::FILE_ACT
+            'type'=>DealFileType::FILE_ACT,
+            'pageTitle'=>'Акты'
         ];
 
-        return 'bills';
+        return 'files';
     }
 
 
@@ -875,10 +909,11 @@ class AliProfile extends CBitrixComponent
 
         $this->arResult=[
             'files'=>$files,
-            'type'=>DealFileType::FILE_INVOICE
+            'type'=>DealFileType::FILE_INVOICE,
+            'pageTitle'=>'Счета фактуры'
         ];
 
-        return 'bills';
+        return 'files';
     }
 
 
@@ -888,10 +923,11 @@ class AliProfile extends CBitrixComponent
 
         $this->arResult=[
             'files'=>$files,
-            'type'=>DealFileType::FILE_TTH
+            'type'=>DealFileType::FILE_TTH,
+            'pageTitle'=>'Товаро-транспортные документы'
         ];
 
-        return 'bills';
+        return 'files';
     }
 
 
@@ -900,10 +936,11 @@ class AliProfile extends CBitrixComponent
 
         $this->arResult=[
             'files'=>$files,
-            'type'=>DealFileType::FILE_CONTRACT
+            'type'=>DealFileType::FILE_CONTRACT,
+            'pageTitle'=>'Договоры'
         ];
 
-        return 'bills';
+        return 'files';
     }
 
 
@@ -1046,3 +1083,4 @@ class AliProfile extends CBitrixComponent
         LocalRedirect($this->getUrl());
     }
 }
+?>

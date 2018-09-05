@@ -4,17 +4,10 @@ define("NEED_AUTH", true);
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
 
-$APPLICATION->SetTitle("Личный кабинет");
+$APPLICATION->SetTitle(null);
+$APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
 
 use \Bitrix\Main\Application;
-
-$context = Application::getInstance()->getContext();
-$request = $context->getRequest();
-if(isset($request['id'])){
-
-	//$APPLICATION->AddChainItem("Детальная информация о товаре", "index.php?id=".$request['id']."&ID=".$arSection["ID"]);
-}
-
 
 $dir_name = basename(__DIR__);
 
@@ -32,7 +25,6 @@ if($USER->IsAuthorized()) {
 
 	
 }
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");
 
 ?>
-
-<br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Ali\Logistic\Helpers\Html;
@@ -15,14 +15,13 @@ use Ali\Logistic\Helpers\Html;
 /** @var CBitrixComponent $component */
 use \Bitrix\Main\Localization\Loc;
 
-$APPLICATION->SetTitle('Личный кабинет');
 
 $user = is_array($arResult['user']) && count($arResult['user']) ? $arResult['user'] : null;
 $hasCompany = isset($arResult['hasCompany'])? $arResult['hasCompany'] : null;
 
 ?>
+<?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <?php if(!empty($user)){ ?>
-
 <div id="personal_page" class="row">
 	<div class="col-xs-4">
 		<table class="table table-hover">

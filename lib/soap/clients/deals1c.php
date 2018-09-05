@@ -66,6 +66,7 @@ class Deals1C extends Client1C
 		$data['length'] = $params['LENGTH'];
 		$data['width'] = $params['WIDTH'];
 		$data['height'] = $params['HEIGHT'];
+		$data['sum'] = $params['SUM'];
 
 		$data['comments'] = $params['COMMENTS'];
 		

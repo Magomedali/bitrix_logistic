@@ -9,11 +9,21 @@ $errors = is_array($arResult['errors']) && count($arResult['errors']) ? $arResul
 $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] : null;
 
 $title = $org ? "Организация ".$org['NAME'] : "Новая организация";
-
-$APPLICATION->SetTitle($title);
+$arResult['breadcrumbs']=[
+	[
+		'title'=>"Мои организации",
+		'url'=>"organisations"
+	],
+	[
+		'title'=>$title,
+		'link'=>null,
+		'active'=>true
+	]
+];
 
 ?>
 
+<?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <div class="row form-org-page">
 	<?php 
 		if($errors){

@@ -5,9 +5,18 @@ use Ali\Logistic\Helpers\Html;
 
 $user = isset($arResult['user']) && $arResult['user'] ? $arResult['user'] : null;
 $errors = is_array($arResult['errors']) && count($arResult['errors']) ? $arResult['errors'] : null;
+$title = isset($arResult['pageTitle']) ? $arResult['pageTitle'] : "Форма пользователя";
+$arResult['breadcrumbs'][]=[
+	'title'=>$title,
+	'link'=>null,
+	'active'=>true
+];
 
 if($user){
+
 ?>
+
+<?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 
 <?php if($errors){?>
 	<div class="row">

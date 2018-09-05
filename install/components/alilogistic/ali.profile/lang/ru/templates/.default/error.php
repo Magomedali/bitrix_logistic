@@ -1,6 +1,6 @@
 <?php
 
 $MESS= array(
-	"ALI_MODULE_ERROR"=> "Îøèáêà",
+	"ALI_MODULE_ERROR"=> "ÐžÑˆÐ¸Ð±ÐºÐ°",
 );
 ?>

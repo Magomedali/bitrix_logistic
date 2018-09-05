@@ -12,7 +12,14 @@ $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['dea
 $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResult['routes'] : array();
 $costs = is_array($arResult['costs']) && count($arResult['costs']) ? $arResult['costs'] : array();
 
-$APPLICATION->SetTitle($deal['NAME']);
+
+$pageTitle = $deal['NAME'];
+
+$arResult['breadcrumbs'][]=[
+		'title'=>$pageTitle,
+		'link'=>null,
+		'active'=>true
+];
 
 function htmlFilelink($component,$files,$type){
 	if(isset($files[$type]) && is_array($files[$type])){
@@ -27,7 +34,7 @@ function htmlFilelink($component,$files,$type){
 }
 ?>
 
-
+<?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <div class="row">
 	<div class="col-xs-4">
 		<table class="table table-hover">

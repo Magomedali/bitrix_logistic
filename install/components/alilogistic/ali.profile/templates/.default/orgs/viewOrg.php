@@ -16,14 +16,25 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] : null;
 
-$APPLICATION->SetTitle($org['NAME']);
+$pageTitle = $org['NAME'];
+
+$arResult['breadcrumbs']=[
+	[
+		'title'=>"Мои организации",
+		'url'=>"organisations"
+	],
+	[
+		'title'=>$pageTitle,
+		'link'=>null,
+		'active'=>true
+	]
+];
 
 ?>
-
+<?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <div class="row">
 	<div class="col-xs-12">
 		<?php if($org){?>
-		<h3><?php echo $org['NAME']?></h3>
 		<a href="<?php echo $component->getUrl("formorg",['id'=>$org['ID']])?>">Редактировать</a>
 		<a href="<?php echo $component->getUrl("removeorg",['id'=>$org['ID']])?>">Удалить</a>
 		<table class="table table-hover">

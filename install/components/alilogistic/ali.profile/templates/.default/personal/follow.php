@@ -3,7 +3,7 @@
 use Ali\Logistic\Helpers\Html;
 
 $title = "Присоединение к другой учетной записи!";
-$breads[]=['title'=>$title,'link'=>'soccer','active'=>1];
+$breads[]=['title'=>$title,'link'=>null,'active'=>1];
 $arResult['breadcrumbs']=$breads;
 
 $errors = is_array($arResult['errors']) && count($arResult['errors']) ? $arResult['errors'] : null;

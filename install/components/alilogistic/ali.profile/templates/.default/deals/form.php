@@ -23,16 +23,20 @@ $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResul
 
 
 $title = $deal 
-			? $replicate ? "Копирование заявки ".$deal['NAME'] : $deal['NAME']
+			? $replicate ? "Копирование заявки '".$deal['NAME']."'" : $deal['NAME']
 			: 'Новая Заявка';
 
 
-$APPLICATION->SetTitle($title);
+$arResult['breadcrumbs'][]=[
+		'title'=>$title,
+		'link'=>null,
+		'active'=>true
+];
 
 ?>
 
+<?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <div class="row form-deal-page">
-
 	<?php 
 		if($errors){
 	?>
@@ -154,6 +158,10 @@ $APPLICATION->SetTitle($title);
 					<p>
 						<label for="deal_requires_insurance" class="form-label">Требуется страхование?</label>
 						<?php echo Html::checkbox("DEAL[REQUIRES_INSURANCE]",$deal['REQUIRES_INSURANCE'],['id'=>'deal_requires_insurance']);?>
+					</p>
+					<p>
+						<label for="deal_sum" class="form-label">Стоимость</label>
+						<?php echo Html::input("number","DEAL[SUM]",$deal['SUM'] ? $deal['SUM'] : "",['id'=>'deal_sum','class'=>'form-control']);?>
 					</p>
 				</div>
 				<div class="col-xs-4">

@@ -1,25 +1,21 @@
-<?
+<?php
 define("NEED_AUTH", true);
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
-// $APPLICATION->SetTitle("Личный кабинет");
-$dir_name = basename(__DIR__);
-?>
+$APPLICATION->SetTitle(null);
+$APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
 
-<?php
+$dir_name = basename(__DIR__);
 
 if($USER->IsAuthorized()) {
-    
 	$APPLICATION->IncludeComponent(
-	"alilogistic:ali.profile",
-	"",
-	Array(
-		'route'=>$dir_name
-	)
+		"alilogistic:ali.profile",
+		"",
+		Array(
+			'route'=>$dir_name
+		)
 	);
 }
-
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");
 ?>
-
-<br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
