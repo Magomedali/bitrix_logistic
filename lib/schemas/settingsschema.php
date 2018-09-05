@@ -75,4 +75,18 @@ class SettingsSchemaTable extends Entity\DataManager
     }
 
 
+
+
+    public static function defaultParameters(){
+
+
+        $sql = <<<SQL
+            INSERT INTO `ali_logistic_settings` (`ID`, `NAME`, `VALUE`, `CREATED_AT`, `UPDATED_AT`) VALUES
+            (1, 'contract_nds', 'contract_nds.doc', '2018-09-05 00:00:00', '2018-09-05 00:00:00'),
+            (2, 'contract_nonds', 'contract_nonds.docx', '2018-09-05 00:00:00', '2018-09-05 00:00:00');
+SQL;
+        
+
+        
+    }
 }
