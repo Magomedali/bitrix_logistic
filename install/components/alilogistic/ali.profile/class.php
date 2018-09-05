@@ -8,6 +8,7 @@ use Ali\Logistic\Companies;
 use Ali\Logistic\Deals;
 use Ali\Logistic\User;
 use Ali\Logistic\Contractors;
+use Ali\Logistic\Settings;
 use Ali\Logistic\Routes;
 use Ali\Logistic\DealCostings;
 use \Bitrix\Main\Application;
@@ -931,17 +932,71 @@ class AliProfile extends CBitrixComponent
     }
 
 
+
+
+
+
+
+
+
     public function docsAction(){
-        $files = User::getFiles(DealFileType::FILE_CONTRACT);
+        $contract_nds = Settings::getByName("contract_nds");
+        $contract_nonds = Settings::getByName("contract_nonds");
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+        $path = ALI_CONTRACT_PATH;
+        if(isset($request['d']) && (int)$request['d']){
+            $file = Settings::getById((int)$request['d']);
+
+            if($file && isset($file['VALUE']) && file_exists($path.$file['VALUE'])){
+                    $fname = $file['VALUE'];
+                    $parts = explode(".", $fname);
+                    $format = reset(array_reverse($parts));
+
+                    global $APPLICATION;
+                    $APPLICATION->RestartBuffer();
+
+                    header("Content-type; text/pdf; charset='utf-8'");
+                    header("Cache-Control: no-cache");
+
+                    if($format == "doc" || $format == "docx"){
+                        header("Content-Description: File Transfer");
+                        header("Content-Disposition: attachment; filename=$fname");
+                        header("Content-Type: application/msword");
+                    }else{
+                        header("Content-Type: application/$format");
+                    }
+                    
+                    
+                    header("Content-Transfer-Encoding: binary");
+                    readfile($path.$fname);
+                    exit;
+
+                }
+        }
+
 
         $this->arResult=[
-            'files'=>$files,
-            'type'=>DealFileType::FILE_CONTRACT,
-            'pageTitle'=>'Договоры'
+            'contract_nds'=>$contract_nds,
+            'contract_nonds'=>$contract_nonds,
+            'pageTitle'=>'Договоры',
+            'path'=>$path
         ];
 
-        return 'files';
+        return 'docs';
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -957,17 +1012,17 @@ class AliProfile extends CBitrixComponent
                 $path = DealFileType::getFilePath($file['FILE_TYPE']);
                
                 if(file_exists($path.$file['FILE'])){
-
+                    $fname = $file['FILE'];
                     global $APPLICATION;
                     $APPLICATION->RestartBuffer();
 
                     header("Content-type; text/pdf; charset='utf-8'");
                     header("Cache-Control: no-cache");
                     // header("Content-Description: File Transfer");
-                    // header("Content-Disposition: attachment; filename=file");
+                    header("Content-Disposition: attachment; filename=$fname");
                     header("Content-Type: application/pdf");
                     header("Content-Transfer-Encoding: binary");
-                    readfile($path.$file['FILE']);
+                    readfile($path.$fname);
                     exit;
 
                 }
@@ -1082,5 +1137,6 @@ class AliProfile extends CBitrixComponent
         
         LocalRedirect($this->getUrl());
     }
+
 }
 ?>

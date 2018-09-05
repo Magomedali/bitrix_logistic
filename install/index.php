@@ -141,6 +141,14 @@ Class ali_logistic extends CModule
         }
         
 
+        if(!Application::getConnection(\Ali\Logistic\Schemas\SettingsSchemaTable::getConnectionName())->isTableExists(
+            Base::getInstance('\Ali\Logistic\Schemas\SettingsSchemaTable')->getDBTableName()
+            )
+        )
+        {
+            Base::getInstance('\Ali\Logistic\Schemas\SettingsSchemaTable')->createDbTable();
+        }
+        
         $this->installDbProgramming();
 
         return true;
@@ -186,7 +194,10 @@ Class ali_logistic extends CModule
         Application::getConnection(\Ali\Logistic\Schemas\ReviseSchemaTable::getConnectionName())->
              queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\ReviseSchemaTable')->getDBTableName());
 
-            
+        Application::getConnection(\Ali\Logistic\Schemas\SettingsSchemaTable::getConnectionName())->
+             queryExecute('drop table if exists '.Base::getInstance('\Ali\Logistic\Schemas\SettingsSchemaTable')->getDBTableName());
+
+ 
         global $DB, $DBType, $APPLICATION;
 
         //$DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT']."/bitrix/modules/{$this->MODULE_ID}/install/db/mysql/uninstall.sql");
@@ -276,10 +287,11 @@ Class ali_logistic extends CModule
         if($this->isVersionD7())
         {
             \Bitrix\Main\ModuleManager::registerModule($this->MODULE_ID);
-
             $this->InstallDB();
             $this->InstallEvents();
             $this->InstallFiles();
+
+            
 
             #работа с .settings.php
             $configuration = Conf\Configuration::getInstance();
