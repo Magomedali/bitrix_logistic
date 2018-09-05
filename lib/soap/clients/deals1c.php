@@ -54,7 +54,7 @@ class Deals1C extends Client1C
 		$data['quantityofhours'] = $params['COUNT_HOURS'];
 		$data['insurance'] = $params['REQUIRES_INSURANCE'];
 		
-		$data['sum'] = 0;
+		$data['sum'] = $params['SUM'];
 		
 		$data['temperaturefrom'] = $params['REQUIRES_TEMPERATURE_FROM'];
 		$data['temperatureto'] = $params['REQUIRES_TEMPERATURE_TO'];
