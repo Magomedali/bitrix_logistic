@@ -46,6 +46,8 @@ class Deal
     public $vehicle;
     public $status;
     public $printForm;
+    public $howpacked;
+    public $countplace;
 
     function __construct($data)
     {
@@ -65,6 +67,7 @@ class Deal
         $this->temperaturefrom = $data['temperaturefrom'];
         $this->temperatureto = $data['temperatureto'];
         $this->additionalequipment = $data['additionalequipment'];
+        $this->specialequipment = $data['specialequipment'];
         $this->methodoftransportation = $data['methodoftransportation'];
         $this->escort = $data['escort'];
         $this->documentation = $data['documentation'];
@@ -73,10 +76,18 @@ class Deal
         $this->width = $data['width'];
         $this->height = $data['height'];
         $this->methodofloading = $data['methodofloading'];
+        $this->methodofunloading = $data['methodofunloading'];
         $this->driver = $data['driver'];
         $this->vehicle = $data['vehicle'];
         $this->status = $data['status'];
         $this->printForm = $data['printForm'] ? $data['printForm'] : null;
+        $this->howpacked = $data['howpacked'];
+        $this->countplace = $data['countplace'];
+        $this->adrclass = $data['adrclass'];
+        $this->reqrussiandriver = $data['reqrussiandriver'];
+        $this->crossdocking = $data['crossdocking'];
+        $this->securestorage = $data['securestorage'];
+        $this->cargohandling = $data['cargohandling'];
 
         if(isset($data['routes']) && is_array($data['routes']) && count($data['routes'])){
             
@@ -124,20 +135,34 @@ class Deal
         $data['SUM']=$this->sum;
 
     	$data['TYPE_OF_VEHICLE']= is_array($this->ts) ? implode(";", $this->ts) : $this->ts;
+        $data['HOW_PACKED']= is_array($this->howpacked) ? implode(";", $this->howpacked) : $this->howpacked;
     	$data['LOADING_METHOD']=is_array($this->methodofloading) ? implode(";", $this->methodofloading) : $this->methodofloading;
+
+        $data['UNLOADING_METHOD']=is_array($this->methodofunloading) ? implode(";", $this->methodofunloading) : $this->methodofloading;
 
     	$data['WAY_OF_TRANSPORTATION'] = WayOfTransportation::getCode($this->methodoftransportation);
     	$data['REQUIRES_LOADER'] = boolval($this->countloaders);
         $data['COUNT_LOADERS'] = $this->countloaders;
         $data['COUNT_HOURS'] = $this->quantityofhours;
+        $data['COUNT_PLACE'] = $this->countplace;
         $data['REQUIRES_INSURANCE'] = boolval($this->insurance);
         $data['REQUIRES_TEMPERATURE_FROM'] = $this->temperaturefrom;
         $data['REQUIRES_TEMPERATURE_TO'] = $this->temperatureto;
 
         $data['SUPPORT_REQUIRED'] = boolval($this->escort);
         $data['ADDITIONAL_EQUIPMENT'] = is_array($this->additionalequipment) ? implode(";", $this->additionalequipment) : $this->additionalequipment;
+
+        $data['SPECIAL_EQUIPMENT'] = is_array($this->specialequipment) ? implode(";", $this->specialequipment) : $this->specialequipment;
         $data['REQUIRED_DOCUMENTS'] = is_array($this->documentation) ? implode(";", $this->documentation) : $this->documentation;
         $data['WITH_NDS'] = boolval($this->nds);
+
+
+        $data['CARGO_HANDLING'] = boolval($this->cargohandling);
+        $data['CROSS_DOCKING'] = boolval($this->crossdocking);
+        $data['SECURE_STORAGE'] = boolval($this->securestorage);
+        $data['REQUIRED_RUSSIAN_DRIVER'] = boolval($this->reqrussiandriver);
+        $data['ADR_CLASS'] = (int)$this->adrclass;
+
 
         $data['STATE'] = DealStates::getCode($this->status);
         

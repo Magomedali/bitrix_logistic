@@ -8,8 +8,10 @@ use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Dictionary\WayOfTransportation;
 use Ali\Logistic\Dictionary\TypeOfVehicle;
 use Ali\Logistic\Dictionary\AdditionalEquipment;
+use Ali\Logistic\Dictionary\SpecialEquipment;
 use Ali\Logistic\Dictionary\Documents;
 use Ali\Logistic\Dictionary\LoadingMethod;
+use Ali\Logistic\Dictionary\HowPacked;
 
 use Ali\Logistic\soap\Types\Deal;
 use Ali\Logistic\Schemas\DealsSchemaTable;
@@ -48,10 +50,20 @@ class Deals1C extends Client1C
 
 		$data['ts'] = is_array($params['TYPE_OF_VEHICLE']) ? $params['TYPE_OF_VEHICLE'] : explode(TypeOfVehicle::getDelimiter(), $params['TYPE_OF_VEHICLE']);
 
+		$data['howpacked'] = is_array($params['HOW_PACKED']) ? $params['HOW_PACKED'] : explode(HowPacked::getDelimiter(), $params['HOW_PACKED']);
+
 		$data['comments'] = null;
 		$data['nds'] = $params['WITH_NDS'];
+
+		$data['cargohandling'] = $params['CARGO_HANDLING'];
+        $data['crossdocking'] = $params['CROSS_DOCKING'];
+        $data['securestorage'] = $params['SECURE_STORAGE'];
+        $data['reqrussiandriver'] = $params['REQUIRED_RUSSIAN_DRIVER'];
+        $data['adrclass'] = $params['ADR_CLASS']; (int)$this->adrclass;
+
 		$data['countloaders'] = $params['COUNT_LOADERS'];
 		$data['quantityofhours'] = $params['COUNT_HOURS'];
+		$data['countplace'] = $params['COUNT_PLACE'];
 		$data['insurance'] = $params['REQUIRES_INSURANCE'];
 		
 		$data['sum'] = $params['SUM'];
@@ -59,6 +71,8 @@ class Deals1C extends Client1C
 		$data['temperaturefrom'] = $params['REQUIRES_TEMPERATURE_FROM'];
 		$data['temperatureto'] = $params['REQUIRES_TEMPERATURE_TO'];
 		$data['additionalequipment'] = is_array($params['ADDITIONAL_EQUIPMENT']) ? $params['ADDITIONAL_EQUIPMENT'] : explode(AdditionalEquipment::getDelimiter(), $params['ADDITIONAL_EQUIPMENT']);
+
+		$data['specialequipment'] = is_array($params['SPECIAL_EQUIPMENT']) ? $params['SPECIAL_EQUIPMENT'] : explode(SpecialEquipment::getDelimiter(), $params['SPECIAL_EQUIPMENT']);
 
 		$data['escort'] = $params['SUPPORT_REQUIRED'];
 		$data['documentation'] = is_array($params['REQUIRED_DOCUMENTS']) ? $params['REQUIRED_DOCUMENTS'] : explode(Documents::getDelimiter(), $params['REQUIRED_DOCUMENTS']);
@@ -71,6 +85,7 @@ class Deals1C extends Client1C
 		$data['comments'] = $params['COMMENTS'];
 		
 		$data['methodofloading'] = is_array($params['LOADING_METHOD']) ? $params['LOADING_METHOD'] : explode(LoadingMethod::getDelimiter(), $params['LOADING_METHOD']);
+		$data['methodofunloading'] = is_array($params['UNLOADING_METHOD']) ? $params['LOADING_METHOD'] : explode(LoadingMethod::getDelimiter(), $params['LOADING_METHOD']);
 
 		$data['methodoftransportation'] = WayOfTransportation::getLabels($params['WAY_OF_TRANSPORTATION']);
       	$data['routes'] = array();

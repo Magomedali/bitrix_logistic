@@ -96,6 +96,7 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
     				<xs:element name="temperaturefrom" type="xs:float" nillable="true"/>
     				<xs:element name="temperatureto" type="xs:float" nillable="true"/>
     				<xs:element name="additionalequipment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    				<xs:element name="specialequipment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
     				<xs:element name="methodoftransportation" type="xs:string" nillable="true"/>
     				<xs:element name="escort" type="xs:boolean" nillable="true"/>
     				<xs:element name="documentation" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
@@ -104,12 +105,20 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
     				<xs:element name="width" type="xs:float" nillable="true"/>
     				<xs:element name="height" type="xs:float" nillable="true"/>
     				<xs:element name="methodofloading" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    				<xs:element name="methodofunloading" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
     				<xs:element name="routes" type="tns:route" minOccurs="0" maxOccurs="unbounded"/>
     				<xs:element name="costs" type="tns:cost" minOccurs="0" maxOccurs="unbounded"/>
     				<xs:element name="driver" type="xs:string" nillable="true"/>
     				<xs:element name="vehicle" type="xs:string" nillable="true"/>
     				<xs:element name="status" type="xs:string"/>
     				<xs:element name="printForm" type="xs:base64Binary" nillable="true"/>
+    				<xs:element name="howpacked" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    				<xs:element name="countplace" type="xs:integer" nillable="true"/>
+    				<xs:element name="adrclass" type="xs:integer" nillable="true"/>
+    				<xs:element name="reqrussiandriver" type="xs:boolean" nillable="true"/>
+    				<xs:element name="crossdocking" type="xs:boolean" nillable="true"/>
+    				<xs:element name="securestorage" type="xs:boolean" nillable="true"/>
+    				<xs:element name="cargohandling" type="xs:boolean" nillable="true"/>
     			</xs:sequence>
     		</xs:complexType>
     

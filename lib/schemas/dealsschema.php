@@ -229,18 +229,21 @@ class DealsSchemaTable extends Entity\DataManager{
                 'default_value'=>function(){
                     return "";
                 },
-                'validation'=>function(){
+                'save_data_modification'=>function(){
                     return array(
-                        function($v,$pr,$row,$f){
-
-                            // $types = \Ali\Logistic\Dictionary\LoadingMethod::getLabels();
-                            // if(array_key_exists($v, $types) == false){
-                            //     return "Недопустимое значение типа!";
-                            // }
-
-                            return true;
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : "";
                         }
                     );
+                }
+            )),
+
+
+            new Entity\TextField('UNLOADING_METHOD',array(
+                'title'=>'Способ разгрузки',
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
                 },
                 'save_data_modification'=>function(){
                     return array(
@@ -344,6 +347,27 @@ class DealsSchemaTable extends Entity\DataManager{
                 }
             )),
 
+            new Entity\BooleanField('CARGO_HANDLING',array(
+                'title'=>'Погрузо-разгрузочные работы',
+                'default_value'=>function(){
+                    return false;
+                }
+            )),
+
+            new Entity\BooleanField('SECURE_STORAGE',array(
+                'title'=>'Ответственное хранение',
+                'default_value'=>function(){
+                    return false;
+                }
+            )),
+
+            new Entity\BooleanField('CROSS_DOCKING',array(
+                'title'=>'Кросс-докинг',
+                'default_value'=>function(){
+                    return false;
+                }
+            )),
+
 
 
             new Entity\TextField('ADDITIONAL_EQUIPMENT',array(
@@ -352,18 +376,21 @@ class DealsSchemaTable extends Entity\DataManager{
                 'default_value'=>function(){
                     return "";
                 },
-                'validation'=>function(){
+                'save_data_modification'=>function(){
                     return array(
-                        function($v,$pr,$row,$f){
-
-                            // $types = \Ali\Logistic\Dictionary\AdditionalEquipment::getLabels();
-                            // if(array_key_exists($v, $types) == false){
-                            //     return "Недопустимое значение типа!";
-                            // }
-
-                            return true;
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : "";
                         }
                     );
+                }
+            )),
+
+
+
+            new Entity\TextField('SPECIAL_EQUIPMENT',array(
+                'title'=>'Специальное оборудования',
+                'default_value'=>function(){
+                    return "";
                 },
                 'save_data_modification'=>function(){
                     return array(
@@ -391,6 +418,30 @@ class DealsSchemaTable extends Entity\DataManager{
                             // if(array_key_exists($v, $types) == false){
                             //     return "Недопустимое значение типа!";
                             // }
+
+                            return true;
+                        }
+                    );
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return strlen($value) ? $value : "";
+                        }
+                    );
+                }
+            )),
+
+
+
+            new Entity\TextField('HOW_PACKED',array(
+                'title'=>'Как упакован',
+                'default_value'=>function(){
+                    return false;
+                },
+                'validation'=>function(){
+                    return array(
+                        function($v,$pr,$row,$f){
 
                             return true;
                         }
@@ -449,6 +500,61 @@ class DealsSchemaTable extends Entity\DataManager{
                 }
             )),
 
+
+            new Entity\IntegerField('COUNT_PLACE',array(
+                'title'=>'Количество мест',
+                'default_value'=>function(){
+                    return 0;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return (int)$value;
+                        }
+                    );
+                }
+            )),
+
+
+
+            new Entity\IntegerField('ADR_CLASS',array(
+                'title'=>'Адр класс',
+                'default_value'=>function(){
+                    return 0;
+                },
+                'validation'=>function(){
+                    return array(
+                        function($v,$pr,$row,$f){
+
+                           
+                            if((int)$v && !((int)$v >= 1 && (int)$v <= 10)){
+                                return "Недопустимое значение 'Адр класс', Адр класс может принимать значение только от 1 до 10!";
+                            }
+
+                            return true;
+                        }
+                    );
+                }б
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return (int)$value;
+                        }
+                    );
+                }
+            )),
+
+
+
+            new Entity\BooleanField('REQUIRED_RUSSIAN_DRIVER',array(
+                'title'=>'Водитель гражданин России',
+                'default_value'=>function(){
+                    return false;
+                }
+            )),
+
+
+
             new Entity\StringField('DRIVER_INFO',array(
                 'title'=>'Водитель',
                 'required'=>false,
@@ -479,6 +585,39 @@ class DealsSchemaTable extends Entity\DataManager{
                     );
                 }
             )),
+
+
+            new Entity\StringField('LOADING_PLACE',array(
+                'title'=>'Место погрузки',
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return trim(strip_tags($value));
+                        }
+                    );
+                }
+            )),
+
+
+            new Entity\StringField('UNLOADING_PLACE',array(
+                'title'=>'Место разгрузки',
+                'required'=>false,
+                'default_value'=>function(){
+                    return "";
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return trim(strip_tags($value));
+                        }
+                    );
+                }
+            )),
+
 
             new Entity\StringField('PRINT_FORM',array(
                 'title'=>'Печатная форма',

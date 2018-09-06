@@ -15,6 +15,9 @@ use Ali\Logistic\Dictionary\LoadingMethod;
 use Ali\Logistic\Dictionary\DealFileType;
 use Ali\Logistic\Dictionary\AdditionalEquipment;
 use Ali\Logistic\Dictionary\Documents;
+use Ali\Logistic\Dictionary\SpecialEquipment;
+use Ali\Logistic\Dictionary\HowPacked;
+
 use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\Schemas\DealCostingsSchemaTable;
 
@@ -43,16 +46,38 @@ class Deals{
             $data['LOADING_METHOD'] = $loadingMethods;
         }
 
+        if(isset($data['UNLOADING_METHOD']) && is_array($data['UNLOADING_METHOD'])){
+            $unloadingMethods = LoadingMethod::toString($data['UNLOADING_METHOD']);
+            $data['UNLOADING_METHOD'] = $unloadingMethods;
+        }
+
         if(isset($data['ADDITIONAL_EQUIPMENT']) && is_array($data['ADDITIONAL_EQUIPMENT'])){
             $addEq = AdditionalEquipment::toString($data['ADDITIONAL_EQUIPMENT']);
             $data['ADDITIONAL_EQUIPMENT'] = $addEq;
+        }
+
+        if(isset($data['SPECIAL_EQUIPMENT']) && is_array($data['SPECIAL_EQUIPMENT'])){
+            $sp = SpecialEquipment::toString($data['SPECIAL_EQUIPMENT']);
+            $data['SPECIAL_EQUIPMENT'] = $sp;
         }
 
         if(isset($data['REQUIRED_DOCUMENTS']) && is_array($data['REQUIRED_DOCUMENTS'])){
             $docs = Documents::toString($data['REQUIRED_DOCUMENTS']);
             $data['REQUIRED_DOCUMENTS'] = $docs;
         }
-        
+
+
+        if(isset($data['HOW_PACKED']) && is_array($data['HOW_PACKED'])){
+            $hwp = HowPacked::toString($data['HOW_PACKED']);
+            $data['HOW_PACKED'] = $hwp;
+        }
+
+
+        $data['CARGO_HANDLING'] = isset($data['CARGO_HANDLING']);
+        $data['CROSS_DOCKING'] = isset($data['CROSS_DOCKING']);
+        $data['SECURE_STORAGE'] = isset($data['SECURE_STORAGE']);
+        $data['REQUIRED_RUSSIAN_DRIVER'] = isset($data['REQUIRED_RUSSIAN_DRIVER']);
+
 
         $data['INTEGRATE_ERROR'] = isset($data['INTEGRATE_ERROR']);
         $data['IS_INTEGRATED'] = isset($data['IS_INTEGRATED']);
