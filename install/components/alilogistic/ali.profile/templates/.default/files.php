@@ -19,8 +19,8 @@ $arResult['breadcrumbs'][]=[
 ?>
 
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
-<div class="organisations-page">
-	<div class="organisations">
+<div id="alilogistic" class="row organisations-page">
+	<div class="col-md-12 organisations">
 		<table class="table table-bordered  table-hover">
 			<thead>
 				<tr>

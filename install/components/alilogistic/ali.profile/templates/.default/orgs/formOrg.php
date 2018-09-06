@@ -24,7 +24,7 @@ $arResult['breadcrumbs']=[
 ?>
 
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
-<div class="row form-org-page">
+<div id="alilogistic" class="row form-org-page">
 	<?php 
 		if($errors){
 	?>

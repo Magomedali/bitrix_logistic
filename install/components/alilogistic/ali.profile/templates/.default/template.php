@@ -22,7 +22,7 @@ $hasCompany = isset($arResult['hasCompany'])? $arResult['hasCompany'] : null;
 ?>
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <?php if(!empty($user)){ ?>
-<div id="personal_page" class="row">
+<div id="alilogistic" class="row personal_page">
 	<div class="col-xs-4">
 		<table class="table table-hover">
 			<thead>

@@ -11,8 +11,8 @@ $file_path = isset($arResult['path'])  ? $arResult['path'] : ALI_CONTRACT_PATH;
 ?>
 
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
-<div class="docs-page">
-	<div class="docs">
+<div id="alilogistic" class="row docs-page">
+	<div class="col-md-12 docs">
 		<?php 
 			if($contract_nds && isset($contract_nds['VALUE']) && file_exists($file_path.$contract_nds['VALUE'])){
 				?>

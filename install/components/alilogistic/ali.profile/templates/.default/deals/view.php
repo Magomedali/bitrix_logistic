@@ -35,7 +35,7 @@ function htmlFilelink($component,$files,$type){
 ?>
 
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
-<div class="row">
+<div class="row" id="alilogistic">
 	<div class="col-xs-4">
 		<table class="table table-hover">
 			<thead>

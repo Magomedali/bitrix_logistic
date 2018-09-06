@@ -32,7 +32,7 @@ $arResult['breadcrumbs']=[
 
 ?>
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
-<div class="row">
+<div id="alilogistic" class="row">
 	<div class="col-xs-12">
 		<?php if($org){?>
 		<a href="<?php echo $component->getUrl("formorg",['id'=>$org['ID']])?>">Редактировать</a>

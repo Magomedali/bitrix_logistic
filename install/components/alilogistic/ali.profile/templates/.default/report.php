@@ -34,7 +34,7 @@ $file_path = ALI_REVISES_PATH;
 <?php if(!empty($contractors)){ ?>
 
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
-<div id="sverka_page" class="row">
+<div id="alilogistic" class="row report_page">
 	<?php if($errors){ ?>
 		<div class="col-xs-12">
 			<?php foreach ($errors as $key => $e) { ?>

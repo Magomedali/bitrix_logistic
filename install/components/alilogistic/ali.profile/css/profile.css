@@ -1,1 +1,24 @@
 .col-md-9 > h1.line-behind.text-left.emm{display:none;}
+
+#alilogistic .tab-pane{
+	padding-top: 0px;
+}
+
+#alilogistic .row,#alilogistic.row{
+	margin-right: -15px;
+    margin-left: -15px;
+}
+
+.pager .prev_tab,.pager .next_tab{
+	cursor: pointer;
+}
+
+
+#deal_type_od_vehicle label,
+#deal_loading_method label,
+#deal_way_of_transportation label,
+#deal_additional_equipment label,
+#deal_req_documents label
+{
+	display: block;
+}

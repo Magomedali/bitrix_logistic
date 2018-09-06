@@ -26,7 +26,7 @@ $errors = is_array($arResult['errors']) && count($arResult['errors']) ? $arResul
 	</div>
 <?php } ?>
 
-<div class="div">
+<div id="alilogistic" class="row">
 	<div class="col-xs-12">
 		<form action="" method="POST">
 			<div class="row">

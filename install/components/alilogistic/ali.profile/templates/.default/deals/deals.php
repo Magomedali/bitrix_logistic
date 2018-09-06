@@ -33,7 +33,7 @@ function htmlFilelink($component,$files,$type){
 }
 ?>
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
-<div class="row" id="filtres">
+<div class="row filtres" id="alilogistic">
 	<div class="col-xs-12">
 		<form action="" method="GET">
 			<div class="row filters_head">
@@ -106,10 +106,9 @@ function htmlFilelink($component,$files,$type){
 			</div>
 		</form>
 	</div>
-</div>
-<div class="row deals-page" style="margin-top: 20px;">
-	<p>Количество заявок - <?php echo $total;?></p>
-	<div class="col-xs-12 deals">
+
+	
+	<div class="col-xs-12 deals" style="margin-top: 15px;">
 		<table class="table table-bordered  table-hover">
 			<thead>
 				<tr>

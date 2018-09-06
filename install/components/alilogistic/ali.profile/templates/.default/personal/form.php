@@ -32,7 +32,7 @@ if($user){
 	</div>
 <?php } ?>
 
-<div class="row">
+<div id="alilogistic" class="row">
 	<div class="col-xs-6">
 		<form action="" method="POST">
 			

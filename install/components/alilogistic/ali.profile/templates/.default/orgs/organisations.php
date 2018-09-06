@@ -10,7 +10,7 @@ $arResult['breadcrumbs'][]=[
 ];
 ?>
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
-<div class="organisations-page">
+<div id="alilogistic" class="organisations-page">
 	<div class="panel">
 		<a href="<?php echo $component->getUrl('formorg')?>">Добавить организацию</a>
 	</div>
