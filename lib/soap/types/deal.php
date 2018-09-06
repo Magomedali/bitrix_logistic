@@ -33,13 +33,16 @@ class Deal
     public $temperaturefrom;
     public $temperatureto;
     public $additionalequipment;
+    public $specialequipment;
     public $methodoftransportation;
     public $escort;
     public $documentation;
     public $size;
     public $length;
     public $width;
+    public $height;
     public $methodofloading;
+    public $methodofunloading;
     public $routes = array();
     public $costs = array();
     public $driver;
@@ -48,6 +51,12 @@ class Deal
     public $printForm;
     public $howpacked;
     public $countplace;
+    public $adrclass;
+    public $reqrussiandriver;
+    public $crossdocking;
+    public $securestorage;
+    public $cargohandling;
+    public $armedescort;
 
     function __construct($data)
     {
@@ -88,6 +97,7 @@ class Deal
         $this->crossdocking = $data['crossdocking'];
         $this->securestorage = $data['securestorage'];
         $this->cargohandling = $data['cargohandling'];
+        $this->armedescort = $data['armedescort'];
 
         if(isset($data['routes']) && is_array($data['routes']) && count($data['routes'])){
             
@@ -158,6 +168,7 @@ class Deal
 
 
         $data['CARGO_HANDLING'] = boolval($this->cargohandling);
+        $data['ARMED_ESCORT'] = boolval($this->armedescort);
         $data['CROSS_DOCKING'] = boolval($this->crossdocking);
         $data['SECURE_STORAGE'] = boolval($this->securestorage);
         $data['REQUIRED_RUSSIAN_DRIVER'] = boolval($this->reqrussiandriver);

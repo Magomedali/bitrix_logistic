@@ -6,6 +6,8 @@ use Ali\Logistic\Dictionary\TypeOfVehicle;
 use Ali\Logistic\Dictionary\WayOfTransportation;
 use Ali\Logistic\Dictionary\AdditionalEquipment;
 use Ali\Logistic\Dictionary\Documents;
+use Ali\Logistic\Dictionary\HowPacked;
+use Ali\Logistic\Dictionary\SpecialEquipment;
 use Ali\Logistic\helpers\Html;
 use Ali\Logistic\helpers\ArrayHelper;
 
@@ -90,10 +92,8 @@ $arResult['breadcrumbs'][]=[
 						<div id="routes" class="tab-pane fade in active">
 							<div class="row">
 								<div class="col-xs-12">
-									<h2>Маршруты</h4>
+									<h2>Маршруты</h2>
 									<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-success'>Добаить</a>
-									
-
 									<div class="row routes" id="formRoutesBlock">
 										<div class="col-md-12" id="routesItems">
 											<?php
@@ -116,10 +116,7 @@ $arResult['breadcrumbs'][]=[
 												}
 											?>
 										</div>
-									</div>
-
-									
-											
+									</div>	
 								</div>
 							</div>
 						</div>
@@ -133,12 +130,12 @@ $arResult['breadcrumbs'][]=[
 
 						<!-- Cargo tab -->
 						<div id="cargo" class="tab-pane fade in">
-							<h2>Груз</h4>
+							<h2>Груз</h2>
 							<div class="row">
 								<div class="col-xs-6">
 									<p>
-										<label for="deal_name" class="form-label">Наименование</label>
-										<input type="text" name="DEAL[NAME]" id="deal_name" value="<?php echo $deal ? $deal['NAME'] : null;?>" class="form-control" required>
+										<label for="deal_name" class="form-label">Наименование груза</label>
+										<input type="text" name="DEAL[NAME]" id="deal_name" value="<?php echo $deal ? $deal['NAME'] : null;?>" class="form-control">
 									</p>
 								</div>
 								<div class="col-xs-3">
@@ -151,12 +148,37 @@ $arResult['breadcrumbs'][]=[
 								</div>
 								<div class="col-xs-3">
 									<p>
+										<?php 
+											$with_nds = $with_o_nds = null;
+											if(isset($deal['WITH_NDS']) && $deal['WITH_NDS']){
+												$with_nds = 1;
+											}else{
+												$with_o_nds = 1;
+											}
+										?>
+										<label for="deal_with_nds" class="form-label">С НДС</label>
+										<?php echo Html::radio("DEAL[WITH_NDS]",$with_nds,['id'=>'deal_with_nds','value'=>1]);?>
+
+										<label for="deal_with_o_nds" class="form-label">Без НДС</label>
+										<?php echo Html::radio("DEAL[WITH_NDS]",$with_o_nds,['id'=>'deal_with_o_nds','value'=>0]);?>
+									</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-3">
+									<p>
 										<label for="deal_weight" class="form-label">Вес груза</label>
 										<input type="number" name="DEAL[WEIGHT]" id="deal_weight" value="<?php echo $deal ? $deal['WEIGHT'] : null;?>" class="form-control" >
 									</p>
 								</div>
 							</div>
 							<div class="row">
+								<div class="col-xs-3">
+									<p>
+										<label for="deal_space" class="form-label">Объем (куб. м.)</label>
+										<input type="number" name="DEAL[SPACE]" id="deal_space" value="<?php echo $deal ? $deal['SPACE'] : null;?>" class="form-control">
+									</p>
+								</div>
 								<div class="col-xs-3">
 									<p>
 										<label for="deal_width" class="form-label">Ширина (м)</label>
@@ -176,10 +198,19 @@ $arResult['breadcrumbs'][]=[
 										<input type="number" name="DEAL[LENGTH]" id="deal_length" value="<?php echo $deal ? $deal['LENGTH'] : null;?>" class="form-control">
 									</p>
 								</div>
-								<div class="col-xs-3">
+							</div>
+
+							<div class="row">
+								<div class="col-xs-4">
 									<p>
-										<label for="deal_space" class="form-label">Объем (куб. м.)</label>
-										<input type="number" name="DEAL[SPACE]" id="deal_space" value="<?php echo $deal ? $deal['SPACE'] : null;?>" class="form-control">
+										<label>Количество мест</label>
+										<?php echo Html::input("number","DEAL[COUNT_PLACE]",$deal['COUNT_PLACE'],['class'=>'form-control']);?>
+									</p>
+								</div>
+								<div class="col-xs-8">
+									<p>
+										<label>Как упакован</label>
+										<?php echo Html::checkboxList("DEAL[HOW_PACKED]",HowPacked::toArrayCode($deal['HOW_PACKED']),HowPacked::getLabels(),['id'=>'deal_HowPacked']);?>
 									</p>
 								</div>
 							</div>
@@ -190,23 +221,7 @@ $arResult['breadcrumbs'][]=[
 										<?php echo Html::textarea("DEAL[COMMENTS]",$deal['COMMENTS'],['class'=>'form-control']);?>
 									</p>
 								</div>
-								<div class="col-xs-4">
-									<p>
-										<?php 
-											$with_nds = $with_o_nds = null;
-											if(isset($deal['WITH_NDS']) && $deal['WITH_NDS']){
-												$with_nds = 1;
-											}else{
-												$with_o_nds = 1;
-											}
-										?>
-										<label for="deal_with_nds" class="form-label">С НДС</label>
-										<?php echo Html::radio("DEAL[WITH_NDS]",$with_nds,['id'=>'deal_with_nds','value'=>1]);?>
 
-										<label for="deal_with_o_nds" class="form-label">Без НДС</label>
-										<?php echo Html::radio("DEAL[WITH_NDS]",$with_o_nds,['id'=>'deal_with_o_nds','value'=>0]);?>
-									</p>
-								</div>
 							</div>
 						</div>
 
@@ -226,9 +241,9 @@ $arResult['breadcrumbs'][]=[
 
 						<!-- Ts tab -->
 						<div id="ts" class="tab-pane fade in">
-							<h2>Транспорт</h4>
+							<h2>Транспорт</h2>
 							<div class="row">
-								<div class="col-xs-4">
+								<div class="col-xs-3">
 									<p>
 										<label for="deal_type_od_vehicle" class="form-label">Tип транспортного средства</label>
 										<?php 
@@ -237,7 +252,7 @@ $arResult['breadcrumbs'][]=[
 									</p>
 								</div>
 
-								<div class="col-xs-4">
+								<div class="col-xs-3">
 									<p>
 										<label for="deal_loading_method" class="form-label">Способ погрузки</label>
 										<?php 
@@ -246,7 +261,16 @@ $arResult['breadcrumbs'][]=[
 									</p>
 								</div>
 
-								<div class="col-xs-4">
+								<div class="col-xs-3">
+									<p>
+										<label for="deal_unloading_method" class="form-label">Способ разгрузки</label>
+										<?php 
+											echo Html::checkboxList("DEAL[UNLOADING_METHOD]",LoadingMethod::toArrayCode($deal['UNLOADING_METHOD']),$LoadingMethod,['id'=>"deal_unloading_method"]);
+										?>
+									</p>
+								</div>
+
+								<div class="col-xs-3">
 									<p>
 										<label for="deal_way_of_transportation" class="form-label">Способ перевозки</label>
 										<?php 
@@ -255,17 +279,62 @@ $arResult['breadcrumbs'][]=[
 									</p>
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+									      <h4 class="panel-title">
+									        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Дополнительные требования</a>
+									      </h4>
+									    </div>
+									    <div class="panel-body">
+									    	<div class="row">
+												<div class="col-xs-2">
+													<p>
+														<label for="deal_req_temp_from" class="form-label">Темп. от</label>
+														<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_FROM]",$deal['REQUIRES_TEMPERATURE_FROM'],['id'=>'deal_req_temp_from','class'=>'form-control']);?>
+													</p>
+												</div>
+												<div class="col-xs-2">
+													<p>
+														<label for="deal_req_temp_to" class="form-label">Темп. до</label>
+														<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_TO]",$deal['REQUIRES_TEMPERATURE_TO'],['id'=>'deal_req_temp_to','class'=>'form-control']);?>
+													</p>
+												</div>
+												<div class="col-xs-4">
+													<p>
+														<label for="deal_adrclass" class="form-label">АДР Класс</label>
+														<?php echo Html::input("number","DEAL[ADR_CLASS]",$deal['ADR_CLASS'],['min'=>1,'max'=>10,'id'=>'deal_adrclass','class'=>'form-control']);?>
+													</p>
+												</div>
+												
+											</div>
+											<div class="row">
+												<div class="col-xs-5">
+													<p>
+														<label for="deal_additional_equipment" class="form-label">Требуются дополнительные оборудования?</label>
+														<?php echo Html::checkboxList("DEAL[ADDITIONAL_EQUIPMENT]",AdditionalEquipment::toArrayCode($deal['ADDITIONAL_EQUIPMENT']),$AdditionalEquipment,['id'=>'deal_additional_equipment']);?>
+													</p>
+													
+												</div>
+												<div class="col-xs-3">
+													<p>
+														<label for="deal_req_documents" class="form-label">Требуется документы?</label>
+														<?php echo Html::checkboxList("DEAL[REQUIRED_DOCUMENTS]",Documents::toArrayCode($deal['REQUIRED_DOCUMENTS']),$Documents,['id'=>'deal_req_documents']);?>
+													</p>
+												</div>
+												<div class="col-xs-4">
+													<p>
+														<label for="deal_reqrussiandriver" class="form-label">Водитель гражданин России</label>
+														<?php echo Html::checkbox("DEAL[REQUIRED_RUSSIAN_DRIVER]",$deal['REQUIRED_RUSSIAN_DRIVER'],['id'=>'deal_reqrussiandriver']);?>
+													</p>
+												</div>
+											</div>
+									    </div>
+									</div>
+								</div>
+							</div>
 						</div>
-						
-
-
-
-
-
-
-
-
-
 
 
 
@@ -276,21 +345,21 @@ $arResult['breadcrumbs'][]=[
 
 						<!-- Additional tab -->
 						<div id="additional" class="tab-pane fade in">
-							<h2>Дополнительные услуги</h4>
+							<h2>Дополнительные услуги</h2>
 							<div class="row">
 								<div class="col-xs-4">
 									<p>
-										<label for="deal_requires_loader" class="form-label">Требуется грузчик?</label>
 										<?php echo Html::checkbox("DEAL[REQUIRES_LOADER]",$deal['REQUIRES_LOADER'],['id'=>'deal_requires_loader','value'=>1]);?>
+										<label for="deal_requires_loader" class="form-label">Требуется грузчик?</label>
 									</p>
 								</div>
-								<div class="col-xs-2">
+								<div class="col-xs-3">
 									<p>
 										<label for="deal_count_loader" class="form-label">Количество грузчиков</label>
 										<?php echo Html::input("number","DEAL[COUNT_LOADERS]",$deal['COUNT_LOADERS'],['id'=>'deal_count_loader','class'=>'form-control']);?>
 									</p>
 								</div>
-								<div class="col-xs-2">
+								<div class="col-xs-3">
 									<p>
 										<label for="deal_count_hours" class="form-label">Количество часов</label>
 										<?php echo Html::input("number","DEAL[COUNT_HOURS]",$deal['COUNT_HOURS'],['id'=>'deal_count_hours','class'=>'form-control']);?>
@@ -301,8 +370,8 @@ $arResult['breadcrumbs'][]=[
 							<div class="row">
 								<div class="col-xs-4">
 									<p>
-										<label for="deal_requires_insurance" class="form-label">Требуется страхование?</label>
 										<?php echo Html::checkbox("DEAL[REQUIRES_INSURANCE]",$deal['REQUIRES_INSURANCE'],['id'=>'deal_requires_insurance']);?>
+										<label for="deal_requires_insurance" class="form-label">Требуется страхование?</label>
 									</p>
 									
 								</div>
@@ -312,42 +381,36 @@ $arResult['breadcrumbs'][]=[
 										<?php echo Html::input("number","DEAL[SUM]",$deal['SUM'] ? $deal['SUM'] : "",['id'=>'deal_sum','class'=>'form-control']);?>
 									</p>
 								</div>
-								<div class="col-xs-2">
-									<p>
-										<label for="deal_req_temp_from" class="form-label">Темп. от</label>
-										<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_FROM]",$deal['REQUIRES_TEMPERATURE_FROM'],['id'=>'deal_req_temp_from','class'=>'form-control']);?>
-									</p>
-								</div>
-								<div class="col-xs-2">
-									<p>
-										<label for="deal_req_temp_to" class="form-label">Темп. до</label>
-										<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_TO]",$deal['REQUIRES_TEMPERATURE_TO'],['id'=>'deal_req_temp_to','class'=>'form-control']);?>
-									</p>
-								</div>
 							</div>
 
 							<div class="row">
 								<div class="col-xs-4">
 									<p>
-										<label for="deal_req_supports" class="form-label">Требуется сопровождение?</label>
 										<?php echo Html::checkbox("DEAL[SUPPORT_REQUIRED]",$deal['SUPPORT_REQUIRED'],['id'=>'deal_req_supports']);?>
+										<label for="deal_req_supports" class="form-label">Требуется сопровождение?</label>
+									</p>
+									<p>
+										<?php echo Html::checkbox("DEAL[CARGO_HANDLING]",$deal['CARGO_HANDLING'],['id'=>'deal_req_cargo_handling']);?>
+										<label for="deal_req_cargo_handling" class="form-label">Погрузо-разгрузочные работы</label>
+									</p>
+									<p>
+										<?php echo Html::checkbox("DEAL[SECURE_STORAGE]",$deal['SECURE_STORAGE'],['id'=>'deal_req_sec_storage']);?>
+										<label for="deal_req_sec_storage" class="form-label">Ответственное хранение</label>
+									</p>
+									<p>
+										<?php echo Html::checkbox("DEAL[CROSS_DOCKING]",$deal['CROSS_DOCKING'],['id'=>'deal_req_cross_docking']);?>
+										<label for="deal_req_cross_docking" class="form-label">Кросс-докинг</label>
+									</p>
+									<p>
+										<?php echo Html::checkbox("DEAL[ARMED_ESCORT]",$deal['ARMED_ESCORT'],['id'=>'deal_req_armed_escort']);?>
+										<label for="deal_req_armed_escort" class="form-label">Вооруженное сопровождение</label>
 									</p>
 								</div>
 								<div class="col-xs-4">
-									<div class="parent_checkbox">
-										<p>
-											<label for="deal_additional_equipment" class="form-label">Требуются дополнительные оборудования?</label>
-											<?php echo Html::checkboxList("DEAL[ADDITIONAL_EQUIPMENT]",AdditionalEquipment::toArrayCode($deal['ADDITIONAL_EQUIPMENT']),$AdditionalEquipment,['id'=>'deal_additional_equipment']);?>
-										</p>
-									</div>
-								</div>
-								<div class="col-xs-4">
-									<div class="parent_checkbox">
-										<p>
-											<label for="deal_req_documents" class="form-label">Требуется документы?</label>
-											<?php echo Html::checkboxList("DEAL[REQUIRED_DOCUMENTS]",Documents::toArrayCode($deal['REQUIRED_DOCUMENTS']),$Documents,['id'=>'deal_req_documents']);?>
-										</p>
-									</div>
+									<p>
+										<label for="deal_spec_equipment" class="form-label">Спецтехника</label>
+										<?php echo Html::checkboxList("DEAL[SPECIAL_EQUIPMENT]",SpecialEquipment::toArrayCode($deal['SPECIAL_EQUIPMENT']),SpecialEquipment::getLabels(),['id'=>'deal_spec_equipment']);?>
+									</p>
 								</div>
 							</div>
 						</div>
@@ -470,5 +533,61 @@ $arResult['breadcrumbs'][]=[
 		})
 	});
 
+	var dateTostandartFormat = function(d){
+
+		var Y=d.getFullYear();
+		var m=d.getMonth()+1;
+		var day=d.getDate();
+		var H=d.getHours();
+		var i=d.getMinutes();
+		var s=d.getSeconds();
+		day = (day < 10) ? day='0'+day : day;
+		
+		m = (m < 10) ? m='0'+m : m;
+		
+		var strDate = Y+"-"+m+"-"+day+"T"+H+":"+i;
+		
+		return strDate; 
+	}
+
+	$("body").on("change",'.form-route input.startdate,.form-route input.finishdate',function(){
+
+		var now = Date.now();
+		var strDate = $(this).val();
+		var inputDate = new Date(strDate);
+		
+
+		if($(this).hasClass("startdate")){
+			// Дата начала должна быть меньше даты окончания
+			var finish = $(this).parents(".form-route").find("input.finishdate").val();
+			var finishDate = new Date(finish);
+			var startDate = inputDate;
+			if(finishDate < startDate){
+				var f_d_str = dateTostandartFormat(startDate);
+				$(this).parents(".form-route").find("input.finishdate").val(f_d_str);
+				return false;
+			}
+		}
+
+		if($(this).hasClass("finishdate")){
+			// Дата окончания должна быть больше даты начала
+			var start = $(this).parents(".form-route").find("input.startdate").val();
+			var startDate = new Date(start);
+			var finishDate = inputDate;
+			if(finishDate < startDate){
+				console.log(startDate);
+				$(this).val(dateTostandartFormat(startDate));
+				return false;
+			}
+		}
+
+		// Подстраховка, если инпуты пустые изначально
+		if(now > inputDate){
+			//Запрет ввода даты меньше текущей
+			$(this).val(dateTostandartFormat(new Date(now)));
+			return false;
+		}
+
+	});
 	
 </script>

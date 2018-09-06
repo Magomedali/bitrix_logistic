@@ -18,7 +18,9 @@
 #deal_loading_method label,
 #deal_way_of_transportation label,
 #deal_additional_equipment label,
-#deal_req_documents label
+#deal_req_documents label,
+#deal_unloading_method label,
+#deal_spec_equipment label
 {
 	display: block;
 }

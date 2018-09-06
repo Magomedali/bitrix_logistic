@@ -10,7 +10,7 @@ class HowPacked extends \Ali\Logistic\Dictionary\Dictionary{
 
 	const PALLETS = 1;
 	const BARREL = 2;
-	const CASE = 3;
+	const FRAME = 3;
 	const IN_BULK = 4;
 	const BIG_BAG = 5;
 	const COIL = 6;
@@ -20,7 +20,7 @@ class HowPacked extends \Ali\Logistic\Dictionary\Dictionary{
 	protected static $labels = array(
 		self::PALLETS=>"палет",
 		self::BARREL=>"бочка",
-		self::CASE=>"коробка",
+		self::FRAME=>"коробка",
 		self::IN_BULK=>"навалом",
 		self::BIG_BAG=>"биг-бэг",
 		self::COIL=>"катушка",

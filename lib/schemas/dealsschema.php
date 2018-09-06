@@ -107,7 +107,7 @@ class DealsSchemaTable extends Entity\DataManager{
 
 
             new Entity\StringField('NAME',array(
-                'title'=>'Наименование',
+                'title'=>'Наименование груза',
                 'required'=>true,
                 'save_data_modification'=>function(){
                     return array(
@@ -369,6 +369,14 @@ class DealsSchemaTable extends Entity\DataManager{
             )),
 
 
+            new Entity\BooleanField('ARMED_ESCORT',array(
+                'title'=>'Вооруженное сопровождение',
+                'default_value'=>function(){
+                    return false;
+                }
+            )),
+
+
 
             new Entity\TextField('ADDITIONAL_EQUIPMENT',array(
                 'title'=>'Требуются дополнительные оборудования',
@@ -534,7 +542,7 @@ class DealsSchemaTable extends Entity\DataManager{
                             return true;
                         }
                     );
-                }б
+                },
                 'save_data_modification'=>function(){
                     return array(
                         function($value,$primary,$row,$field){

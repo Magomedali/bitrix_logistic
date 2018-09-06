@@ -73,20 +73,23 @@ class Deals{
         }
 
 
-        $data['CARGO_HANDLING'] = isset($data['CARGO_HANDLING']);
-        $data['CROSS_DOCKING'] = isset($data['CROSS_DOCKING']);
-        $data['SECURE_STORAGE'] = isset($data['SECURE_STORAGE']);
-        $data['REQUIRED_RUSSIAN_DRIVER'] = isset($data['REQUIRED_RUSSIAN_DRIVER']);
+
+        $data['CARGO_HANDLING'] = isset($data['CARGO_HANDLING']) && boolval($data['CARGO_HANDLING']);
+        $data['CROSS_DOCKING'] = isset($data['CROSS_DOCKING']) && boolval($data['CROSS_DOCKING']);
+        $data['SECURE_STORAGE'] = isset($data['SECURE_STORAGE']) && boolval($data['SECURE_STORAGE']);
+        $data['REQUIRED_RUSSIAN_DRIVER'] = isset($data['REQUIRED_RUSSIAN_DRIVER']) && boolval($data['REQUIRED_RUSSIAN_DRIVER']);
+        $data['ARMED_ESCORT'] = isset($data['ARMED_ESCORT']) && boolval($data['ARMED_ESCORT']);
 
 
-        $data['INTEGRATE_ERROR'] = isset($data['INTEGRATE_ERROR']);
-        $data['IS_INTEGRATED'] = isset($data['IS_INTEGRATED']);
-        $data['REQUIRES_LOADER'] = isset($data['REQUIRES_LOADER']);
-        $data['REQUIRES_INSURANCE'] = isset($data['REQUIRES_INSURANCE']);
-        $data['SUPPORT_REQUIRED'] = isset($data['SUPPORT_REQUIRED']);
-        $data['WITH_NDS'] = isset($data['WITH_NDS']) && (int)$data['WITH_NDS'];
+        $data['INTEGRATE_ERROR'] = isset($data['INTEGRATE_ERROR']) && boolval($data['INTEGRATE_ERROR']);
+        $data['IS_INTEGRATED'] = isset($data['IS_INTEGRATED']) && boolval($data['IS_INTEGRATED']);
+        $data['REQUIRES_LOADER'] = isset($data['REQUIRES_LOADER']) && boolval($data['REQUIRES_LOADER']);
+        $data['REQUIRES_INSURANCE'] = isset($data['REQUIRES_INSURANCE']) && boolval($data['REQUIRES_INSURANCE']);
+        $data['SUPPORT_REQUIRED'] = isset($data['SUPPORT_REQUIRED']) && boolval($data['SUPPORT_REQUIRED']);
+        $data['WITH_NDS'] = isset($data['WITH_NDS']) && boolval($data['WITH_NDS']);
 
         $data['IS_ACTIVE']=false;
+
 
         if(!isset($data['CREATED_AT']))
             $data['CREATED_AT'] = new \Bitrix\Main\Type\DateTime();

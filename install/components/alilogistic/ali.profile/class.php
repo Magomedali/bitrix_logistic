@@ -553,8 +553,10 @@ class AliProfile extends CBitrixComponent
                 $deal = DealsSchemaTable::getRow(['select'=>['*'],'filter'=>['ID'=>(int)$request['DEAL']['ID']]]);
                 if(!isset($deal['ID'])) LocalRedirect($this->getUrl("deals"));
             }
-            $deal = array_merge($deal,$request['DEAL']);
-
+            $normalData = Deals::normalizeData($request['DEAL']);
+           
+            $deal = array_merge($deal,$normalData);
+            
             
             $contrs_uuids = ArrayHelper::map($contractors,'ID','INTEGRATED_ID');
 
@@ -649,6 +651,19 @@ class AliProfile extends CBitrixComponent
 
         return "deals/form";
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

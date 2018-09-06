@@ -56,10 +56,11 @@ class Deals1C extends Client1C
 		$data['nds'] = $params['WITH_NDS'];
 
 		$data['cargohandling'] = $params['CARGO_HANDLING'];
+		$data['armedescort'] = $params['ARMED_ESCORT'];
         $data['crossdocking'] = $params['CROSS_DOCKING'];
         $data['securestorage'] = $params['SECURE_STORAGE'];
         $data['reqrussiandriver'] = $params['REQUIRED_RUSSIAN_DRIVER'];
-        $data['adrclass'] = $params['ADR_CLASS']; (int)$this->adrclass;
+        $data['adrclass'] = $params['ADR_CLASS'];
 
 		$data['countloaders'] = $params['COUNT_LOADERS'];
 		$data['quantityofhours'] = $params['COUNT_HOURS'];

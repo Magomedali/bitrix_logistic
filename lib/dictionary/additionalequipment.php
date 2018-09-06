@@ -30,7 +30,7 @@ class AdditionalEquipment extends \Ali\Logistic\Dictionary\Dictionary{
 		self::WOODEN_FLOOR=>"Деревянный пол",
 		self::DOPELSTOKI=>"Допельштоки",
 		self::THERMAL_SENSOR=>"Термодатчик",
-		self::REF_SEPTUM=>"Кран",
+		self::REF_SEPTUM=>"Рефперегородка",
 	); 
 
 
