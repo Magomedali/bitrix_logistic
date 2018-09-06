@@ -15,55 +15,84 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 
 ?>
 
-<tr class="form-route" data-number="<?php echo $number; ?>">
-	<td style="min-width: 40px;">
-		<?php
-			echo Html::dropDownList("ROUTES[{$number}][KIND]",$route && isset($route['KIND']) ? $route['KIND'] : null,$routeKinds,['class'=>'form-control']);
-		?>
-	</td>
-	<td>
-		<?php
-			echo Html::input("datetime-local","ROUTES[{$number}][START_AT]",$route && isset($route['START_AT']) ? date("Y-m-d\TH:i",strtotime($route['START_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control']);
-		?>
-	</td>
-	<td>
-		<?php
-			echo Html::input("datetime-local","ROUTES[{$number}][FINISH_AT]",$route && isset($route['FINISH_AT']) ? date("Y-m-d\TH:i",strtotime($route['FINISH_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control']);
-		?>
-	</td>
-	<td>
-		<?php
-			echo Html::input("text","ROUTES[{$number}][ORGANISATION]",$route && isset($route['ORGANISATION']) ? $route['ORGANISATION'] : null,['class'=>'form-control']);
-		?>
-	</td>
-	<td>
-		<?php
-			echo Html::input("text","ROUTES[{$number}][ADDRESS]",$route && isset($route['ADDRESS']) ? $route['ADDRESS'] : null,['class'=>'form-control']);
-		?>
-	</td>
-	<td>
-		<?php
-			echo Html::input("text","ROUTES[{$number}][PERSON]",$route && isset($route['PERSON']) ? $route['PERSON'] : null,['class'=>'form-control']);
-		?>
-	</td>
-	<td>
-		<?php
-			echo Html::input("text","ROUTES[{$number}][PHONE]",$route && isset($route['PHONE']) ? $route['PHONE'] : null,['class'=>'form-control']);
-		?>
-	</td>
-	<td>
-		<?php
-			echo Html::input("text","ROUTES[{$number}][COMMENT]",$route && isset($route['COMMENT']) ? $route['COMMENT'] : null,['class'=>'form-control']);
-		?>
-	</td>
-	<td>
-		<?php
-			if(!$replicate && isset($route['ID'])){
-				echo Html::hiddenInput("ROUTES[{$number}][ID]",$route['ID']);
-				echo Html::a("X",$component->getActionUrl("rmroute",['id'=>$route['ID']]),['class'=>'btn btn-danger rmRoute']);
-			}else{
-				echo Html::a("X",null,['class'=>'btn btn-danger rmRouteForm']);
-			}
-		?>
-	</td>
-</tr>
+<div class="row form-route" data-number="<?php echo $number; ?>">
+<div class="col-xs-12">
+		
+	<div class="row">
+		<div class="col-xs-3">
+			<h3>Маршрут "<?php echo $number; ?>"</h3>
+		</div>
+		<div class="col-xs-9" style="padding-top: 30px;">
+			<?php
+				if(!$replicate && isset($route['ID'])){
+					echo Html::hiddenInput("ROUTES[{$number}][ID]",$route['ID']);
+					echo Html::a("Удалить",$component->getActionUrl("rmroute",['id'=>$route['ID']]),['class'=>'rmRoute']);
+				}else{
+					echo Html::a("Удалить",null,['class'=>'rmRouteForm']);
+				}
+			?>		
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-2">
+			<label>Тип:</label>
+			<?php
+				echo Html::dropDownList("ROUTES[{$number}][KIND]",$route && isset($route['KIND']) ? $route['KIND'] : null,$routeKinds,['class'=>'form-control']);
+			?>
+		</div>
+		<div class="col-xs-5">
+			<p>
+				<label>Населенный пункт:</label>
+				<?php
+					echo Html::input("text","ROUTES[{$number}][ADDRESS]",$route && isset($route['ADDRESS']) ? $route['ADDRESS'] : null,['class'=>'form-control']);
+				?>
+			</p>
+			<p>
+				<label>Дата с:</label>
+				<?php
+					echo Html::input("datetime-local","ROUTES[{$number}][START_AT]",$route && isset($route['START_AT']) ? date("Y-m-d\TH:i",strtotime($route['START_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control']);
+				?>
+			</p>
+			<p>
+				<label>Получатель/Отправитель:</label>
+				<?php
+					echo Html::input("text","ROUTES[{$number}][ORGANISATION]",$route && isset($route['ORGANISATION']) ? $route['ORGANISATION'] : null,['class'=>'form-control']);
+				?>
+			</p>
+			<p>
+				<label>Контактное лицо:</label>
+				<?php
+					echo Html::input("text","ROUTES[{$number}][PERSON]",$route && isset($route['PERSON']) ? $route['PERSON'] : null,['class'=>'form-control']);
+				?>
+			</p>
+		</div>
+		<div class="col-xs-5">
+			<p>
+				<label>Точный адрес:</label>
+				<?php
+					echo Html::input("text","ROUTES[{$number}][ADDRESS]",$route && isset($route['ADDRESS']) ? $route['ADDRESS'] : null,['class'=>'form-control']);
+				?>
+			</p>
+			<p>
+				<label>Дата по:</label>
+				<?php
+					echo Html::input("datetime-local","ROUTES[{$number}][FINISH_AT]",$route && isset($route['FINISH_AT']) ? date("Y-m-d\TH:i",strtotime($route['FINISH_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control']);
+				?>
+			</p>
+			<p>
+				<label>Телефон:</label>
+				<?php
+					echo Html::input("text","ROUTES[{$number}][PHONE]",$route && isset($route['PHONE']) ? $route['PHONE'] : null,['class'=>'form-control']);
+				?>
+			</p>
+			<p>
+				<label>Комментарии:</label>
+				<?php
+					echo Html::input("text","ROUTES[{$number}][COMMENT]",$route && isset($route['COMMENT']) ? $route['COMMENT'] : null,['class'=>'form-control']);
+				?>
+			</p>
+		</div>
+	</div>
+</div>
+</div>

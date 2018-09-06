@@ -256,8 +256,6 @@ class AliProfile extends CBitrixComponent
      */
     function checkPassword($userPassword, $password)
     {
-        $userData = CUser::GetByID($userId)->Fetch();
-
         $salt = substr($userPassword, 0, (strlen($userPassword) - 32));
 
         $realPassword = substr($userPassword, -32);
@@ -287,6 +285,9 @@ class AliProfile extends CBitrixComponent
             $email = trim(strip_tags($request['email']));
             $user = UserTable::getRow(['select'=>['*'],'filter'=>['=EMAIL'=>$email]]);
             $result = new Result();
+
+            
+            
             if(!isset($user['PASSWORD']) || !$this->checkPassword($user['PASSWORD'],$request['password'])){
             
                 $result->addError(new Error("Некорректный логин или пароль!",404));
@@ -301,13 +302,14 @@ class AliProfile extends CBitrixComponent
                 if(!$company_id){
                     $result->addError(new Error("У пользователя нет организаций!",404));
                 }
-
+                
                 $contractors = Companies::hasComanyContractors($company_id);
                 if(!is_array($contractors) || !count($contractors)){
                     $result->addError(new Error("У пользователя нет организаций!",404));
                 }
 
-                $result = Companies::registeUser($company_id,$id);
+                if($result->isSuccess())
+                    $result = Companies::registeUser($company_id,$id);
                 
             }
 

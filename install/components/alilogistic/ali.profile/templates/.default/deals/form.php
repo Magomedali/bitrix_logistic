@@ -92,25 +92,14 @@ $arResult['breadcrumbs'][]=[
 								<div class="col-xs-12">
 									<h2>Маршруты</h4>
 									<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-success'>Добаить</a>
-									<table class="table table-bordered table-hover" id="formRoutesTable">
-										<thead>
-											<tr>
-												<th style="min-width: 100px;">Тип</th>
-												<th>Время от</th>
-												<th>Время до</th>
-												<th>Организация</th>
-												<th>Адрес</th>
-												<th>Контактное лицо</th>
-												<th>Телефон</th>
-												<th>Комментарий</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
+									
+
+									<div class="row routes" id="formRoutesBlock">
+										<div class="col-md-12" id="routesItems">
 											<?php
 												if(count($routes)){
 													foreach ($routes as $key => $r) {
-														$arResult['number'] = $key;
+														$arResult['number'] = ++$key;
 														$arResult['route'] = $r;
 														$this->getComponent()->includeComponentTemplate("deals/rowRoute");
 													}
@@ -126,8 +115,11 @@ $arResult['breadcrumbs'][]=[
 													$this->getComponent()->includeComponentTemplate("deals/rowRoute");
 												}
 											?>
-										</tbody>
-									</table>
+										</div>
+									</div>
+
+									
+											
 								</div>
 							</div>
 						</div>
@@ -411,11 +403,11 @@ $arResult['breadcrumbs'][]=[
 	$("#btn_getRowRoute").click(function(event){
 		event.preventDefault();
 
-		var count = parseInt($("#formRoutesTable tbody tr").length);
+		var count = parseInt($("#formRoutesBlock div.form-route").length);
 		var number = 0;
 
 		if(count){
-			number = parseInt($("#formRoutesTable tbody tr").eq(-1).data("number")) + 1;
+			number = parseInt($("#formRoutesBlock div.form-route").eq(-1).data("number")) + 1;
 		}
 		var url = $(this).attr("href");
 
@@ -429,7 +421,7 @@ $arResult['breadcrumbs'][]=[
 			beforeSend:function(){
 			},
 			success:function(html){
-				$("#formRoutesTable tbody").append(html);
+				$("#routesItems").append(html);
 			},
 			error:function(msg){
 				console.log(msg);
@@ -444,20 +436,20 @@ $arResult['breadcrumbs'][]=[
 
 	$("body").on("click",".rmRouteForm",function(){
 		
-		var count = parseInt($("#formRoutesTable tbody tr").length);
-		//if(count <= 2) return false;
+		var count = parseInt($("#formRoutesBlock div.form-route").length);
+		if(count <= 2) return false;
 
-		$(this).parents("tr.form-route").remove();
+		$(this).parents("div.form-route").remove();
 	});
 
 	$("body").on("click",".rmRoute",function(event){
 		event.preventDefault();
 
-		var count = parseInt($("#formRoutesTable tbody tr").length);
+		var count = parseInt($("#formRoutesBlock div.form-route").length);
 		if(count <= 2) return false;
 
 		var url = $(this).attr("href");
-		var route = $(this).parents("tr.form-route");
+		var route = $(this).parents("div.form-route");
 		$.ajax({
 			url:url,
 			type:"POST",
