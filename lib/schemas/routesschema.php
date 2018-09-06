@@ -94,6 +94,18 @@ class RoutesSchemaTable extends Entity\DataManager
                 }
             )),
 
+            new Entity\TextField('TOWN',array(
+                'title'=>'Населенный пункт',
+                'required'=>false,
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return !$value ? "" : trim(strip_tags($value));
+                        }
+                    );
+                }
+            )),
+
             new Entity\TextField('ADDRESS',array(
                 'title'=>'Адрес',
                 'required'=>true,

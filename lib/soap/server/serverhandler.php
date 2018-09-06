@@ -186,10 +186,7 @@ class ServerHandler
 
 	public function integrateFile($data,$type){
 		
-		$d['dealUuid'] = $data->dealUuid;
-		$d['fileNumber'] = $data->fileNumber;
-		$d['fileDate'] = $data->fileDate;
-		$d['binaryFile'] = $data->binaryFile;
+		$d = json_decode(json_encode($data),true);
 
 		$dealFile = new DealFiles($d);
 		$res = $dealFile->checkDealExists();

@@ -82,6 +82,7 @@ class Deals1C extends Client1C
 				$route['typeshipment'] = (int)$r['KIND'] != RoutesKind::LOADING;
 				$route['datefrom'] = date("Y-m-d H:i",strtotime($r['START_AT']));
 				$route['dateby'] = date("Y-m-d H:i",strtotime($r['FINISH_AT']));
+				$route['town'] = $r['TOWN'];
 				$route['location'] = $r['ADDRESS'];
 				$route['shipper'] = $r['ORGANISATION'];
 				$route['contactname'] = $r['PERSON'];

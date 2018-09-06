@@ -10,13 +10,11 @@ use \Bitrix\Main\Application;
 
 class Documents extends \Ali\Logistic\Dictionary\Dictionary{
 
-	const PROCURATION = 1;
-	const MEDICAL_BOOK = 2;
-	const SANITIZATION= 3;
+	const MEDICAL_BOOK = 1;
+	const SANITIZATION= 2;
 
 
 	protected static $labels = array(
-		self::PROCURATION=>"Доверенность",
 		self::MEDICAL_BOOK=>"Медкнижка",
 		self::SANITIZATION=>"Санобработка",
 	); 

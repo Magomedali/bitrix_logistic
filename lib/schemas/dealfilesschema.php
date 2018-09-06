@@ -50,7 +50,20 @@ class DealFilesSchemaTable extends Entity\DataManager
                 }
             )),
 
-
+            new Entity\FloatField('SUM',array(
+                'title'=>'Сумма',
+                'required'=>false,
+                'default_value'=>function(){
+                    return 0;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value ? $value : 0 ;
+                        }
+                    );
+                }
+            )),
 
             new Entity\StringField('FILE_NUMBER',array(
                 'required'=>false,
@@ -108,6 +121,13 @@ class DealFilesSchemaTable extends Entity\DataManager
 
 
             new Entity\DatetimeField('CREATED_AT',array(
+                'default_value'=>function(){
+                    return new \Bitrix\Main\Type\DateTime();
+                }
+            )),
+
+
+            new Entity\DatetimeField('PAID_AT',array(
                 'default_value'=>function(){
                     return new \Bitrix\Main\Type\DateTime();
                 }

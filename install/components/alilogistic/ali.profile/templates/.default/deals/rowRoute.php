@@ -45,7 +45,7 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 			<p>
 				<label>Населенный пункт:</label>
 				<?php
-					echo Html::input("text","ROUTES[{$number}][ADDRESS]",$route && isset($route['ADDRESS']) ? $route['ADDRESS'] : null,['class'=>'form-control']);
+					echo Html::input("text","ROUTES[{$number}][TOWN]",$route && isset($route['TOWN']) ? $route['TOWN'] : null,['class'=>'form-control']);
 				?>
 			</p>
 			<p>

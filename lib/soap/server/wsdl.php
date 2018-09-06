@@ -119,6 +119,7 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
     				<xs:element name="typeshipment" type="xs:boolean"/>
     				<xs:element name="datefrom" type="xs:dateTime"/>
     				<xs:element name="dateby" type="xs:dateTime"/>
+    				<xs:element name="town" type="xs:string" nillable="true"/>
     				<xs:element name="location" type="xs:string"/>
     				<xs:element name="shipper" type="xs:string"/>
     				<xs:element name="contactname" type="xs:string"/>
@@ -152,6 +153,8 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
         			<xs:element name="dealUuid" type="xs:string"/>
         			<xs:element name="fileNumber" type="xs:string"/>
         			<xs:element name="fileDate" type="xs:date"/>
+        			<xs:element name="paidDate" type="xs:datetime" nillable="true"/>
+        			<xs:element name="sum" type="xs:float" nillable="true"/>
         			<xs:element name="binaryFile" type="xs:base64Binary"/>
         		</xs:sequence>
         	</xs:complexType>

@@ -18,6 +18,7 @@ class Route
 	public $typeshipment;
 	public $datefrom;
 	public $dateby;
+	public $town;
 	public $location;
 	public $shipper;
 	public $contactname;
@@ -30,6 +31,7 @@ class Route
 		$this->typeshipment = $route['typeshipment'];
 		$this->datefrom = $route['datefrom'];
 		$this->dateby = $route['dateby'];
+		$this->town = $route['town'];
 		$this->location = $route['location'];
 		$this->shipper = $route['shipper'];
 		$this->contactname = $route['contactname'];
@@ -71,6 +73,7 @@ class Route
         $data['START_AT']=DateTime::createFromTimestamp(strtotime($this->datefrom));
     	$data['FINISH_AT']=DateTime::createFromTimestamp(strtotime($this->dateby));
 
+    	$data['TOWN'] = $this->town;
     	$data['ADDRESS'] = $this->location;
     	$data['COMMENT'] = $this->comment;
     	$data['ORGANISATION'] = $this->shipper;

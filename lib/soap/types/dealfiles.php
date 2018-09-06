@@ -15,6 +15,8 @@ class DealFiles
 	public $fileNumber;
 	public $fileDate;
 	public $binaryFile;
+	public $paidDate;
+	public $sum;
 
 	protected $deal_id = null;
 
@@ -26,6 +28,8 @@ class DealFiles
 		$this->fileNumber = $data['fileNumber'];
 		$this->fileDate = $data['fileDate'];
 		$this->binaryFile = $data['binaryFile'];
+		$this->paidDate = isset($data['paidDate']) ? $data['paidDate'] : null;
+		$this->sum = isset($data['sum']) ? $data['sum'] : null;
 	}
 
 	public function getDealId(){
