@@ -6,7 +6,7 @@ if(\Bitrix\Main\ModuleManager::isModuleInstalled('ali.logistic')){
   $aMenu = [
     "parent_menu" => "global_menu_content", // поместим в раздел "Сервис"
     "sort"        => 100,                    // вес пункта меню
-    "url"         => "ali.logisitc_main.php",  // ссылка на пункте меню
+    "url"         => "ali.logistic_main.php",  // ссылка на пункте меню
     "text"        => GetMessage("ADMIN_ALI_LOGISTIC_MENU_TITLE"),       // текст пункта меню
     "title"       => GetMessage("ADMIN_ALI_LOGISTIC_MENU_TITLE"), // текст всплывающей подсказки
    //"icon"        => "form_menu_icon", // малая иконка
