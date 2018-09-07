@@ -1,6 +1,9 @@
 <?php
 
 define("ALI_MODULE_NAME","ali.logistic");
+define("ALI_MODULE_PATH",$_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/");
+define("ALI_MODULE_ADMIN_PATH",ALI_MODULE_PATH."/admin/");
+
 define("ALI_COMPONENTS_NS","alilogistic");
 
 define("ALI_FILE_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/files/");

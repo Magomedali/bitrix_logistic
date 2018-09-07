@@ -39,4 +39,16 @@ class Companies
         }
         return false;
     }
+
+
+
+
+    public static function createCompanyForUser($id){
+        
+        if($id){
+            $res = CompaniesSchemaTable::add(['OWNER_ID'=>$id]);
+            return $res->isSuccess() ? $res->getId() :false;
+        }
+        return false;
+    }
 }

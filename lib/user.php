@@ -57,9 +57,17 @@ class User
     public static function getCurrentUserCompany(){
         global $USER;
 
+        return self::getUserCompanies($USER->GetId());
+    }
+
+
+
+    public static function getUserCompanies($id){
+
+
         $companies = array();
 
-        $results = CompanyEmployee::getUserIsEmployeeCompanies($USER->GetId());
+        $results = CompanyEmployee::getUserIsEmployeeCompanies($id);
         
         if($results && count($results)){
             foreach ($results as $key => $value) {
@@ -67,12 +75,14 @@ class User
             }
         }
 
-        $company = self::getUserCompany($USER->GetId());
+        $company = self::getUserCompany($id);
 
         if($company && count($company)) $companies[] = $company;
 
         return $companies;
     }
+
+
 
 
     public static function getCurrentUserContractors(){

@@ -1,0 +1,20 @@
+.results_search{
+
+}
+	.results_search ul{
+		margin:10px 0px;
+		padding: 0px;
+	}	
+		.results_search ul li{
+			list-style: none;
+		}
+		.results_search ul li:not(.def){
+			list-style: none;
+			cursor: pointer;
+			border: 1px solid #ccc;
+			padding: 2px;
+		}
+
+		.results_search ul li.selected{
+			background:#daecc9;
+		}
