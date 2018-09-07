@@ -24,6 +24,7 @@ class Route
 	public $contactname;
 	public $numberphone;
 	public $comment;
+	public $order;
 
 
 	function __construct($route, $deal_id = null)
@@ -37,6 +38,8 @@ class Route
 		$this->contactname = $route['contactname'];
 		$this->numberphone = $route['numberphone'];
 		$this->comment = $route['comment'];
+
+		$this->order = isset($route['order']) ? $route['order'] : 0;
 		
 		$this->uuid = isset($route['uuid']) ? $route['uuid'] : null;
 
@@ -72,6 +75,8 @@ class Route
         $data['KIND'] = !boolval($this->typeshipment) ? RoutesKind::LOADING : RoutesKind::UNLOADING;
         $data['START_AT']=DateTime::createFromTimestamp(strtotime($this->datefrom));
     	$data['FINISH_AT']=DateTime::createFromTimestamp(strtotime($this->dateby));
+
+    	$data['ORDER'] = $this->order;
 
     	$data['TOWN'] = $this->town;
     	$data['ADDRESS'] = $this->location;

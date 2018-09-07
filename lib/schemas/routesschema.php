@@ -168,6 +168,13 @@ class RoutesSchemaTable extends Entity\DataManager
 
             new Entity\IntegerField('OWNER_ID'),
 
+
+            new Entity\IntegerField('ORDER',array(
+                'default_value'=>function(){
+                    return 0;
+                }
+            )),
+
             new Entity\ReferenceField(
                 'OWNER',
                 '\Bitrix\Main\UserTable',

@@ -568,15 +568,23 @@ class AliProfile extends CBitrixComponent
             $deal['OWNER_ID'] = $user_id;
             $deal['IS_DRAFT'] = isset($request['how_draft']);
             
-            $routes = isset($request['ROUTES']) && is_array($request['ROUTES']) ? $request['ROUTES'] : array();
 
-            if(count($routes) >= 2){
+            $routes_start = isset($request['ROUTES_START']) && is_array($request['ROUTES_START']) ? $request['ROUTES_START'] : array();
+            $routes = isset($request['ROUTES']) && is_array($request['ROUTES']) ? $request['ROUTES'] : array();
+            $routes_end = isset($request['ROUTES_END']) && is_array($request['ROUTES_END']) ? $request['ROUTES_END'] : array();
+
+            if($routes_start && $routes_end){
+
+                $deal['LOADING_PLACE'] = $routes_start['ADDRESS'];
+                $deal['UNLOADING_PLACE'] = $routes_end['ADDRESS'];
+                array_unshift($routes,$routes_start);
+                array_push($routes, $routes_end);
+
+
                 $res = Deals::save($deal);
             
                 if(!$res->isSuccess()){
                     $errors = $res->getErrorMessages();
-
-                    
                 }else{
                     $deal['ID']= $res->getId();
                     
@@ -586,6 +594,7 @@ class AliProfile extends CBitrixComponent
                         foreach ($routes as $key => $rData) {
                             $rData['DEAL_ID'] = $deal['ID'];
                             $rData['OWNER_ID'] = $user_id;
+                            $rData['ORDER'] = ++$key;
                             $res = Routes::save($rData);
                             if(!$res->isSuccess()){
                                 $errors = array_merge($errors,$res->getErrorMessages());
@@ -622,7 +631,7 @@ class AliProfile extends CBitrixComponent
                     
                 }
             }else{
-                $errors[] = "Добавьте пожалуйста машруты, необходимо минимум 2!";
+                $errors[] = "Добавьте пожалуйста машруты, необходимо минимум 2(адрес погрузки и адрес разгрузки)!";
             }
 
             
@@ -735,8 +744,11 @@ class AliProfile extends CBitrixComponent
             if(isset($filtres['ts']) && trim(strip_tags($filtres['ts'])) != "")
                 $params['filter']["VEHICLE"]=trim(strip_tags($filtres['ts']))."%";
 
-            if(isset($filtres['name']) && trim(strip_tags($filtres['name'])) != "")
-                $params['filter']["NAME"]=trim(strip_tags($filtres['name']))."%";
+            if(isset($filtres['loading']) && trim(strip_tags($filtres['loading'])) != "")
+                $params['filter']["LOADING_PLACE"]=trim(strip_tags($filtres['loading']))."%";
+
+            if(isset($filtres['unloading']) && trim(strip_tags($filtres['unloading'])) != "")
+                $params['filter']["UNLOADING_PLACE"]=trim(strip_tags($filtres['unloading']))."%";
 
             if(isset($filtres['weight_f']) && $filtres['weight_f'] > 0)
                 $params['filter'][">=WEIGHT"] = $filtres['weight_f'];

@@ -58,6 +58,10 @@ class Deal
     public $cargohandling;
     public $armedescort;
 
+
+    public $load_place;
+    public $unload_place;
+
     function __construct($data)
     {
         $this->uuid = isset($data['uuid']) ? $data['uuid'] : null;
@@ -99,12 +103,32 @@ class Deal
         $this->cargohandling = $data['cargohandling'];
         $this->armedescort = $data['armedescort'];
 
+
+        $this->load_place = $data['load_place'];
+        $this->unload_place = $data['unload_place'];
+
         if(isset($data['routes']) && is_array($data['routes']) && count($data['routes'])){
             
             if(isset($data['routes']['typeshipment'])){
                 $this->routes = array(new Route($data['routes']));
             }else{
-                foreach ($data['routes'] as $r) {
+
+                $routes = $data['routes'];
+                if(count($routes) >=2){
+                    $end = end($routes);
+                    $start = reset($routes);
+                    if(!boolval($start['typeshipment'])){
+                        $this->load_place = $start['location'];
+                    }
+
+                    if(boolval($end['typeshipment'])){
+                        $this->unload_place = $end['location'];
+                    }
+                }
+                
+
+                foreach ($data['routes'] as $key=>$r) {
+                    $r['order']= ++$key;
                     array_push($this->routes, new Route($r));
                 } 
             }

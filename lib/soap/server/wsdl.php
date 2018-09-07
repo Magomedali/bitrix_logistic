@@ -106,7 +106,7 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
     				<xs:element name="height" type="xs:float" nillable="true"/>
     				<xs:element name="methodofloading" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
     				<xs:element name="methodofunloading" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-    				<xs:element name="routes" type="tns:route" minOccurs="0" maxOccurs="unbounded"/>
+    				<xs:element name="routes" type="tns:route" minOccurs="2" maxOccurs="unbounded"/>
     				<xs:element name="costs" type="tns:cost" minOccurs="0" maxOccurs="unbounded"/>
     				<xs:element name="driver" type="xs:string" nillable="true"/>
     				<xs:element name="vehicle" type="xs:string" nillable="true"/>

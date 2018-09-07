@@ -92,27 +92,35 @@ $arResult['breadcrumbs'][]=[
 						<div id="routes" class="tab-pane fade in active">
 							<div class="row">
 								<div class="col-xs-12">
-									<h2>Маршруты</h2>
-									<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-success'>Добаить</a>
+									<div class="row">
+										<div class="col-xs-3">
+											<h2>Маршруты</h2>
+										</div>
+										<div class="col-xs-4">
+											<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-primary' style="margin-top: 33px;">Добаить погрузку/разгрузку</a>
+										</div>
+									</div>
+									
+									
 									<div class="row routes" id="formRoutesBlock">
 										<div class="col-md-12" id="routesItems">
 											<?php
 												if(count($routes)){
+													$start = array_shift($routes);
+													$end = array_pop($routes);
+													$arResult['route'] = $start;
+													
+													$this->getComponent()->includeComponentTemplate("deals/rowRouteLoading");
 													foreach ($routes as $key => $r) {
 														$arResult['number'] = ++$key;
 														$arResult['route'] = $r;
 														$this->getComponent()->includeComponentTemplate("deals/rowRoute");
 													}
+													$arResult['route'] = $end;
+													$this->getComponent()->includeComponentTemplate("deals/rowRouteUnLoading");
 												}else{
-													$arResult['number'] = 1;
-													$dr['KIND'] = 1;
-													$arResult['route'] = $dr;
-													$this->getComponent()->includeComponentTemplate("deals/rowRoute");
-
-													$arResult['number'] = 2;
-													$dr['KIND'] = 2;
-													$arResult['route'] = $dr;
-													$this->getComponent()->includeComponentTemplate("deals/rowRoute");
+													$this->getComponent()->includeComponentTemplate("deals/rowRouteLoading");
+													$this->getComponent()->includeComponentTemplate("deals/rowRouteUnLoading");
 												}
 											?>
 										</div>
@@ -287,49 +295,51 @@ $arResult['breadcrumbs'][]=[
 									        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Дополнительные требования</a>
 									      </h4>
 									    </div>
-									    <div class="panel-body">
-									    	<div class="row">
-												<div class="col-xs-2">
-													<p>
-														<label for="deal_req_temp_from" class="form-label">Темп. от</label>
-														<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_FROM]",$deal['REQUIRES_TEMPERATURE_FROM'],['id'=>'deal_req_temp_from','class'=>'form-control']);?>
-													</p>
-												</div>
-												<div class="col-xs-2">
-													<p>
-														<label for="deal_req_temp_to" class="form-label">Темп. до</label>
-														<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_TO]",$deal['REQUIRES_TEMPERATURE_TO'],['id'=>'deal_req_temp_to','class'=>'form-control']);?>
-													</p>
-												</div>
-												<div class="col-xs-4">
-													<p>
-														<label for="deal_adrclass" class="form-label">АДР Класс</label>
-														<?php echo Html::input("number","DEAL[ADR_CLASS]",$deal['ADR_CLASS'],['min'=>1,'max'=>10,'id'=>'deal_adrclass','class'=>'form-control']);?>
-													</p>
-												</div>
-												
-											</div>
-											<div class="row">
-												<div class="col-xs-5">
-													<p>
-														<label for="deal_additional_equipment" class="form-label">Требуются дополнительные оборудования?</label>
-														<?php echo Html::checkboxList("DEAL[ADDITIONAL_EQUIPMENT]",AdditionalEquipment::toArrayCode($deal['ADDITIONAL_EQUIPMENT']),$AdditionalEquipment,['id'=>'deal_additional_equipment']);?>
-													</p>
+									    <div class="collapse" id="collapseOne">
+										    <div class="panel-body">
+										    	<div class="row">
+													<div class="col-xs-2">
+														<p>
+															<label for="deal_req_temp_from" class="form-label">Темп. от</label>
+															<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_FROM]",$deal['REQUIRES_TEMPERATURE_FROM'],['id'=>'deal_req_temp_from','class'=>'form-control']);?>
+														</p>
+													</div>
+													<div class="col-xs-2">
+														<p>
+															<label for="deal_req_temp_to" class="form-label">Темп. до</label>
+															<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_TO]",$deal['REQUIRES_TEMPERATURE_TO'],['id'=>'deal_req_temp_to','class'=>'form-control']);?>
+														</p>
+													</div>
+													<div class="col-xs-4">
+														<p>
+															<label for="deal_adrclass" class="form-label">АДР Класс</label>
+															<?php echo Html::input("number","DEAL[ADR_CLASS]",$deal['ADR_CLASS'],['min'=>1,'max'=>10,'id'=>'deal_adrclass','class'=>'form-control']);?>
+														</p>
+													</div>
 													
 												</div>
-												<div class="col-xs-3">
-													<p>
-														<label for="deal_req_documents" class="form-label">Требуется документы?</label>
-														<?php echo Html::checkboxList("DEAL[REQUIRED_DOCUMENTS]",Documents::toArrayCode($deal['REQUIRED_DOCUMENTS']),$Documents,['id'=>'deal_req_documents']);?>
-													</p>
+												<div class="row">
+													<div class="col-xs-5">
+														<p>
+															<label for="deal_additional_equipment" class="form-label">Требуются дополнительные оборудования?</label>
+															<?php echo Html::checkboxList("DEAL[ADDITIONAL_EQUIPMENT]",AdditionalEquipment::toArrayCode($deal['ADDITIONAL_EQUIPMENT']),$AdditionalEquipment,['id'=>'deal_additional_equipment']);?>
+														</p>
+														
+													</div>
+													<div class="col-xs-3">
+														<p>
+															<label for="deal_req_documents" class="form-label">Требуется документы?</label>
+															<?php echo Html::checkboxList("DEAL[REQUIRED_DOCUMENTS]",Documents::toArrayCode($deal['REQUIRED_DOCUMENTS']),$Documents,['id'=>'deal_req_documents']);?>
+														</p>
+													</div>
+													<div class="col-xs-4">
+														<p>
+															<label for="deal_reqrussiandriver" class="form-label">Водитель гражданин России</label>
+															<?php echo Html::checkbox("DEAL[REQUIRED_RUSSIAN_DRIVER]",$deal['REQUIRED_RUSSIAN_DRIVER'],['id'=>'deal_reqrussiandriver']);?>
+														</p>
+													</div>
 												</div>
-												<div class="col-xs-4">
-													<p>
-														<label for="deal_reqrussiandriver" class="form-label">Водитель гражданин России</label>
-														<?php echo Html::checkbox("DEAL[REQUIRED_RUSSIAN_DRIVER]",$deal['REQUIRED_RUSSIAN_DRIVER'],['id'=>'deal_reqrussiandriver']);?>
-													</p>
-												</div>
-											</div>
+										    </div>
 									    </div>
 									</div>
 								</div>
@@ -466,11 +476,11 @@ $arResult['breadcrumbs'][]=[
 	$("#btn_getRowRoute").click(function(event){
 		event.preventDefault();
 
-		var count = parseInt($("#formRoutesBlock div.form-route").length);
+		var count = parseInt($("#formRoutesBlock div.form-route_between").length);
 		var number = 0;
 
 		if(count){
-			number = parseInt($("#formRoutesBlock div.form-route").eq(-1).data("number")) + 1;
+			number = parseInt($("#formRoutesBlock div.form-route_between").eq(-1).data("number")) + 1;
 		}
 		var url = $(this).attr("href");
 
@@ -484,7 +494,7 @@ $arResult['breadcrumbs'][]=[
 			beforeSend:function(){
 			},
 			success:function(html){
-				$("#routesItems").append(html);
+				$("#block_route_end").before(html);
 			},
 			error:function(msg){
 				console.log(msg);
@@ -499,20 +509,20 @@ $arResult['breadcrumbs'][]=[
 
 	$("body").on("click",".rmRouteForm",function(){
 		
-		var count = parseInt($("#formRoutesBlock div.form-route").length);
-		if(count <= 2) return false;
+		var count = parseInt($("#formRoutesBlock div.form-route_between").length);
+		
 
-		$(this).parents("div.form-route").remove();
+		$(this).parents("div.form-route_between").remove();
 	});
 
 	$("body").on("click",".rmRoute",function(event){
 		event.preventDefault();
 
-		var count = parseInt($("#formRoutesBlock div.form-route").length);
-		if(count <= 2) return false;
+		var count = parseInt($("#formRoutesBlock div.form-route_between").length);
+		
 
 		var url = $(this).attr("href");
-		var route = $(this).parents("div.form-route");
+		var route = $(this).parents("div.form-route_between");
 		$.ajax({
 			url:url,
 			type:"POST",

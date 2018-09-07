@@ -25,86 +25,96 @@ function htmlFilelink($component,$files,$type){
 		$f = $files[$type];
 		$fPath = DealFileType::getFilePath($type);
 		if(isset($f['FILE']) && file_exists($fPath.$f['FILE'])){
-			return Html::a("Открыть",$component->getActionUrl('downloadFile',['f'=>$f['ID']]),['target'=>'_blank']);
+			return Html::a(DealFileType::getLabels($type),$component->getActionUrl('downloadFile',['f'=>$f['ID']]),['target'=>'_blank'])."<br>";
 		}else{
-			return "Файл не найден!";
+			return "Файл '".DealFileType::getLabels($type)."' не найден!<br>";
 		}
-	} 
+	}
+
 }
 ?>
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <div class="row filtres" id="alilogistic">
 	<div class="col-xs-12">
-		<form action="" method="GET">
-			<div class="row filters_head">
-				<div class="col-xs-12">
-					<h3>Фильтры</h3>
+		<div class="panel panel-default  form-route form-route_between" data-number="<?php echo $number; ?>">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion_filters" href="#collapse_filters">Параметры фильтра</a>
+				</h4>
+			</div>
+			<div class="collapse" id="collapse_filters">
+				<div class="panel-body">
+					<form action="" method="GET">
+						<div class="row">
+							<div class="col-xs-3">
+								<label>С</label>
+								<?php echo Html::input("date",'Filter[date_from]',isset($filtres['Filter']['date_from']) && strtotime($filtres['Filter']['date_from']) ? date("Y-m-d",strtotime($filtres['Filter']['date_from'])) : null,['class'=>'form-control']);?>
+							</div>
+							<div class="col-xs-3">
+								<label>По</label>
+								<?php echo Html::input("date",'Filter[date_to]',isset($filtres['Filter']['date_to']) && strtotime($filtres['Filter']['date_to']) ? date("Y-m-d",strtotime($filtres['Filter']['date_to'])) : null,['class'=>'form-control']);?>
+							</div>
+							<div class="col-xs-3">
+								<label>Водитель</label>
+								<?php echo Html::input("text",'Filter[driver]',isset($filtres['Filter']['driver']) ? $filtres['Filter']['driver'] : "",['class'=>'form-control']);?>
+							</div>
+							<div class="col-xs-3">
+								<label>№ ТС</label>
+								<?php echo Html::input("text",'Filter[ts]',isset($filtres['Filter']['ts']) ? $filtres['Filter']['ts'] : "",['class'=>'form-control']);?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-2">
+								<label>Номер</label>
+								<?php echo Html::input("text",'Filter[number]',isset($filtres['Filter']['number']) ? $filtres['Filter']['number'] : "",['class'=>'form-control']);?>
+							</div>
+
+							<div class="col-xs-2">
+								<label>Вес С</label>
+								<?php echo Html::input("number",'Filter[weight_f]',isset($filtres['Filter']['weight_f']) ? $filtres['Filter']['weight_f'] : "",['class'=>'form-control']);?>
+							</div>
+
+
+							<div class="col-xs-2">
+								<label>Вес По</label>
+								<?php echo Html::input("number",'Filter[weight_t]',isset($filtres['Filter']['weight_t']) ? $filtres['Filter']['weight_t'] : "",['class'=>'form-control']);?>
+							</div>
+
+
+							<div class="col-xs-2">
+								<label>Объем С</label>
+								<?php echo Html::input("number",'Filter[space_f]',isset($filtres['Filter']['space_f']) ? $filtres['Filter']['space_f'] : "",['class'=>'form-control']);?>
+							</div>
+
+
+							<div class="col-xs-2">
+								<label>Объем По</label>
+								<?php echo Html::input("number",'Filter[space_t]',isset($filtres['Filter']['space_t']) ? $filtres['Filter']['space_t'] : "",['class'=>'form-control']);?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-3">
+								<label>Место погрузки</label>
+								<?php echo Html::input("text",'Filter[loading]',isset($filtres['Filter']['loading']) ? $filtres['Filter']['loading'] : "",['class'=>'form-control']);?>
+							</div>
+							<div class="col-xs-3">
+								<label>Место разгрузки</label>
+								<?php echo Html::input("text",'Filter[unloading]',isset($filtres['Filter']['unloading']) ? $filtres['Filter']['unloading'] : "",['class'=>'form-control']);?>
+							</div>
+							<div class="col-xs-3">
+								<label>Статус</label>
+								<?php echo Html::dropDownList('Filter[state]',isset($filtres['Filter']['state']) ? $filtres['Filter']['state'] : null,DealStates::getLabels(),['class'=>'form-control','prompt'=>'Выберите статус']);?>
+							</div>
+							<div class="col-xs-2">
+								<?php
+									echo Html::submitButton("Найти",['class'=>'btn btn-primary','style'=>'margin-top:25px;']);
+								?>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-xs-3">
-					<label>С</label>
-					<?php echo Html::input("date",'Filter[date_from]',isset($filtres['Filter']['date_from']) && strtotime($filtres['Filter']['date_from']) ? date("Y-m-d",strtotime($filtres['Filter']['date_from'])) : null,['class'=>'form-control']);?>
-				</div>
-				<div class="col-xs-3">
-					<label>По</label>
-					<?php echo Html::input("date",'Filter[date_to]',isset($filtres['Filter']['date_to']) && strtotime($filtres['Filter']['date_to']) ? date("Y-m-d",strtotime($filtres['Filter']['date_to'])) : null,['class'=>'form-control']);?>
-				</div>
-				<div class="col-xs-3">
-					<label>Водитель</label>
-					<?php echo Html::input("text",'Filter[driver]',isset($filtres['Filter']['driver']) ? $filtres['Filter']['driver'] : "",['class'=>'form-control']);?>
-				</div>
-				<div class="col-xs-3">
-					<label>№ ТС</label>
-					<?php echo Html::input("text",'Filter[ts]',isset($filtres['Filter']['ts']) ? $filtres['Filter']['ts'] : "",['class'=>'form-control']);?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2">
-					<label>Номер</label>
-					<?php echo Html::input("text",'Filter[number]',isset($filtres['Filter']['number']) ? $filtres['Filter']['number'] : "",['class'=>'form-control']);?>
-				</div>
-
-				<div class="col-xs-2">
-					<label>Наименование</label>
-					<?php echo Html::input("text",'Filter[name]',isset($filtres['Filter']['name']) ? $filtres['Filter']['name'] : "",['class'=>'form-control']);?>
-				</div>
-
-				<div class="col-xs-2">
-					<label>Вес С</label>
-					<?php echo Html::input("number",'Filter[weight_f]',isset($filtres['Filter']['weight_f']) ? $filtres['Filter']['weight_f'] : "",['class'=>'form-control']);?>
-				</div>
-
-
-				<div class="col-xs-2">
-					<label>Вес По</label>
-					<?php echo Html::input("number",'Filter[weight_t]',isset($filtres['Filter']['weight_t']) ? $filtres['Filter']['weight_t'] : "",['class'=>'form-control']);?>
-				</div>
-
-
-				<div class="col-xs-2">
-					<label>Объем С</label>
-					<?php echo Html::input("number",'Filter[space_f]',isset($filtres['Filter']['space_f']) ? $filtres['Filter']['space_f'] : "",['class'=>'form-control']);?>
-				</div>
-
-
-				<div class="col-xs-2">
-					<label>Объем По</label>
-					<?php echo Html::input("number",'Filter[space_t]',isset($filtres['Filter']['space_t']) ? $filtres['Filter']['space_t'] : "",['class'=>'form-control']);?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-3">
-					<label>Статус</label>
-					<?php echo Html::dropDownList('Filter[state]',isset($filtres['Filter']['state']) ? $filtres['Filter']['state'] : null,DealStates::getLabels(),['class'=>'form-control','prompt'=>'Выберите статус']);?>
-				</div>
-				<div class="col-xs-2">
-					<?php
-						echo Html::submitButton("Найти",['class'=>'btn btn-primary','style'=>'margin-top:25px;']);
-					?>
-				</div>
-			</div>
-		</form>
+		</div>
 	</div>
 
 	
@@ -120,11 +130,10 @@ function htmlFilelink($component,$files,$type){
 					<th>Стоимость Руб.</th>
 					<th>ФИО водителя</th>
 					<th>№ ТС</th>
-					<th>Статус</th>
-					<th>Cчет</th>
-					<th>Акт</th>
-					<th>Счет фактура</th>
-					<th>ТТН</th>
+					<th>Место погрузки</th>
+					<th>Место разгрузки</th>
+					<th>№ ТС</th>
+					<th>Документы</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -143,33 +152,26 @@ function htmlFilelink($component,$files,$type){
 								<td><?php echo $o['SUM'] ? $o['SUM'] : "";?></td>
 								<td><?php echo $o['DRIVER_INFO'];?></td>
 								<td><?php echo $o['VEHICLE'];?></td>
+								<td><?php echo $o['LOADING_PLACE'];?></td>
+								<td><?php echo $o['UNLOADING_PLACE'];?></td>
 								<td><?php echo DealStates::getLabels($o['STATE']);?></td>
 								<td>
 									<?php 
-										 if(isset($o['files'])){
+										if(isset($o['files'])){
 										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_BILL);
-										 }
-									?>
-								</td>
-								<td>
-									<?php 
-										 if(isset($o['files'])){
+										}
+									
+										if(isset($o['files'])){
 										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_ACT);
-										 }
-									?>
-								</td>
-								<td>
-									<?php 
-										 if(isset($o['files'])){
+										}
+									 
+										if(isset($o['files'])){
 										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_INVOICE);
-										 }
-									?>
-								</td>
-								<td>
-									<?php 
-										 if(isset($o['files'])){
+										}
+									
+										if(isset($o['files'])){
 										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_TTH);
-										 }
+										}
 									?>
 								</td>
 								<td>

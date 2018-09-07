@@ -48,7 +48,7 @@ class Routes
         $params = array_merge($local_params,$parameters);
         
         $params['filter']['DEAL_ID']=$deal_id;
-        
+        $params['order']=['ORDER'=>'ASC'];
         
         return RoutesSchemaTable::getList($params)->fetchAll();
     }

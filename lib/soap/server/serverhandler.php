@@ -127,11 +127,13 @@ class ServerHandler
         			
         			Route::deleteDealRoutes($deal_id);
 
-        			foreach ($dealObject->routes as $r) {
+        			foreach ($dealObject->routes as $key => $r) {
         				if($r instanceof Route){
         					$r->setDealId($deal_id);
         					$route = $r;
+        					$route->order = ++$key;
         				}else{
+        					$r['order'] = ++$key;
         					$route = new Route($r,$deal_id);
         				}
 
