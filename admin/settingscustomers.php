@@ -19,7 +19,8 @@ $title = "Настройка свободных контрагентов";
 
 
 $APPLICATION->SetTitle($title);
-$self_url = $_SERVER['HTTP_REFERER'];
+// $self_url = $_SERVER['HTTP_REFERER'];
+$self_url = "/bitrix/admin/ali.logistic_settingscustomers.php";
 
 if($request->isAjaxRequest()){
 	
@@ -50,6 +51,14 @@ if($request->isAjaxRequest()){
 		]); 
 		exit;
 	}
+
+	$APPLICATION->RestartBuffer();
+	echo json_encode(
+		[
+			'result'=>"Не правильный запрос!"
+		]
+	);
+	exit;
 }
 
 $result = new Result;
