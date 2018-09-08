@@ -17,11 +17,11 @@ define("ALI_FILE_PRINT_FORM_PATH", 		ALI_FILE_PATH."/print_form/");
 define("ALI_FILE_TTH_PATH", 			ALI_FILE_PATH."/tth/");
 
 
-define("ALI_CONTRACT_PATH", 		ALI_FILE_PATH);
+define("ALI_CONTRACT_PATH",ALI_FILE_PATH);
 
-define("ALI_DEAL_PRINT_FORM_PATH", 		ALI_FILE_PATH."/dealprintform/");
+define("ALI_DEAL_PRINT_FORM_PATH",ALI_FILE_PATH."/dealprintform/");
 
-define("ALI_REVISES_PATH", 		ALI_FILE_PATH."/revises/");
+define("ALI_REVISES_PATH",ALI_FILE_PATH."/revises/");
 
 
 
