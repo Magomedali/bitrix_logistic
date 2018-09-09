@@ -119,7 +119,6 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
     				<xs:element name="crossdocking" type="xs:boolean" nillable="true"/>
     				<xs:element name="securestorage" type="xs:boolean" nillable="true"/>
     				<xs:element name="cargohandling" type="xs:boolean" nillable="true"/>
-                    <xs:element name="armedescort" type="xs:boolean" nillable="true"/>
     			</xs:sequence>
     		</xs:complexType>
     
