@@ -24,7 +24,16 @@ $arResult['breadcrumbs'][]=[
 		<table class="table table-bordered  table-hover">
 			<thead>
 				<tr>
+					<th>№</th>
 					<th>Дата</th>
+					<th>Сумма</th>
+					<?php 
+						if($type == DealFileType::FILE_BILL){
+							?>
+							<th>Дата оплаты</th>
+							<?php
+						}
+					?>
 					<th>Номер</th>
 					<th>Файл</th>
 				</tr>
@@ -36,7 +45,16 @@ $arResult['breadcrumbs'][]=[
 							?>
 
 							<tr>
+								<td><?php echo ++$i;?></td>
 								<td><?php echo date("d.m.Y",strtotime($f['FILE_DATE']));?></td>
+								<td><?php echo $f['SUM'] ? $f['SUM'] : '';?></td>
+								<?php 
+									if($type == DealFileType::FILE_BILL){
+										?>
+										<th><?php echo date("d.m.Y",strtotime($f['PAID_AT']));?></th>
+										<?php
+									}
+								?>
 								<td><?php echo $f['FILE_NUMBER'];?></td>
 								<td>
 									<?php 

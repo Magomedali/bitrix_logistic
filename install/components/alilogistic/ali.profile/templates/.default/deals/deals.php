@@ -134,7 +134,6 @@ function htmlFilelink($component,$files,$type){
 					<th>Место разгрузки</th>
 					<th>№ ТС</th>
 					<th>Документы</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -144,7 +143,26 @@ function htmlFilelink($component,$files,$type){
 							?>
 
 							<tr>
-								<td><?php echo $o['DOCUMENT_NUMBER']?></td>
+								<td style="position:relative;">
+									<?php echo Html::a($o['DOCUMENT_NUMBER'],null,['class'=>'deal_actions'])?>
+									<div class="deal_actions_block">
+										<?php 
+											if((int)$o['STATE'] < DealStates::IN_PLANNING){
+												?>
+												<a href="<?php echo $component->getUrl('dealform',['id'=>$o['ID']])?>">
+													<i class="glyphicon glyphicon-pencil"></i> Редактировать
+												</a><br>
+												<?php
+											}
+										?>
+										<a href="<?php echo $component->getUrl('viewdeal',['id'=>$o['ID']])?>">
+											<i class="glyphicon glyphicon-eye-open"></i> Подробнее
+										</a><br>
+										<a href="<?php echo $component->getUrl('dealform',['replicate'=>$o['ID']])?>">
+											<i class="glyphicon glyphicon-copyright-mark"></i> Копировать
+										</a>
+									</div>	
+								</td>
 								<td><?php echo date("H:i d.m.Y",strtotime($o['CREATED_AT']))?></td>
 								<td><?php echo $o['NAME'];?></td>
 								<td><?php echo $o['WEIGHT'] ? $o['WEIGHT'] : "";?></td>
@@ -174,17 +192,6 @@ function htmlFilelink($component,$files,$type){
 										}
 									?>
 								</td>
-								<td>
-									<?php 
-										if((int)$o['STATE'] < DealStates::IN_PLANNING){
-											?>
-											<a href="<?php echo $component->getUrl('dealform',['id'=>$o['ID']])?>">Редактировать</a>
-											<?php
-										}
-									?>
-									<a href="<?php echo $component->getUrl('viewdeal',['id'=>$o['ID']])?>">Подробнее</a>
-									<a href="<?php echo $component->getUrl('dealform',['replicate'=>$o['ID']])?>">Копировать</a>
-								</td>
 							</tr>
 
 							<?php
@@ -201,5 +208,16 @@ function htmlFilelink($component,$files,$type){
 	<div class="col-xs-12">
 		<?php $this->getComponent()->includeComponentTemplate("helpers/pagination"); ?>
 	</div>
+<script type="text/javascript">
 	
+	$(".deal_actions").click(function(event){
+		event.preventDefault();
+
+		var tthis = $(this);
+		var this_block = tthis.siblings(".deal_actions_block");
+		$(".deal_actions_block").not(this_block).hide();
+		this_block.toggle();
+	});
+</script>	
 </div>
+

@@ -86,7 +86,11 @@ class SettingsSchemaTable extends Entity\DataManager
             (2, 'contract_nonds', 'contract_nonds.docx', '2018-09-05 00:00:00', '2018-09-05 00:00:00');
 SQL;
         
+        
+        global $DB;
 
+
+        $DB->query($sql);
         
     }
 }

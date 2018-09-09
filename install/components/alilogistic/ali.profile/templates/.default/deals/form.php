@@ -180,34 +180,34 @@ $arResult['breadcrumbs'][]=[
 								<div class="col-xs-3">
 									<p>
 										<label for="deal_weight" class="form-label">Вес груза</label>
-										<input type="number" name="DEAL[WEIGHT]" id="deal_weight" value="<?php echo $deal ? $deal['WEIGHT'] : null;?>" class="form-control" >
+										<input type="number" name="DEAL[WEIGHT]" id="deal_weight" value="<?php echo $deal ? $deal['WEIGHT'] : null;?>" class="form-control" step='any'>
 									</p>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-xs-3">
 									<p>
-										<label for="deal_space" class="form-label">Объем (куб. м.)</label>
-										<input type="number" name="DEAL[SPACE]" id="deal_space" value="<?php echo $deal ? $deal['SPACE'] : null;?>" class="form-control">
-									</p>
-								</div>
-								<div class="col-xs-3">
-									<p>
 										<label for="deal_width" class="form-label">Ширина (м)</label>
-										<input type="number" name="DEAL[WIDTH]" id="deal_width" value="<?php echo $deal ? $deal['WIDTH'] : null;?>" class="form-control">
+										<input type="number" name="DEAL[WIDTH]" id="deal_width" value="<?php echo $deal ? $deal['WIDTH'] : null;?>" class="form-control" step='any'>
 									</p>
 								</div>
 								<div class="col-xs-3">
 									<p>
 										<label for="deal_height" class="form-label">Высота (м)</label>
-										<input type="number" name="DEAL[HEIGHT]" id="deal_height" value="<?php echo $deal ? $deal['HEIGHT'] : null;?>" class="form-control">
+										<input type="number" name="DEAL[HEIGHT]" id="deal_height" value="<?php echo $deal ? $deal['HEIGHT'] : null;?>" class="form-control" step='any'>
 									</p>
 								</div>
 
 								<div class="col-xs-3">
 									<p>
 										<label for="deal_length" class="form-label">Длина (м)</label>
-										<input type="number" name="DEAL[LENGTH]" id="deal_length" value="<?php echo $deal ? $deal['LENGTH'] : null;?>" class="form-control">
+										<input type="number" name="DEAL[LENGTH]" id="deal_length" value="<?php echo $deal ? $deal['LENGTH'] : null;?>" class="form-control" step='any'>
+									</p>
+								</div>
+								<div class="col-xs-3">
+									<p>
+										<label for="deal_space" class="form-label">Объем (куб. м.)</label>
+										<input type="number" name="DEAL[SPACE]" id="deal_space" value="<?php echo $deal ? $deal['SPACE'] : null;?>" class="form-control" step='any'>
 									</p>
 								</div>
 							</div>
@@ -305,19 +305,19 @@ $arResult['breadcrumbs'][]=[
 													<div class="col-xs-2">
 														<p>
 															<label for="deal_req_temp_from" class="form-label">Темп. от</label>
-															<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_FROM]",$deal['REQUIRES_TEMPERATURE_FROM'],['id'=>'deal_req_temp_from','class'=>'form-control']);?>
+															<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_FROM]",$deal['REQUIRES_TEMPERATURE_FROM'] ? $deal['REQUIRES_TEMPERATURE_FROM'] : "",['id'=>'deal_req_temp_from','class'=>'form-control','step'=>'any']);?>
 														</p>
 													</div>
 													<div class="col-xs-2">
 														<p>
 															<label for="deal_req_temp_to" class="form-label">Темп. до</label>
-															<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_TO]",$deal['REQUIRES_TEMPERATURE_TO'],['id'=>'deal_req_temp_to','class'=>'form-control']);?>
+															<?php echo Html::input("number","DEAL[REQUIRES_TEMPERATURE_TO]",$deal['REQUIRES_TEMPERATURE_TO'] ? $deal['REQUIRES_TEMPERATURE_TO'] : "",['id'=>'deal_req_temp_to','class'=>'form-control','step'=>'any']);?>
 														</p>
 													</div>
 													<div class="col-xs-4">
 														<p>
 															<label for="deal_adrclass" class="form-label">АДР Класс</label>
-															<?php echo Html::input("number","DEAL[ADR_CLASS]",$deal['ADR_CLASS'],['min'=>1,'max'=>10,'id'=>'deal_adrclass','class'=>'form-control']);?>
+															<?php echo Html::input("number","DEAL[ADR_CLASS]",$deal['ADR_CLASS'] ? $deal['ADR_CLASS'] : "",['min'=>1,'max'=>10,'id'=>'deal_adrclass','class'=>'form-control']);?>
 														</p>
 													</div>
 													
@@ -392,7 +392,7 @@ $arResult['breadcrumbs'][]=[
 								<div class="col-xs-2">
 									<p>
 										<label for="deal_sum" class="form-label">Стоимость</label>
-										<?php echo Html::input("number","DEAL[SUM]",$deal['SUM'] ? $deal['SUM'] : "",['id'=>'deal_sum','class'=>'form-control']);?>
+										<?php echo Html::input("number","DEAL[SUM]",$deal['SUM'] ? $deal['SUM'] : "",['id'=>'deal_sum','class'=>'form-control','step'=>'any']);?>
 									</p>
 								</div>
 							</div>
@@ -730,5 +730,18 @@ $arResult['breadcrumbs'][]=[
 		}
 
 	});
+
+
+	$("#deal_length,#deal_height,#deal_width").keyup(function(){
+		var space = $("#deal_space");
+
+		var l = $("#deal_length").val();
+		var w = $("#deal_width").val();
+		var h = $("#deal_height").val();
+		var space_val = w*l*h;
+		if(l > 0 && w > 0 && h > 0){
+			space.val(space_val.toFixed(2));
+		}
+	})
 
 </script>

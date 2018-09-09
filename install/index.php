@@ -147,6 +147,8 @@ Class ali_logistic extends CModule
         )
         {
             Base::getInstance('\Ali\Logistic\Schemas\SettingsSchemaTable')->createDbTable();
+
+            \Ali\Logistic\Schemas\SettingsSchemaTable::defaultParameters();
         }
         
         $this->installDbProgramming();

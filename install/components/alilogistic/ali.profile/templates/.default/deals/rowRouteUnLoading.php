@@ -23,7 +23,7 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 				</h4>
 			</div>
 			<div class="col-xs-2">
-				<a class="form-route-select" href="#">Выбрать</a>
+				<a class="form-route-select">Выбрать</a>
 			</div>
 		</div>
 	</div>

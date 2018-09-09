@@ -43,3 +43,19 @@ input.error{
 span.dt_error{
 	color: #f35151;
 }
+
+.deal_actions{
+	cursor: pointer;
+}
+
+.deal_actions_block{
+	display: none;
+	border: 1px solid #ddd;
+    background: #fff;
+    padding: 7px;
+    position: absolute;
+    z-index: 1;
+    width: 145px;
+    top: -2px;
+    left: 79px;
+}

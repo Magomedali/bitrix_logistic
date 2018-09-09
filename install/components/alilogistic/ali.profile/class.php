@@ -193,7 +193,7 @@ class AliProfile extends CBitrixComponent
         
         $this->arResult['user'] = $user;
         $this->arResult['hasCompany'] = $hasCompany;
-
+        
         return $this->arResult;
     }
 
