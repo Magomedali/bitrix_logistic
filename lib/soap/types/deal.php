@@ -56,7 +56,6 @@ class Deal
     public $crossdocking;
     public $securestorage;
     public $cargohandling;
-    public $armedescort;
 
 
     public $load_place;
@@ -101,7 +100,6 @@ class Deal
         $this->crossdocking = $data['crossdocking'];
         $this->securestorage = $data['securestorage'];
         $this->cargohandling = $data['cargohandling'];
-        $this->armedescort = $data['armedescort'];
 
 
         $this->load_place = $data['load_place'];
@@ -192,7 +190,7 @@ class Deal
 
 
         $data['CARGO_HANDLING'] = boolval($this->cargohandling);
-        $data['ARMED_ESCORT'] = boolval($this->armedescort);
+        $data['ARMED_ESCORT'] = false;
         $data['CROSS_DOCKING'] = boolval($this->crossdocking);
         $data['SECURE_STORAGE'] = boolval($this->securestorage);
         $data['REQUIRED_RUSSIAN_DRIVER'] = boolval($this->reqrussiandriver);

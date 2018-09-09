@@ -411,10 +411,6 @@ $arResult['breadcrumbs'][]=[
 										<?php echo Html::checkbox("DEAL[CROSS_DOCKING]",$deal['CROSS_DOCKING'],['id'=>'deal_req_cross_docking']);?>
 										<label for="deal_req_cross_docking" class="form-label">Кросс-докинг</label>
 									</p>
-									<p>
-										<?php echo Html::checkbox("DEAL[ARMED_ESCORT]",$deal['ARMED_ESCORT'],['id'=>'deal_req_armed_escort']);?>
-										<label for="deal_req_armed_escort" class="form-label">Вооруженное сопровождение</label>
-									</p>
 								</div>
 								<div class="col-xs-4">
 									<p>
