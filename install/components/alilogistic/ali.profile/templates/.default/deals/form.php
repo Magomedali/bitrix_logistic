@@ -96,8 +96,12 @@ $arResult['breadcrumbs'][]=[
 										<div class="col-xs-3">
 											<h2>Маршруты</h2>
 										</div>
-										<div class="col-xs-4">
-											<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-primary' style="margin-top: 33px;">Добаить погрузку/разгрузку</a>
+										<div class="col-xs-8" style="padding-top: 33px;">
+											<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-primary' >Добаить погрузку/разгрузку</a>
+										</div>
+										<div class="col-xs-1" style="padding-top: 33px; text-align: right;">
+											<a href="#" id="btn_routeToUp"><i class="glyphicon glyphicon-chevron-up"></i></a><br>
+											<a href="#" id="btn_routeToDown"><i class="glyphicon glyphicon-chevron-down"></i></a>
 										</div>
 									</div>
 									
@@ -556,44 +560,175 @@ $arResult['breadcrumbs'][]=[
 		return strDate; 
 	}
 
-	$("body").on("change",'.form-route input.startdate,.form-route input.finishdate',function(){
+	// $("body").on("focusout",'.form-route input.startdate,.form-route input.finishdate',function(){
 
-		var now = Date.now();
-		var strDate = $(this).val();
-		var inputDate = new Date(strDate);
+
+	// 	var now = Date.now();
+	// 	var strDate = $(this).val();
+	// 	var inputDate = new Date(strDate);
 		
 
-		if($(this).hasClass("startdate")){
-			// Дата начала должна быть меньше даты окончания
-			var finish = $(this).parents(".form-route").find("input.finishdate").val();
-			var finishDate = new Date(finish);
-			var startDate = inputDate;
-			if(finishDate < startDate){
-				var f_d_str = dateTostandartFormat(startDate);
-				$(this).parents(".form-route").find("input.finishdate").val(f_d_str);
-				return false;
-			}
+	// 	if($(this).hasClass("startdate")){
+	// 		// Дата начала должна быть меньше даты окончания
+	// 		var finish = $(this).parents(".form-route").find("input.finishdate").val();
+	// 		var finishDate = new Date(finish);
+	// 		var startDate = inputDate;
+	// 		if(finishDate < startDate){
+	// 			var f_d_str = dateTostandartFormat(startDate);
+	// 			$(this).parents(".form-route").find("input.finishdate").val(f_d_str);
+	// 			return false;
+	// 		}
+	// 	}
+
+	// 	if($(this).hasClass("finishdate")){
+	// 		// Дата окончания должна быть больше даты начала
+	// 		var start = $(this).parents(".form-route").find("input.startdate").val();
+	// 		var startDate = new Date(start);
+	// 		var finishDate = inputDate;
+	// 		if(finishDate < startDate){
+	// 			console.log(startDate);
+	// 			$(this).val(dateTostandartFormat(startDate));
+	// 			return false;
+	// 		}
+	// 	}
+
+	// 	// Подстраховка, если инпуты пустые изначально
+	// 	if(now > inputDate){
+	// 		//Запрет ввода даты меньше текущей
+	// 		$(this).val(dateTostandartFormat(new Date(now)));
+	// 		return false;
+	// 	}
+
+	// });
+
+
+	$("body").on("click",".form-route-select",function(event){
+		event.preventDefault();
+		var selectedClass = "form-route-selected";
+		$(".form-route").removeClass(selectedClass);
+		var parent = $(this).parents(".form-route");
+		parent.addClass(selectedClass);
+	});
+	
+	var routeModel = function(){
+		this.dt_from;
+		this.dt_to;
+		this.town;
+		this.address;
+		this.person;
+		this.org;
+		this.phone;
+		this.comment;
+
+		this.load = function(form){
+			this.dt_from = form.find("input.startdate").val();
+			this.dt_to = form.find("input.finishdate").val();
+
+			this.town = form.find("input.town").val();
+			this.address = form.find("input.address").val();
+			this.person = form.find("input.person").val();
+			this.org = form.find("input.org").val();
+			this.phone = form.find("input.phone").val();
+			this.comment = form.find("input.comment").val();
 		}
 
-		if($(this).hasClass("finishdate")){
-			// Дата окончания должна быть больше даты начала
-			var start = $(this).parents(".form-route").find("input.startdate").val();
-			var startDate = new Date(start);
-			var finishDate = inputDate;
-			if(finishDate < startDate){
-				console.log(startDate);
-				$(this).val(dateTostandartFormat(startDate));
-				return false;
-			}
-		}
+		this.unLoad = function(to){
+			to.find("input.startdate").val(this.dt_from);
+			to.find("input.finishdate").val(this.dt_to);
 
-		// Подстраховка, если инпуты пустые изначально
-		if(now > inputDate){
-			//Запрет ввода даты меньше текущей
-			$(this).val(dateTostandartFormat(new Date(now)));
-			return false;
+			to.find("input.town").val(this.town);
+			to.find("input.address").val(this.address);
+			to.find("input.person").val(this.person);
+			to.find("input.org").val(this.org);
+			to.find("input.phone").val(this.phone );
+			to.find("input.comment").val(this.comment);
+		}
+	};
+
+	var changeData = function(from,to){
+		var mFrom = new routeModel();
+		mFrom.load(from);
+		
+		var mTo = new routeModel();
+		mTo.load(to);
+
+		mFrom.unLoad(to);
+		mTo.unLoad(from);
+	}
+
+	$("#btn_routeToUp").click(function(event){
+		event.preventDefault();
+		var selectedClass = "form-route-selected";
+		var selected = $(".form-route."+selectedClass);
+		if(!selected.length) return false;
+		var prev = selected.prev();
+		if(!prev.length) return false;
+
+		changeData(selected,prev);
+		prev.find(".form-route-select").trigger("click");
+	});
+
+
+	$("#btn_routeToDown").click(function(event){
+		event.preventDefault();
+		var selectedClass = "form-route-selected";
+		var selected = $(".form-route."+selectedClass);
+		if(!selected.length) return false;
+		var next = selected.next();
+		if(!next.length) return false;
+
+		changeData(selected,next);
+		next.find(".form-route-select").trigger("click");
+	});
+
+
+	$("#formDeal").submit(function(event){
+		
+		var errors = [];
+		var tabRoutes = $(".nav.nav-tabs a[href='#routes']");
+		
+		var routes = $(".form-route");
+		var t = "Неправильное значение даты и времени!";
+		var now = Date.now();
+		routes.each(function(){
+			var strStart = $(this).find("input.startdate").val();
+			var strFinish = $(this).find("input.finishdate").val();
+			var startDate = new Date(strStart);
+			var finishDate = new Date(strFinish);
+			var nextCheck = true;
+			if(startDate < Date.now()){
+				errors.push(t);
+				$(this).find("input.startdate").addClass("error");
+				$(this).find("input.startdate + span.dt_error").html(t);
+				nextCheck = false;
+			}else{
+				$(this).find("input.startdate").removeClass("error");
+				$(this).find("input.startdate + span.dt_error").html("");
+			}
+
+			if(nextCheck){
+				if(startDate > finishDate){
+					errors.push(t);
+					$(this).find("input.startdate").addClass("error");
+					$(this).find("input.startdate + span.dt_error").html(t);
+					$(this).find("input.finishdate").addClass("error");
+					$(this).find("input.finishdate + span.dt_error").html(t);
+				}else{
+					$(this).find("input.startdate").removeClass("error");
+					$(this).find("input.startdate + span.dt_error").html("");
+					$(this).find("input.finishdate").removeClass("error");
+					$(this).find("input.finishdate + span.dt_error").html("");
+				}
+			}
+			
+		});
+		
+
+		if(errors.length){
+			event.preventDefault();
+			tabRoutes.trigger("click");
 		}
 
 	});
-	
+
 </script>

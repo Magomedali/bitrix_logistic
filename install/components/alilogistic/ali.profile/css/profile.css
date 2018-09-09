@@ -24,3 +24,22 @@
 {
 	display: block;
 }
+
+
+#block_route_start .form-route-select,
+#block_route_end .form-route-select{
+	color: #fff;
+}
+
+.form-route-selected .panel-body{
+	background: #ebecef;
+}
+
+
+input.error{
+ border-color:#f35151;
+}
+
+span.dt_error{
+	color: #f35151;
+}
