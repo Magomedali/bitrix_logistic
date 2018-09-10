@@ -257,18 +257,21 @@ class DealsSchemaTable extends Entity\DataManager{
 
             new Entity\IntegerField('WAY_OF_TRANSPORTATION',array(
                 'title'=>'Способ перевозки',
-                'required'=>false,
+                'required'=>true,
                 'default_value'=>function(){
-                    return 0;
+                    return $v ? $v : 0;
                 },
                 'validation'=>function(){
                     return array(
                         function($v,$pr,$row,$f){
 
-                            $types = \Ali\Logistic\Dictionary\WayOfTransportation::getLabels();
-                            if(array_key_exists($v, $types) == false){
-                                return "Недопустимое значение для 'Способ перевозки'!";
+                            if($v){
+                               $types = \Ali\Logistic\Dictionary\WayOfTransportation::getLabels();
+                                if(array_key_exists($v, $types) == false){
+                                    return "Недопустимое значение для 'Способ перевозки'!";
+                                }
                             }
+                            
 
                             return true;
                         }
@@ -290,6 +293,13 @@ class DealsSchemaTable extends Entity\DataManager{
                 'title'=>'Количество грузчиков',
                 'default_value'=>function(){
                     return 0;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value ? $value : 0 ;
+                        }
+                    );
                 }
             )),
 
@@ -297,6 +307,13 @@ class DealsSchemaTable extends Entity\DataManager{
                 'title'=>'Количество часов',
                 'default_value'=>function(){
                     return 0;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value ? $value : 0 ;
+                        }
+                    );
                 }
             )),
 
