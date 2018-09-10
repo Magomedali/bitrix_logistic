@@ -112,7 +112,7 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
     				<xs:element name="vehicle" type="xs:string" nillable="true"/>
     				<xs:element name="status" type="xs:string"/>
     				<xs:element name="printForm" type="xs:base64Binary" nillable="true"/>
-    				<xs:element name="howpacked" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    				<xs:element name="howpacked" type="xs:string" nillable="true"/>
     				<xs:element name="countplace" type="xs:integer" nillable="true"/>
     				<xs:element name="adrclass" type="xs:integer" nillable="true"/>
     				<xs:element name="reqrussiandriver" type="xs:boolean" nillable="true"/>

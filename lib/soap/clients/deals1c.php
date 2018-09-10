@@ -50,7 +50,7 @@ class Deals1C extends Client1C
 
 		$data['ts'] = is_array($params['TYPE_OF_VEHICLE']) ? $params['TYPE_OF_VEHICLE'] : explode(TypeOfVehicle::getDelimiter(), $params['TYPE_OF_VEHICLE']);
 
-		$data['howpacked'] = is_array($params['HOW_PACKED']) ? $params['HOW_PACKED'] : explode(HowPacked::getDelimiter(), $params['HOW_PACKED']);
+		
 
 		$data['comments'] = null;
 		$data['nds'] = $params['WITH_NDS'];
@@ -87,6 +87,7 @@ class Deals1C extends Client1C
 		$data['methodofloading'] = is_array($params['LOADING_METHOD']) ? $params['LOADING_METHOD'] : explode(LoadingMethod::getDelimiter(), $params['LOADING_METHOD']);
 		$data['methodofunloading'] = is_array($params['UNLOADING_METHOD']) ? $params['LOADING_METHOD'] : explode(LoadingMethod::getDelimiter(), $params['LOADING_METHOD']);
 
+		$data['howpacked'] = HowPacked::getLabels($params['HOW_PACKED']);
 		$data['methodoftransportation'] = WayOfTransportation::getLabels($params['WAY_OF_TRANSPORTATION']);
       	$data['routes'] = array();
 

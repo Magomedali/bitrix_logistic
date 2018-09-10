@@ -6,6 +6,7 @@ use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\Dictionary\RoutesKind;
 use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Dictionary\WayOfTransportation;
+use Ali\Logistic\Dictionary\HowPacked;
 use Ali\Logistic\Dictionary\DealFileType;
 
 $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['deal'] : null;
@@ -133,7 +134,7 @@ function htmlFilelink($component,$files,$type){
 								</tr>
 								<tr>
 									<td><strong>Как упакован</strong></td>
-									<td><?php echo $deal['HOW_PACKED']?></td>
+									<td><?php echo HowPacked::getLabels($deal['HOW_PACKED'])?></td>
 								</tr>
 								<tr>
 									<td><strong>Количество мест</strong></td>

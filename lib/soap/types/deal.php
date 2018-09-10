@@ -9,6 +9,7 @@ use Ali\Logistic\soap\Types\Route;
 use Ali\Logistic\soap\Types\Costs;
 use Ali\Logistic\soap\Types\DealFiles;
 use Ali\Logistic\Dictionary\WayOfTransportation;
+use Ali\Logistic\Dictionary\HowPacked;
 use Ali\Logistic\Dictionary\DealStates;
 use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\Result;
@@ -167,11 +168,12 @@ class Deal
         $data['SUM']=$this->sum;
 
     	$data['TYPE_OF_VEHICLE']= is_array($this->ts) ? implode(";", $this->ts) : $this->ts;
-        $data['HOW_PACKED']= is_array($this->howpacked) ? implode(";", $this->howpacked) : $this->howpacked;
+        
     	$data['LOADING_METHOD']=is_array($this->methodofloading) ? implode(";", $this->methodofloading) : $this->methodofloading;
 
         $data['UNLOADING_METHOD']=is_array($this->methodofunloading) ? implode(";", $this->methodofunloading) : $this->methodofloading;
 
+        $data['HOW_PACKED']= HowPacked::getCode($this->howpacked);
     	$data['WAY_OF_TRANSPORTATION'] = WayOfTransportation::getCode($this->methodoftransportation);
     	$data['REQUIRES_LOADER'] = boolval($this->countloaders);
         $data['COUNT_LOADERS'] = $this->countloaders;

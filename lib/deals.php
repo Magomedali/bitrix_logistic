@@ -17,7 +17,6 @@ use Ali\Logistic\Dictionary\AdditionalEquipment;
 use Ali\Logistic\Dictionary\Documents;
 use Ali\Logistic\Dictionary\SpecialEquipment;
 use Ali\Logistic\Dictionary\HowPacked;
-
 use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\Schemas\DealCostingsSchemaTable;
 
@@ -67,10 +66,10 @@ class Deals{
         }
 
 
-        if(isset($data['HOW_PACKED']) && is_array($data['HOW_PACKED'])){
-            $hwp = HowPacked::toString($data['HOW_PACKED']);
-            $data['HOW_PACKED'] = $hwp;
-        }
+        // if(isset($data['HOW_PACKED']) && is_array($data['HOW_PACKED'])){
+        //     $hwp = HowPacked::toString($data['HOW_PACKED']);
+        //     $data['HOW_PACKED'] = $hwp;
+        // }
 
 
 

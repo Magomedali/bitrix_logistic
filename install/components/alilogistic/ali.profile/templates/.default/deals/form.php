@@ -222,7 +222,7 @@ $arResult['breadcrumbs'][]=[
 								<div class="col-xs-8">
 									<p>
 										<label>Как упакован</label>
-										<?php echo Html::checkboxList("DEAL[HOW_PACKED]",HowPacked::toArrayCode($deal['HOW_PACKED']),HowPacked::getLabels(),['id'=>'deal_HowPacked']);?>
+										<?php echo Html::radioList("DEAL[HOW_PACKED]",$deal['HOW_PACKED'],HowPacked::getLabels(),['id'=>'deal_HowPacked']);?>
 									</p>
 								</div>
 							</div>
