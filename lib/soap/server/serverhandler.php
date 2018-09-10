@@ -190,6 +190,14 @@ class ServerHandler
 		
 		$d = json_decode(json_encode($data),true);
 
+		$log = $this->log_path."integrateFile.txt";
+		$lf = fopen($log, "w+");
+
+		fwrite($lf, "\n\n".date("H:i d.m.Y",time())."\n\n");
+		fwrite($lf, "\n\n Интеграция файла тип '{$type}'\n\n");
+		fwrite($lf, json_encode($d));
+		fclose($lf);
+
 		$dealFile = new DealFiles($d);
 		$res = $dealFile->checkDealExists();
 		if($res->isSuccess()){

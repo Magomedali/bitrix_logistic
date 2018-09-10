@@ -36,7 +36,7 @@ class DealFiles
 		return $this->deal_id;
 	}
 
-	public function checkDealExists($uuid=null){
+	public function checkDealExists($uuid = null){
 
 		$dealUuid = $uuid ? $uuid : $this->dealUuid;
         $res = new Result();
