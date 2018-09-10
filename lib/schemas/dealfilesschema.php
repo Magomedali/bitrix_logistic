@@ -129,7 +129,7 @@ class DealFilesSchemaTable extends Entity\DataManager
 
             new Entity\DatetimeField('PAID_AT',array(
                 'default_value'=>function(){
-                    return new \Bitrix\Main\Type\DateTime();
+                    return null;
                 }
             )),
 

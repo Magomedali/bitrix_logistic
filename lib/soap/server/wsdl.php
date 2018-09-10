@@ -3,7 +3,7 @@ header("Content-type: text/xml; charset='utf-8'");
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
 $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
-
+$nsp = "http://".$_SERVER['HTTP_HOST']."/alkserver/";
 ?>
 <definitions 	xmlns="http://schemas.xmlsoap.org/wsdl/"
 				xmlns:soap12bind="http://schemas.xmlsoap.org/wsdl/soap12/"
@@ -12,13 +12,13 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
 				xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
 	            xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
 	
-				xmlns:tns="http://rus:8080/rus/"
+				xmlns:tns="<?php echo $nsp?>"
 				xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	            xmlns:xsd1="http://www.rusexpeditor-response.org"
 	            xmlns:xsd2="http://www.rusexpeditor-sendcontractors.org"
 	            xmlns:xsd3="http://www.rusexpeditor-senddeal.org"
 				name="AliLogisticService"
-				targetNamespace="http://rus:8080/rus/">
+				targetNamespace="<?php echo $nsp?>">
 	<types>
     	<xs:schema 
         		xmlns:tns="http://www.rusexpeditor-response.org" 
@@ -162,9 +162,9 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
         			<xs:element name="dealUuid" type="xs:string"/>
         			<xs:element name="fileNumber" type="xs:string"/>
         			<xs:element name="fileDate" type="xs:date"/>
-        			<xs:element name="paidDate" type="xs:datetime" nillable="true"/>
-        			<xs:element name="sum" type="xs:float" nillable="true"/>
-        			<xs:element name="binaryFile" type="xs:base64Binary"/>
+                    <xs:element name="binaryFile" type="xs:base64Binary"/>
+                    <xs:element name="paidDate" type="xs:datetime" nillable="true"/>
+                    <xs:element name="sum" type="xs:float" nillable="true"/>
         		</xs:sequence>
         	</xs:complexType>
         </xs:schema>
@@ -176,7 +176,7 @@ $server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
 		            xmlns:xs2="http://www.rusexpeditor-sendcontractors.org"
 		            xmlns:xs3="http://www.rusexpeditor-senddeal.org"
 		            xmlns:xs4="http://www.rusexpeditor-sendfile.org"
-					targetNamespace="http://rus:8080/rus/"
+					targetNamespace="<?php echo $nsp?>"
 					attributeFormDefault="unqualified"
 					elementFormDefault="qualified">
         

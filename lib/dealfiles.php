@@ -22,9 +22,12 @@ class DealFiles{
         $deal_id = $Elementfile->getDealId();
         $fNumber = $Elementfile->fileNumber;
         $fileBinary = $Elementfile->binaryFile;
+        $sum = $Elementfile->sum;
+        $paidDate = $Elementfile->paidDate ? DateTime::createFromTimestamp(strtotime($Elementfile->paidDate)) : null;
 
         $fileDate = $Elementfile->fileDate ? DateTime::createFromTimestamp(strtotime($Elementfile->fileDate)) : DateTime();
         
+
 
         $res = new Result();
         $row = DealFilesSchemaTable::getRow(array("select"=>['ID','FILE_NUMBER','FILE','DEAL_ID'],'filter'=>['FILE_NUMBER'=>[$fNumber],'DEAL_ID'=>$deal_id,'FILE_TYPE'=>$typeFile]));
@@ -49,7 +52,11 @@ class DealFiles{
             $data['FILE_TYPE'] = $typeFile;
             $data['FILE_NUMBER'] = $fNumber;
             $data['FILE_DATE'] = $fileDate;
+            if($paidDate){
+                $data['PAID_AT'] = $paidDate;
+            }
             $data['FILE']=$fName;
+            $data['SUM']=$sum;
 
             try {
                 if($file_id){

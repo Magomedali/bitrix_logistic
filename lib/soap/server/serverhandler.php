@@ -27,7 +27,7 @@ class ServerHandler
 	public function sendContractors($data){
         
 		$log = $this->log_path."sendContractors.txt";
-		$output = fopen($log, "w");
+		$output = fopen($log, "a+");
 
 		$output_line = "\n".date("H:i d.m.Y",time())." Контрагенты: "."\n\n";
 		fwrite($output, $output_line);
@@ -99,7 +99,7 @@ class ServerHandler
 	public function sendDeal($deal){
 
 		$log = $this->log_path."sendDeal.txt";
-		$output = fopen($log, "w");
+		$output = fopen($log, "a+");
 
 		$output_line = "\n".date("H:i d.m.Y",time())." Заявка: "."\n\n";
 		fwrite($output, $output_line);
@@ -186,19 +186,23 @@ class ServerHandler
 
 
 
+
 	public function integrateFile($data,$type){
 		
-		$d = json_decode(json_encode($data),true);
+		$dealFile = new DealFiles($data);
+		
+		$log_d['uuid']=$dealFile->dealUuid;
+		$log_d['date']=$dealFile->fileDate;
+		$log_d['number']=$dealFile->fileNumber;
 
 		$log = $this->log_path."integrateFile.txt";
-		$lf = fopen($log, "w+");
-
+		$lf = fopen($log, "a+");
 		fwrite($lf, "\n\n".date("H:i d.m.Y",time())."\n\n");
-		fwrite($lf, "\n\n Интеграция файла тип '{$type}'\n\n");
-		fwrite($lf, json_encode($d));
+		fwrite($lf, "\n\nИнтеграция файла тип '{$type}'\n\n");
+		fwrite($lf, "Входные параметры: \n");
+		fwrite($lf, json_encode($log_d));
 		fclose($lf);
 
-		$dealFile = new DealFiles($d);
 		$res = $dealFile->checkDealExists();
 		if($res->isSuccess()){
 			switch ($type) {
@@ -235,7 +239,7 @@ class ServerHandler
 		$response = new \stdClass();
 		if(!$res->isSuccess()){
 			$response->success = false;
-			$response->error = "errorSendFileBill";
+			$response->error = json_encode($data);//"errorSendFile";
 			$response->errorMessages = $res->getErrorMessages();
 		}else{
 			$response->success = true;
