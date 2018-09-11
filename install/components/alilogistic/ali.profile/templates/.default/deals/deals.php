@@ -132,7 +132,7 @@ function htmlFilelink($component,$files,$type){
 					<th>№ ТС</th>
 					<th>Место погрузки</th>
 					<th>Место разгрузки</th>
-					<th>№ ТС</th>
+					<th>Статус</th>
 					<th>Документы</th>
 				</tr>
 			</thead>
