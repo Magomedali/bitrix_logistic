@@ -56,7 +56,7 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 						<p>
 							<label>Дата с:</label>
 							<?php
-								echo Html::input("datetime-local","ROUTES[{$number}][START_AT]",$route && isset($route['START_AT']) ? date("Y-m-d\TH:i",strtotime($route['START_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control startdate']);
+								echo Html::input("datetime-local","ROUTES[{$number}][START_AT]",$route && isset($route['START_AT']) ? date("Y-m-d\TH:i",strtotime($route['START_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control startdate','max'=>"9999-12-31T23:59"]);
 							?>
 							<span class="dt_error"></span>
 						</p>
@@ -83,7 +83,7 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 						<p>
 							<label>Дата по:</label>
 							<?php
-								echo Html::input("datetime-local","ROUTES[{$number}][FINISH_AT]",$route && isset($route['FINISH_AT']) ? date("Y-m-d\TH:i",strtotime($route['FINISH_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control finishdate']);
+								echo Html::input("datetime-local","ROUTES[{$number}][FINISH_AT]",$route && isset($route['FINISH_AT']) ? date("Y-m-d\TH:i",strtotime($route['FINISH_AT'])) : date("Y-m-d\TH:i",time()),['class'=>'form-control finishdate','max'=>"9999-12-31T23:59"]);
 							?>
 							<span class="dt_error"></span>
 						</p>
