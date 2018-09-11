@@ -143,8 +143,12 @@ function htmlFilelink($component,$files,$type){
 							?>
 
 							<tr>
-								<td style="position:relative;">
-									<?php echo Html::a($o['DOCUMENT_NUMBER'],null,['class'=>'deal_actions'])?>
+								<td>
+									<?php echo $o['DOCUMENT_NUMBER'];?>
+								</td>
+								<td><?php echo date("H:i d.m.Y",strtotime($o['CREATED_AT']))?></td>
+								<td  style="position:relative;">
+									<?php echo Html::a($o['NAME'],null,['class'=>'deal_actions'])?>
 									<div class="deal_actions_block">
 										<?php 
 											if((int)$o['STATE'] < DealStates::IN_PLANNING){
@@ -163,8 +167,6 @@ function htmlFilelink($component,$files,$type){
 										</a>
 									</div>	
 								</td>
-								<td><?php echo date("H:i d.m.Y",strtotime($o['CREATED_AT']))?></td>
-								<td><?php echo $o['NAME'];?></td>
 								<td><?php echo $o['WEIGHT'] ? $o['WEIGHT'] : "";?></td>
 								<td><?php echo $o['SPACE'] ? $o['SPACE'] : "";?></td>
 								<td><?php echo $o['SUM'] ? $o['SUM'] : "";?></td>

@@ -38,6 +38,9 @@ class Deals1C extends Client1C
       	$client = self::init();
 
 		if(!$client){
+			
+			DealsSchemaTable::update($params['ID'],['IS_DRAFT'=>true,'IS_ACTIVE'=>false,'IS_INTEGRATED'=>false,'INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>"Сервер 1С не доступен"]);
+
 			$result->addError(new Error("Сервер 1С не доступен",404));
 			return $result;
 		} 
