@@ -18,7 +18,7 @@ class HowPacked extends \Ali\Logistic\Dictionary\Dictionary{
 
 
 	protected static $labels = array(
-		self::PALLETS=>"палет",
+		self::PALLETS=>"паллет",
 		self::BARREL=>"бочка",
 		self::FRAME=>"коробка",
 		self::IN_BULK=>"навалом",

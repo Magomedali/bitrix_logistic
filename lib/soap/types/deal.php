@@ -201,6 +201,16 @@ class Deal
 
         $data['STATE'] = DealStates::getCode($this->status);
         
+        if($data['STATE'] == DealStates::EXECUTED){
+            $data['COMPLETED'] = true;
+            $data['IS_ACTIVE'] = false;
+        }else{
+            $data['COMPLETED'] = false;
+            $data['IS_ACTIVE'] = true;
+        }
+
+        $data['IS_DRAFT'] - false;
+        
         $data['DRIVER_INFO'] = $this->driver;
         
         $data['VEHICLE'] = $this->vehicle;
@@ -208,7 +218,7 @@ class Deal
 
         $data['COMMENTS'] = $this->comments;
 
-        $data['IS_ACTIVE'] = true;
+        
         
         $data['CREATED_AT'] = DateTime::createFromTimestamp(strtotime($this->datedoc));
 

@@ -61,7 +61,7 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 							<span class="dt_error"></span>
 						</p>
 						<p>
-							<label>Получатель/Отправитель:</label>
+							<label>Организация:</label>
 							<?php
 								echo Html::input("text","ROUTES[{$number}][ORGANISATION]",$route && isset($route['ORGANISATION']) ? $route['ORGANISATION'] : null,['class'=>'form-control org']);
 							?>

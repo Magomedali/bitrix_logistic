@@ -106,6 +106,7 @@ class RoutesSchemaTable extends Entity\DataManager
                 }
             )),
 
+
             new Entity\TextField('ADDRESS',array(
                 'title'=>'Адрес',
                 'required'=>true,
@@ -130,6 +131,7 @@ class RoutesSchemaTable extends Entity\DataManager
                 }
             )),
 
+
             new Entity\StringField('ORGANISATION',array(
                 'title'=>'Организация',
                 'required'=>true,
@@ -141,6 +143,7 @@ class RoutesSchemaTable extends Entity\DataManager
                     );
                 }
             )),
+
 
             new Entity\StringField('PERSON',array(
                 'title'=>'Контактное лицо',
@@ -154,6 +157,7 @@ class RoutesSchemaTable extends Entity\DataManager
                 }
             )),
 
+
             new Entity\StringField('PHONE',array(
                 'title'=>'Телефон',
                 'required'=>true,
@@ -166,6 +170,7 @@ class RoutesSchemaTable extends Entity\DataManager
                 }
             )),
 
+
             new Entity\IntegerField('OWNER_ID'),
 
 
@@ -175,12 +180,14 @@ class RoutesSchemaTable extends Entity\DataManager
                 }
             )),
 
+
             new Entity\ReferenceField(
                 'OWNER',
                 '\Bitrix\Main\UserTable',
                 array('=this.OWNER_ID' => 'ref.ID'),
                 array('join_type' => 'INNER')
             ),
+
 
             new Entity\DatetimeField('CREATED_AT',array(
                 'default_value'=>function(){

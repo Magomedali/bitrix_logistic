@@ -25,8 +25,8 @@ class DealStates extends \Ali\Logistic\Dictionary\Dictionary{
 		self::IN_PLANNING=>"В планировании",
 		self::ON_PERFOMANCE=>"На исполнении",
 		self::CARGO_DELIVERED=>"Груз доставлен",
-		self::EXECUTED=>"Выполнено",
-		self::CANSELED=>"Отменено",
+		self::EXECUTED=>"Выполнена",
+		self::CANSELED=>"Отменена",
 	); 
 
 

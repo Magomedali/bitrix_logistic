@@ -101,7 +101,7 @@ class ServerHandler
 		$log = $this->log_path."sendDeal.txt";
 		$output = fopen($log, "a+");
 
-		$output_line = "\n".date("H:i d.m.Y",time())." Заявка: "."\n\n";
+		$output_line = "\n\n\n\n".date("H:i d.m.Y",time())." Заявка: "."\n\n";
 		fwrite($output, $output_line);
 		
 		$deal = json_decode(json_encode($deal),true); //array
