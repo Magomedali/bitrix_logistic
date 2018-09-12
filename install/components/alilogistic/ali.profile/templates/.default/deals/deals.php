@@ -36,7 +36,7 @@ function htmlFilelink($component,$files,$type){
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <div class="row filtres" id="alilogistic">
 	<div class="col-xs-12">
-		<div class="panel panel-default  form-route form-route_between" data-number="<?php echo $number; ?>">
+		<div class="panel panel-primary  form-route form-route_between" data-number="<?php echo $number; ?>">
 			<div class="panel-heading">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion_filters" href="#collapse_filters">Параметры фильтра</a>
@@ -123,7 +123,7 @@ function htmlFilelink($component,$files,$type){
 			<thead>
 				<tr>
 					<th>Номер</th>
-					<th>Дата</th>
+					<th>Дата заявки</th>
 					<th>Наименование</th>
 					<th>Вес, кг</th>
 					<th>Объем, м3</th>

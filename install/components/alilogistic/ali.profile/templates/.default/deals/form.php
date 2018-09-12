@@ -97,7 +97,7 @@ $arResult['breadcrumbs'][]=[
 											<h2>Маршруты</h2>
 										</div>
 										<div class="col-xs-8" style="padding-top: 33px;">
-											<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-primary' >Добаить погрузку/разгрузку</a>
+											<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-primary' >Добавить погрузку/разгрузку</a>
 										</div>
 										<div class="col-xs-1" style="padding-top: 33px; text-align: right;">
 											<a href="#" id="btn_routeToUp"><i class="glyphicon glyphicon-chevron-up"></i></a><br>
