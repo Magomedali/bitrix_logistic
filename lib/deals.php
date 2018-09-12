@@ -19,6 +19,7 @@ use Ali\Logistic\Dictionary\SpecialEquipment;
 use Ali\Logistic\Dictionary\HowPacked;
 use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\Schemas\DealCostingsSchemaTable;
+use Ali\Logistic\Helpers\Upload;
 
 class Deals{
 
@@ -241,4 +242,45 @@ class Deals{
         return Deals1C::save(self::normalizeData($data));
     }
 
+
+
+    public static function getPublicPathDealFiles(){
+        return str_replace($_SERVER['DOCUMENT_ROOT'], '', ALI_DEAL_FILES);
+    } 
+
+
+    public static function uploadFile($id,$file,$oldFile = null){
+        if(!$id || !$file) return false;
+        
+        $handle = new Upload($file);
+        $file_name = $id."_deal_file_".time();
+        if ($handle->uploaded) {
+            
+             //переименовываем изображение
+            $handle->file_new_name_body = $file_name;
+            $file_ext = $file_name.".".$handle->file_src_name_ext;
+            
+            
+
+            $handle->process(ALI_DEAL_FILES);
+            if ($handle->processed) {
+                $handle->clean();
+                
+                $res = DealsSchemaTable::update($id,['PRINT_FORM'=>$file_ext]);
+                
+                if($res->isSuccess()){
+                    if($oldFile && file_exists(ALI_DEAL_FILES.$oldFile)){
+                        unlink(ALI_DEAL_FILES.$oldFile);
+                    }
+                }else{
+                    if($file_ext && file_exists(ALI_DEAL_FILES.$file_ext)){
+                        unlink(ALI_DEAL_FILES.$file_ext);
+                    }
+                }
+
+                return $res->isSuccess();
+            }
+        }
+        return false;
+    }
 }

@@ -8,11 +8,22 @@ use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Dictionary\WayOfTransportation;
 use Ali\Logistic\Dictionary\HowPacked;
 use Ali\Logistic\Dictionary\DealFileType;
+use Ali\Logistic\Deals;
 
 $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['deal'] : null;
 $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResult['routes'] : array();
 $costs = is_array($arResult['costs']) && count($arResult['costs']) ? $arResult['costs'] : array();
 
+$parts = explode("/", $_SERVER['HTTP_REFERER']);
+$page = array_pop($parts);
+$page = $page ? $page : end($parts);
+
+if($page){
+	$arResult['breadcrumbs'][]=[
+		'title'=>"Заявки",
+		'url'=>$page
+	];
+}
 
 $pageTitle = $deal['NAME'];
 
@@ -148,6 +159,18 @@ function htmlFilelink($component,$files,$type){
 									<td><strong>Комментраии</strong></td>
 									<td><?php echo $deal['COMMENTS']?></td>
 								</tr>
+								<tr>
+									<td><strong>Прикрепленный файл:</strong></td>
+									<td>
+										<?php 
+											$path = Deals::getPublicPathDealFiles();
+
+											if($deal['PRINT_FORM'] && file_exists(ALI_DEAL_FILES.$deal['PRINT_FORM'])){
+												echo Html::a("Скачать",$component->getActionUrl('getDealFile',['id'=>$deal['ID']]),['target'=>'_blank']);
+											}
+										?>
+									</td>
+								</tr>
 							</thead>
 						</table>
 					</div>
@@ -204,6 +227,16 @@ function htmlFilelink($component,$files,$type){
 								<tr>
 									<td><strong>Водитель гражданин России</strong></td>
 									<td><?php echo boolval($deal['REQUIRED_RUSSIAN_DRIVER']) ? "Да" : "Нет";?></td>
+								</tr>
+
+								<tr>
+									<td><strong>Информация о водителе:</strong></td>
+									<td><?php echo $deal['DRIVER_INFO'];?></td>
+								</tr>
+
+								<tr>
+									<td><strong>Транспортное средство:</strong></td>
+									<td><?php echo $deal['VEHICLE'];?></td>
 								</tr>
 
 							</thead>

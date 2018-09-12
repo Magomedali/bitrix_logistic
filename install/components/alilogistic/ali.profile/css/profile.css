@@ -59,3 +59,16 @@ span.dt_error{
     top: -2px;
     left: 79px;
 }
+
+.panel-primary > .panel-heading{
+	background-color: #3b98de;
+}
+
+
+.form-route-select{
+	cursor: pointer;
+}
+
+.rmRouteForm,.rmroute{
+	cursor: pointer;
+}

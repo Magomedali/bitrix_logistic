@@ -22,7 +22,7 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 					<a data-toggle="collapse" data-parent="#accordion_form-route_end" href="#collapse_form-route_end">Разгрузка</a>
 				</h4>
 			</div>
-			<div class="col-xs-2">
+			<div class="col-xs-2" style="text-align: right;">
 				<a class="form-route-select">Выбрать</a>
 			</div>
 		</div>

@@ -1,6 +1,7 @@
 <?php
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
+use Ali\Logistic\Deals;
 use Ali\Logistic\Dictionary\LoadingMethod;
 use Ali\Logistic\Dictionary\TypeOfVehicle;
 use Ali\Logistic\Dictionary\WayOfTransportation;
@@ -54,7 +55,7 @@ $arResult['breadcrumbs'][]=[
 		</div>
 	<?php } ?>
 	<div class="form-deal col-xs-12">
-		<form action="" method="POST" id="formDeal">
+		<form action="" method="POST" id="formDeal" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-xs-6">
 					<?php if(!$replicate && $deal && isset($deal['ID']) && $deal['ID']){?>
@@ -233,7 +234,24 @@ $arResult['breadcrumbs'][]=[
 										<?php echo Html::textarea("DEAL[COMMENTS]",$deal['COMMENTS'],['class'=>'form-control']);?>
 									</p>
 								</div>
+								<div class="col-xs-5">
+									<p>
+										<label>Файл:</label>
+										<?php echo Html::fileInput("PRINT_FORM");?>
+									</p>
+									<?php 
+										$path = Deals::getPublicPathDealFiles();
 
+										if($deal && isset($deal['ID']) && isset($deal['PRINT_FORM']) && $deal['PRINT_FORM'] && file_exists(ALI_DEAL_FILES.$deal['PRINT_FORM'])){
+									?>
+									<p>
+										<?php
+											echo Html::a("Прикрепленный файл",$component->getActionUrl('getDealFile',['id'=>$deal['ID']]),['target'=>'_blank']);
+										?>
+									</p>
+									<?php } ?>
+								</div>
+								
 							</div>
 						</div>
 
@@ -293,7 +311,7 @@ $arResult['breadcrumbs'][]=[
 							</div>
 							<div class="row">
 								<div class="col-xs-12">
-									<div class="panel panel-default">
+									<div class="panel panel-primary">
 										<div class="panel-heading">
 									      <h4 class="panel-title">
 									        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Дополнительные требования</a>
@@ -681,7 +699,7 @@ $arResult['breadcrumbs'][]=[
 		next.find(".form-route-select").trigger("click");
 	});
 
-
+	var is_updated_page = <?php echo $deal && isset($deal['ID']) ? 1 : 0;?> 
 	$("#formDeal").submit(function(event){
 		
 		var errors = [];
@@ -696,7 +714,7 @@ $arResult['breadcrumbs'][]=[
 			var startDate = new Date(strStart);
 			var finishDate = new Date(strFinish);
 			var nextCheck = true;
-			if(startDate < Date.now()){
+			if(!parseInt(is_updated_page) && startDate < Date.now()){
 				errors.push(t);
 				$(this).find("input.startdate").addClass("error");
 				$(this).find("input.startdate + span.dt_error").html(t);

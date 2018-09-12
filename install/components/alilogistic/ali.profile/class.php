@@ -16,6 +16,7 @@ use Bitrix\Main\Entity\Result;
 use Bitrix\Main\Error;
 use Ali\Logistic\soap\clients\CheckINN;
 use Ali\Logistic\helpers\ArrayHelper;
+use Ali\Logistic\helpers\MimeTypes;
 use Ali\Logistic\soap\clients\Sverka1C;
 use Ali\Logistic\Schemas\DealsSchemaTable;
 use Ali\Logistic\Dictionary\DealFileType;
@@ -549,9 +550,12 @@ class AliProfile extends CBitrixComponent
         if($request->isPost() && isset($request['DEAL'])){
             
             $deal = array();
+            $oldFile = null;
             if(isset($request['DEAL']['ID'])){
                 $deal = DealsSchemaTable::getRow(['select'=>['*'],'filter'=>['ID'=>(int)$request['DEAL']['ID']]]);
                 if(!isset($deal['ID'])) LocalRedirect($this->getUrl("deals"));
+
+                $oldFile = $deal['PRINT_FORM'];
             }
             $normalData = Deals::normalizeData($request['DEAL']);
            
@@ -588,6 +592,13 @@ class AliProfile extends CBitrixComponent
                 }else{
                     $deal['ID']= $res->getId();
                     
+                    //Сохранение файла, если был отправлен
+                    if(isset($_FILES) && is_array($_FILES) && isset($_FILES['PRINT_FORM']) && is_array($_FILES['PRINT_FORM'])){
+                        Deals::uploadFile($deal['ID'],$_FILES['PRINT_FORM'],$oldFile);
+                    }
+                    
+
+
                     if(count($routes)){
                         $tmpRoute = array();
 
@@ -1022,6 +1033,53 @@ class AliProfile extends CBitrixComponent
 
 
 
+
+    public function getDealFileAction(){
+
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        if(isset($request['id']) && (int)$request['id']){
+            $file = DealsSchemaTable::getRowById((int)$request['id']);
+
+            if(isset($file['ID']) && $file['ID'] && isset($file['PRINT_FORM'])){
+                $path = ALI_DEAL_FILES;
+
+                if(file_exists($path.$file['PRINT_FORM'])){
+                   
+                    $fname = $file['PRINT_FORM'];
+
+                    $parts = explode(".", $fname);
+                    $format = strtolower(reset(array_reverse($parts)));
+
+                    $mimeType = MimeTypes::getMimeTypeByExt($format);
+
+                    global $APPLICATION;
+                    $APPLICATION->RestartBuffer();
+                    
+                    header("Content-type; text/pdf; charset='utf-8'");
+                    header("Cache-Control: no-cache");
+                    header("Content-Type: $mimeType");
+                    if($format != 'pdf'){
+                        header("Content-Description: File Transfer");
+                        header("Content-Disposition: attachment; filename=".$file['NAME'].'.'.$format);
+                    }
+                    
+                    header("Content-Transfer-Encoding: binary");
+                    readfile($path.$fname);
+                    exit;
+
+                }
+            }
+                
+            $this->arResult=[
+                'error'=>"Файл не найден!"
+            ];
+            return "error";
+        }
+        
+        LocalRedirect($this->getUrl());
+    }
 
 
 

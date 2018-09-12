@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Ali\Logistic\helpers;
+namespace Ali\Logistic\Helpers;
 
 // +------------------------------------------------------------------------+
 // | class.upload.php                                                       |
@@ -37,7 +37,7 @@ namespace Ali\Logistic\helpers;
  * @license   http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright Colin Verot
  */
-class upload {
+class Upload {
 
 
     /**

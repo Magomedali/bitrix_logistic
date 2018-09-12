@@ -21,6 +21,8 @@ define("ALI_CONTRACT_PATH",ALI_FILE_PATH);
 
 define("ALI_DEAL_PRINT_FORM_PATH",ALI_FILE_PATH."/dealprintform/");
 
+define("ALI_DEAL_FILES",ALI_FILE_PATH."/deals/");
+
 define("ALI_REVISES_PATH",ALI_FILE_PATH."/revises/");
 
 

@@ -21,22 +21,22 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 			<div class="col-xs-10">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion_form-route_<?php echo $number; ?>" href="#collapse_form-route_<?php echo $number; ?>">Промежуточная точка</a>
-					<?php
-						if(!$replicate && isset($route['ID'])){
-							echo Html::hiddenInput("ROUTES[{$number}][ID]",$route['ID']);
-							echo Html::a("Удалить",$component->getActionUrl("rmroute",['id'=>$route['ID']]),['class'=>'rmRoute']);
-						}else{
-							echo Html::a("Удалить",null,['class'=>'rmRouteForm']);
-						}
-					?>
 				</h4>
 			</div>
-			<div class="col-xs-2">
-				<a class="form-route-select">Выбрать</a>
+			<div class="col-xs-2" style="text-align: right;">
+				<a class="form-route-select">Выбрать</a>&nbsp&nbsp
+				<?php
+					if(!$replicate && isset($route['ID'])){
+						echo Html::hiddenInput("ROUTES[{$number}][ID]",$route['ID']);
+						echo Html::a("<i class='glyphicon glyphicon-remove'></i>",$component->getActionUrl("rmroute",['id'=>$route['ID']]),['class'=>'rmRoute']);
+					}else{
+						echo Html::a("<i class='glyphicon glyphicon-remove'></i>",null,['class'=>'rmRouteForm']);
+					}
+				?>
 			</div>
 		</div>
 	</div>
-	<div class="collapse" id="collapse_form-route_<?php echo $number; ?>">
+	<div class="collapse in" id="collapse_form-route_<?php echo $number; ?>">
 		<div class="panel-body">
 			<div class="col-xs-12">
 				<div class="row">
