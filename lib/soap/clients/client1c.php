@@ -9,7 +9,7 @@ namespace Ali\Logistic\soap\clients;
 abstract class Client1C 
 {
 	
-	protected static $wsdl_url = "http://91.77.166.249/rusexeditorTest/ws/ws1.1cws?wsdl";
+	protected static $wsdl_url = "http://217.76.41.228/basetest/ws/ws1.1cws?wsdl";
 	protected static $user = "Федулов Денис";
 	protected static $password = "TporgS4";
 
