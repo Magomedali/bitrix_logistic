@@ -75,7 +75,7 @@ $arResult['breadcrumbs'][]=[
 			<div class="row">
 				<div class="col-md-12">
 					<ul class="nav nav-tabs">
-					  <li class="active"><a data-toggle="tab" href="#routes">Маршруты</a></li>
+					  <li class="active"><a data-toggle="tab" href="#routes">Маршрут</a></li>
 					  <li><a data-toggle="tab" href="#cargo">Груз</a></li>
 					  <li><a data-toggle="tab" href="#ts">Транспорт</a></li>
 					  <li><a data-toggle="tab" href="#additional">Дополнительные услуги</a></li>
@@ -95,7 +95,7 @@ $arResult['breadcrumbs'][]=[
 								<div class="col-xs-12">
 									<div class="row">
 										<div class="col-xs-3">
-											<h2>Маршруты</h2>
+											<h2>Маршрут</h2>
 										</div>
 										<div class="col-xs-8" style="padding-top: 33px;">
 											<a href="<?php echo $component->getActionUrl("getrowroute")?>" id="btn_getRowRoute" class='btn btn-primary' >Добавить погрузку/разгрузку</a>
@@ -343,14 +343,14 @@ $arResult['breadcrumbs'][]=[
 												<div class="row">
 													<div class="col-xs-5">
 														<p>
-															<label for="deal_additional_equipment" class="form-label">Требуются дополнительные оборудования?</label>
+															<label for="deal_additional_equipment" class="form-label">Требуется дополнительное оборудование</label>
 															<?php echo Html::checkboxList("DEAL[ADDITIONAL_EQUIPMENT]",AdditionalEquipment::toArrayCode($deal['ADDITIONAL_EQUIPMENT']),$AdditionalEquipment,['id'=>'deal_additional_equipment']);?>
 														</p>
 														
 													</div>
 													<div class="col-xs-3">
 														<p>
-															<label for="deal_req_documents" class="form-label">Требуется документы?</label>
+															<label for="deal_req_documents" class="form-label">Требуются документы</label>
 															<?php echo Html::checkboxList("DEAL[REQUIRED_DOCUMENTS]",Documents::toArrayCode($deal['REQUIRED_DOCUMENTS']),$Documents,['id'=>'deal_req_documents']);?>
 														</p>
 													</div>
@@ -381,8 +381,8 @@ $arResult['breadcrumbs'][]=[
 							<div class="row">
 								<div class="col-xs-4">
 									<p>
-										<?php echo Html::checkbox("DEAL[REQUIRES_LOADER]",$deal['REQUIRES_LOADER'],['id'=>'deal_requires_loader','value'=>1]);?>
-										<label for="deal_requires_loader" class="form-label">Требуется грузчик?</label>
+										<?php echo Html::checkbox("DEAL[CARGO_HANDLING]",$deal['CARGO_HANDLING'],['id'=>'deal_requires_loader','value'=>1]);?>
+										<label for="deal_requires_loader" class="form-label">Требуется грузчик</label>
 									</p>
 								</div>
 								<div class="col-xs-3">
@@ -403,7 +403,7 @@ $arResult['breadcrumbs'][]=[
 								<div class="col-xs-4">
 									<p>
 										<?php echo Html::checkbox("DEAL[REQUIRES_INSURANCE]",$deal['REQUIRES_INSURANCE'],['id'=>'deal_requires_insurance']);?>
-										<label for="deal_requires_insurance" class="form-label">Требуется страхование?</label>
+										<label for="deal_requires_insurance" class="form-label">Требуется страхование</label>
 									</p>
 									
 								</div>
@@ -419,11 +419,7 @@ $arResult['breadcrumbs'][]=[
 								<div class="col-xs-4">
 									<p>
 										<?php echo Html::checkbox("DEAL[SUPPORT_REQUIRED]",$deal['SUPPORT_REQUIRED'],['id'=>'deal_req_supports']);?>
-										<label for="deal_req_supports" class="form-label">Требуется сопровождение?</label>
-									</p>
-									<p>
-										<?php echo Html::checkbox("DEAL[CARGO_HANDLING]",$deal['CARGO_HANDLING'],['id'=>'deal_req_cargo_handling']);?>
-										<label for="deal_req_cargo_handling" class="form-label">Погрузо-разгрузочные работы</label>
+										<label for="deal_req_supports" class="form-label">Требуется сопровождение</label>
 									</p>
 									<p>
 										<?php echo Html::checkbox("DEAL[SECURE_STORAGE]",$deal['SECURE_STORAGE'],['id'=>'deal_req_sec_storage']);?>

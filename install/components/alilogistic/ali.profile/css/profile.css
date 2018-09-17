@@ -24,6 +24,17 @@
 {
 	display: block;
 }
+#deal_type_od_vehicle label,
+#deal_loading_method label,
+#deal_way_of_transportation label,
+#deal_additional_equipment label,
+#deal_req_documents label,
+#deal_unloading_method label,
+#deal_spec_equipment label,
+#deal_HowPacked label{
+	font-weight: 100;
+}
+
 
 
 #block_route_start .form-route-select,
