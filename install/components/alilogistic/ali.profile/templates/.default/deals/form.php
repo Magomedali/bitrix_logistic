@@ -77,10 +77,10 @@ $arResult['breadcrumbs'][]=[
 				<div class="col-md-12">
 					<ul class="nav nav-tabs">
 					  	<?php if($needToSelectContractor){ ?>
-					  		<li class="active"><a data-toggle="tab" href="#selectorganisation">Организация</a></li>
-					  		<li><a data-toggle="tab" href="#choiceNds">НДС</a></li>
+					  		<li class="hiddenTab active"><a data-toggle="tab" href="#selectorganisation">Организация</a></li>
+					  		<li class="hiddenTab"><a data-toggle="tab" href="#choiceNds">НДС</a></li>
 					  	<?php }else{ ?>
-					  		<li class="active"><a data-toggle="tab" href="#choiceNds">НДС</a></li>
+					  		<li class="hiddenTab active"><a data-toggle="tab" href="#choiceNds">НДС</a></li>
 					  	<?php } ?>
 					  
 					  <li><a data-toggle="tab" href="#routes">Маршрут</a></li>
@@ -204,8 +204,6 @@ $arResult['breadcrumbs'][]=[
 										<input type="text" name="DEAL[NAME]" id="deal_name" value="<?php echo $deal ? $deal['NAME'] : null;?>" class="form-control">
 									</p>
 								</div>
-							</div>
-							<div class="row">
 								<div class="col-xs-3">
 									<p>
 										<label for="deal_weight" class="form-label">Вес груза</label>
@@ -498,7 +496,6 @@ $arResult['breadcrumbs'][]=[
 
 		var active_tab = $(".nav-tabs li.active");
 
-		
 		if($(this).hasClass("prev_tab")){
 			if(active_tab.length){
 				var prev = active_tab.prev();

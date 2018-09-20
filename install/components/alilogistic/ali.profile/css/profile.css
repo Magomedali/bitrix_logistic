@@ -87,3 +87,6 @@ span.dt_error{
 .selectOrganisationBlock,.choiceNdsBlock{
 	margin: 75px 0px;
 }
+.hiddenTab{
+	display: none !important;
+}
