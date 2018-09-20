@@ -24,6 +24,7 @@ $deal = is_array($arResult['deal']) && count($arResult['deal']) ? $arResult['dea
 $contractors = is_array($arResult['contractors']) && count($arResult['contractors']) ? $arResult['contractors'] : array();
 $routes = is_array($arResult['routes']) && count($arResult['routes']) ? $arResult['routes'] : array();
 
+$needToSelectContractor = count($contractors) > 1; 
 
 $title = $deal 
 			? $replicate ? "Копирование заявки '".$deal['NAME']."'" : $deal['NAME']
@@ -75,7 +76,14 @@ $arResult['breadcrumbs'][]=[
 			<div class="row">
 				<div class="col-md-12">
 					<ul class="nav nav-tabs">
-					  <li class="active"><a data-toggle="tab" href="#routes">Маршрут</a></li>
+					  	<?php if($needToSelectContractor){ ?>
+					  		<li class="active"><a data-toggle="tab" href="#selectorganisation">Организация</a></li>
+					  		<li><a data-toggle="tab" href="#choiceNds">НДС</a></li>
+					  	<?php }else{ ?>
+					  		<li class="active"><a data-toggle="tab" href="#choiceNds">НДС</a></li>
+					  	<?php } ?>
+					  
+					  <li><a data-toggle="tab" href="#routes">Маршрут</a></li>
 					  <li><a data-toggle="tab" href="#cargo">Груз</a></li>
 					  <li><a data-toggle="tab" href="#ts">Транспорт</a></li>
 					  <li><a data-toggle="tab" href="#additional">Дополнительные услуги</a></li>
@@ -83,14 +91,59 @@ $arResult['breadcrumbs'][]=[
 
 					<div class="tab-content">
 						
+						<!-- selectorganisation tab -->
+						<?php if($needToSelectContractor){ ?>
+						<div id="selectorganisation" class="tab-pane fade in active">
+							<div class="row">
+								<div class="col-xs-4 col-sm-offset-4">
+									<div class="selectOrganisationBlock">
+										<p>
+											<label for="deal_name" class="form-label">Организация</label>
+											<?php
+												echo Html::dropDownList("DEAL[CONTRACTOR_ID]",$deal['CONTRACTOR_ID'],ArrayHelper::map($contractors,'ID','NAME'),['class'=>'form-control']);
+											?>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<?php } ?>
 
 
+						<!-- choiceNds tab -->
+						<div id="choiceNds" class="tab-pane fade in <?php echo !$needToSelectContractor ? 'active' : ''?>">
+							<div class="col-xs-2 col-sm-offset-5">
+								<div class="choiceNdsBlock">
+									<p>
+										<?php 
+												$with_nds = $with_o_nds = null;
+												if(isset($deal['WITH_NDS']) && $deal['WITH_NDS']){
+													$with_nds = 1;
+												}else{
+													$with_o_nds = 1;
+												}
+										?>
+											<label for="deal_with_nds" class="form-label">С НДС</label>
+											<?php echo Html::radio("DEAL[WITH_NDS]",$with_nds,['id'=>'deal_with_nds','value'=>1]);?>
+											<br>
+											<label for="deal_with_o_nds" class="form-label">Без НДС</label>
+											<?php echo Html::radio("DEAL[WITH_NDS]",$with_o_nds,['id'=>'deal_with_o_nds','value'=>0]);?>
 
+										<?php 
+											if(!$needToSelectContractor){
+												$firstC = reset($contractors);
+												echo Html::hiddenInput("DEAL[CONTRACTOR_ID]",$firstC['ID']);
+											} 
+										?>
+									</p>
+								</div>
+							</div>
+						</div>
 
 
 
 						<!-- Routes tab -->
-						<div id="routes" class="tab-pane fade in active">
+						<div id="routes" class="tab-pane fade in">
 							<div class="row">
 								<div class="col-xs-12">
 									<div class="row">
@@ -149,31 +202,6 @@ $arResult['breadcrumbs'][]=[
 									<p>
 										<label for="deal_name" class="form-label">Наименование груза</label>
 										<input type="text" name="DEAL[NAME]" id="deal_name" value="<?php echo $deal ? $deal['NAME'] : null;?>" class="form-control">
-									</p>
-								</div>
-								<div class="col-xs-3">
-									<p>
-										<label for="deal_name" class="form-label">Организация</label>
-										<?php
-											echo Html::dropDownList("DEAL[CONTRACTOR_ID]",$deal['CONTRACTOR_ID'],ArrayHelper::map($contractors,'ID','NAME'),['class'=>'form-control']);
-										?>
-									</p>
-								</div>
-								<div class="col-xs-3">
-									<p>
-										<?php 
-											$with_nds = $with_o_nds = null;
-											if(isset($deal['WITH_NDS']) && $deal['WITH_NDS']){
-												$with_nds = 1;
-											}else{
-												$with_o_nds = 1;
-											}
-										?>
-										<label for="deal_with_nds" class="form-label">С НДС</label>
-										<?php echo Html::radio("DEAL[WITH_NDS]",$with_nds,['id'=>'deal_with_nds','value'=>1]);?>
-
-										<label for="deal_with_o_nds" class="form-label">Без НДС</label>
-										<?php echo Html::radio("DEAL[WITH_NDS]",$with_o_nds,['id'=>'deal_with_o_nds','value'=>0]);?>
 									</p>
 								</div>
 							</div>

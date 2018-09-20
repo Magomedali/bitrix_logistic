@@ -775,8 +775,14 @@ class AliProfile extends CBitrixComponent
 
             if(isset($filtres['state']) && $filtres['state'] > 0)
                 $params['filter']["=STATE"] = $filtres['state'];
+
+            if(isset($filtres['stage']) && $filtres['stage'])
+                $params['filter']["=".$filtres['stage']] = true;
+
+
         }
         
+
         if(isset($request['page']) && $request['page'] && (int)$request['page'] > 0){
             $page = (int)$request['page'];
             $offset = $page * $limit - $limit;
@@ -785,6 +791,14 @@ class AliProfile extends CBitrixComponent
         if(isset($params['filter']) && isset($page_params['filter'])){
             $params['filter'] = array_merge($params['filter'],$page_params['filter']);
         }elseif (isset($page_params['filter'])) {
+            if(array_key_exists("IS_DRAFT", $page_params['filter'])){
+                $filtres['stage'] = 'IS_DRAFT';
+            }elseif(array_key_exists("COMPLETED", $page_params['filter'])){
+                $filtres['stage'] = 'COMPLETED';
+            }elseif(array_key_exists("IS_ACTIVE", $page_params['filter'])){
+                $filtres['stage'] = 'IS_ACTIVE';
+            }
+
             $params['filter'] = $page_params['filter'];
         }
 
@@ -818,11 +832,11 @@ class AliProfile extends CBitrixComponent
 
     public function dealsAction(){
 
-        $params['filter']['IS_ACTIVE'] = true;
+        $params = array();
 
         $this->arResult=[
             'pageName'=>'deals',
-            'pageTitle'=>"Текущие заявки"
+            'pageTitle'=>"Заявки"
         ];
         return $this->dealFilter($params);
     }
@@ -834,8 +848,8 @@ class AliProfile extends CBitrixComponent
 
         $params['filter']['IS_DRAFT'] = true;
         $this->arResult=[
-            'pageName'=>'draftdeals',
-            'pageTitle'=>"Черновики"
+            'pageName'=>'deals',
+            'pageTitle'=>"Заявки"
         ];
         return $this->dealFilter($params);
     }
@@ -849,8 +863,8 @@ class AliProfile extends CBitrixComponent
     public function completeddealsAction(){
 
         $this->arResult=[
-            'pageName'=>'completeddeals',
-            'pageTitle'=>"Выполненые заявки"
+            'pageName'=>'deals',
+            'pageTitle'=>"Заявки"
         ];
 
         $params['filter']['COMPLETED'] = true;
@@ -864,8 +878,8 @@ class AliProfile extends CBitrixComponent
     public function archiveAction(){
 
         $this->arResult=[
-            'pageName'=>'archive',
-            'pageTitle'=>"Архив"
+            'pageName'=>'deals',
+            'pageTitle'=>"Заявки"
         ];
         $params['filter']['IS_DELETED'] = true;
         return $this->dealFilter($params);
@@ -875,8 +889,8 @@ class AliProfile extends CBitrixComponent
     public function searchdealsAction(){
 
         $this->arResult=[
-            'pageName'=>'searchdeals',
-            'pageTitle'=>"Поиск заявок"
+            'pageName'=>'deals',
+            'pageTitle'=>"Заявки"
         ];
         $params = [];
         return $this->dealFilter($params);

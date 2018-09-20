@@ -41,36 +41,8 @@ class AliMenu extends CBitrixComponent
             ""
         ),
         array(
-            "Текущие заявки",
+            "Заявки",
             "/alk/deals",
-            array(),
-            "",
-            ""
-        ),
-        array(
-            "Выполненые заявки",
-            "/alk/completeddeals",
-            array(),
-            "",
-            ""
-        ),
-        array(
-            "Поиск заявок",
-            "/alk/searchdeals",
-            array(),
-            "",
-            ""
-        ),
-        array(
-            "Черновики",
-            "/alk/draftdeals",
-            array(),
-            "",
-            ""
-        ),
-        array(
-            "Архив",
-            "/alk/archive",
             array(),
             "",
             ""

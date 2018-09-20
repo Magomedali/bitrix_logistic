@@ -7,11 +7,15 @@ use Ali\Logistic\Dictionary\DealFileType;
 
 $deals = is_array($arResult['deals']) && count($arResult['deals']) ? $arResult['deals'] : null;
 $filtres = is_array($arResult['filtres']) && count($arResult['filtres']) ? $arResult['filtres'] : null;
+$hasFilter=is_array($filtres)&& array_key_exists('Filter',$filtres) && is_array($filtres['Filter']) && count($filtres['Filter']);
+
 
 $total = isset($arResult['total']) ? $arResult['total'] : 0;
 $page = isset($arResult['page']) ? $arResult['page'] : 1;
 $limit = isset($arResult['limit']) ? $arResult['limit'] : 20;
 $pageTitle = isset($arResult['pageTitle']) ? $arResult['pageTitle'] : "Текущие заявки";
+
+
 
 $arResult['breadcrumbs'][]=[
 		'title'=>$pageTitle,
@@ -42,68 +46,73 @@ function htmlFilelink($component,$files,$type){
 					<a data-toggle="collapse" data-parent="#accordion_filters" href="#collapse_filters">Параметры фильтра</a>
 				</h4>
 			</div>
-			<div class="collapse" id="collapse_filters">
+			<div class="collapse <?php echo $hasFilter ? 'in' :'';?>" id="collapse_filters">
 				<div class="panel-body">
 					<form action="" method="GET">
 						<div class="row">
-							<div class="col-xs-3">
-								<label>С</label>
+							<div class="col-xs-2">
+								<label>С:</label>
 								<?php echo Html::input("date",'Filter[date_from]',isset($filtres['Filter']['date_from']) && strtotime($filtres['Filter']['date_from']) ? date("Y-m-d",strtotime($filtres['Filter']['date_from'])) : null,['class'=>'form-control']);?>
 							</div>
-							<div class="col-xs-3">
-								<label>По</label>
+							<div class="col-xs-2">
+								<label>По:</label>
 								<?php echo Html::input("date",'Filter[date_to]',isset($filtres['Filter']['date_to']) && strtotime($filtres['Filter']['date_to']) ? date("Y-m-d",strtotime($filtres['Filter']['date_to'])) : null,['class'=>'form-control']);?>
 							</div>
+							<div class="col-xs-2">
+								<label>Номер:</label>
+								<?php echo Html::input("text",'Filter[number]',isset($filtres['Filter']['number']) ? $filtres['Filter']['number'] : "",['class'=>'form-control']);?>
+							</div>
 							<div class="col-xs-3">
-								<label>Водитель</label>
+								<label>Водитель:</label>
 								<?php echo Html::input("text",'Filter[driver]',isset($filtres['Filter']['driver']) ? $filtres['Filter']['driver'] : "",['class'=>'form-control']);?>
 							</div>
 							<div class="col-xs-3">
-								<label>№ ТС</label>
+								<label>№ ТС:</label>
 								<?php echo Html::input("text",'Filter[ts]',isset($filtres['Filter']['ts']) ? $filtres['Filter']['ts'] : "",['class'=>'form-control']);?>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-2">
-								<label>Номер</label>
-								<?php echo Html::input("text",'Filter[number]',isset($filtres['Filter']['number']) ? $filtres['Filter']['number'] : "",['class'=>'form-control']);?>
+							<div class="col-xs-3">
+								<label>Статус:</label>
+								<?php echo Html::dropDownList('Filter[state]',isset($filtres['Filter']['state']) ? $filtres['Filter']['state'] : null,DealStates::getLabels(),['class'=>'form-control','prompt'=>'Выберите статус']);?>
 							</div>
-
 							<div class="col-xs-2">
-								<label>Вес С</label>
+								<label>Вес С:</label>
 								<?php echo Html::input("number",'Filter[weight_f]',isset($filtres['Filter']['weight_f']) ? $filtres['Filter']['weight_f'] : "",['class'=>'form-control']);?>
 							</div>
 
 
 							<div class="col-xs-2">
-								<label>Вес По</label>
+								<label>Вес По:</label>
 								<?php echo Html::input("number",'Filter[weight_t]',isset($filtres['Filter']['weight_t']) ? $filtres['Filter']['weight_t'] : "",['class'=>'form-control']);?>
 							</div>
 
 
 							<div class="col-xs-2">
-								<label>Объем С</label>
+								<label>Объем С:</label>
 								<?php echo Html::input("number",'Filter[space_f]',isset($filtres['Filter']['space_f']) ? $filtres['Filter']['space_f'] : "",['class'=>'form-control']);?>
 							</div>
 
 
 							<div class="col-xs-2">
-								<label>Объем По</label>
+								<label>Объем По:</label>
 								<?php echo Html::input("number",'Filter[space_t]',isset($filtres['Filter']['space_t']) ? $filtres['Filter']['space_t'] : "",['class'=>'form-control']);?>
 							</div>
 						</div>
 						<div class="row">
+
 							<div class="col-xs-3">
-								<label>Место погрузки</label>
+								<label>Стадия обработки:</label>
+								<?php echo Html::dropDownList('Filter[stage]',isset($filtres['Filter']['stage']) ? $filtres['Filter']['stage'] : null,['IS_ACTIVE'=>'Текущие','COMPLETED'=>'Завершенные','IS_DRAFT'=>"Черновик"],['class'=>'form-control','prompt'=>'Стадия обработки']);?>
+							</div>
+
+							<div class="col-xs-3">
+								<label>Место погрузки:</label>
 								<?php echo Html::input("text",'Filter[loading]',isset($filtres['Filter']['loading']) ? $filtres['Filter']['loading'] : "",['class'=>'form-control']);?>
 							</div>
 							<div class="col-xs-3">
-								<label>Место разгрузки</label>
+								<label>Место разгрузки:</label>
 								<?php echo Html::input("text",'Filter[unloading]',isset($filtres['Filter']['unloading']) ? $filtres['Filter']['unloading'] : "",['class'=>'form-control']);?>
-							</div>
-							<div class="col-xs-3">
-								<label>Статус</label>
-								<?php echo Html::dropDownList('Filter[state]',isset($filtres['Filter']['state']) ? $filtres['Filter']['state'] : null,DealStates::getLabels(),['class'=>'form-control','prompt'=>'Выберите статус']);?>
 							</div>
 							<div class="col-xs-2">
 								<?php
