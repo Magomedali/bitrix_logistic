@@ -39,6 +39,12 @@ $arResult['breadcrumbs'][]=[
 
 ?>
 
+
+<?php 
+	$this->addExternalCss($componentPath."/css/geocoder.css");
+	$this->addExternalJS($componentPath."/js/geocoder.js"); 
+?>
+
 <?php $this->getComponent()->includeComponentTemplate("helpers/breadcrumbs"); ?>
 <div id="alilogistic" class="row form-deal-page">
 	<?php 
