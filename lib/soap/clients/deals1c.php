@@ -120,6 +120,9 @@ class Deals1C extends Client1C
 			$request->application = $dealObject;
 			$response = $client->uploadapplication($request);
 
+			self::printLogLastRequest($client);
+			self::printLogLastResponse($client);
+			
 			$integrator = new self();
 			$integrator->parseResponce($response);
 			
@@ -136,6 +139,9 @@ class Deals1C extends Client1C
 
 		} catch (\Exception $e) {
 			
+			self::printLogLastRequest($client);
+			self::printLogLastResponse($client);
+
 			DealsSchemaTable::update($params['ID'],['IS_DRAFT'=>true,'IS_ACTIVE'=>false,'IS_INTEGRATED'=>false,'INTEGRATE_ERROR'=>true,'INTEGRATE_ERROR_MSG'=>$e->getMessage()]);
 
 			$result->addError(new Error("Произошла ошибка при интеграции заявки в 1С. Пожалуйста обратитесь в тех. поддержку",500));

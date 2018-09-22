@@ -19,8 +19,11 @@ abstract class Client1C
 	public $doc_number = null;
 	public $revise = null;
 
-
 	public $log_path = "logs/";
+	public static $log_file = "logs.log";
+
+
+	protected $client;
 
 	public function log($tag,$msg){
 		$l = "log.log";
@@ -64,7 +67,8 @@ abstract class Client1C
 
 		$option = array(
 	        'login'=>self::$user,
-	        'password'=>self::$password
+	        'password'=>self::$password,
+	        'trace'=>1
         );
 		try {
 			header('Cache-Control: no-store, no-cache');
@@ -78,5 +82,40 @@ abstract class Client1C
 			return false;
 		}
 	
+	}
+
+
+
+
+	public static function printLogLastRequest($client){
+		if($client){
+			$path = ALI_LOG_SOAP_CLIENT_PATH;
+			$file = $path.self::$log_file;
+			$f = fopen($file, "a+");
+
+			fwrite($f, "\n\n-------Request Headers------".date("H:i d.m.Y")."\n\n");
+			fwrite($f, $client->__getLastRequestHeaders());
+			fwrite($f, "\n\n-------Request------".date("H:i d.m.Y")."\n\n");
+			fwrite($f, $client->__getLastRequest());
+			fclose($f);
+		}
+		
+	}
+
+
+
+	public static function printLogLastResponse($client){
+		if($client){
+			$path = ALI_LOG_SOAP_CLIENT_PATH;
+			$file = $path.self::$log_file;
+			$f = fopen($file, "a+");
+
+			fwrite($f, "\n\n-------Response Headers------".date("H:i d.m.Y")."\n\n");
+			fwrite($f, $client->__getLastResponseHeaders());
+			fwrite($f, "\n\n-------Response------".date("H:i d.m.Y")."\n\n");
+			fwrite($f, $client->__getLastResponse());
+			fclose($f);
+		}
+		
 	}
 }

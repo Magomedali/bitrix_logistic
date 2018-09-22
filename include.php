@@ -30,6 +30,8 @@ define("ALI_REVISES_PATH",ALI_FILE_PATH."/revises/");
 
 define("ALI_LOG_SOAP_SERVER_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/lib/soap/server/output/");
 
+define("ALI_LOG_SOAP_CLIENT_PATH", $_SERVER['DOCUMENT_ROOT']."/bitrix/modules/".ALI_MODULE_NAME."/lib/soap/clients/logs/");
+
 //Количество сообщении на страницу(на загрузку)
 define("MESSAGE_LIMIT", 15);
 

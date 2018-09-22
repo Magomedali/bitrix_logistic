@@ -86,6 +86,7 @@ class Deals{
         $data['REQUIRES_INSURANCE'] = isset($data['REQUIRES_INSURANCE']) && boolval($data['REQUIRES_INSURANCE']);
         $data['SUPPORT_REQUIRED'] = isset($data['SUPPORT_REQUIRED']) && boolval($data['SUPPORT_REQUIRED']);
         $data['WITH_NDS'] = isset($data['WITH_NDS']) && boolval($data['WITH_NDS']);
+        $data['COMPLETED'] = isset($data['COMPLETED']) && boolval($data['COMPLETED']);
 
         $data['IS_ACTIVE']=false;
 

@@ -692,6 +692,13 @@ class DealsSchemaTable extends Entity\DataManager{
                 'title'=>'Завершена',
                 'default_value'=>function(){
                     return false;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return boolval($value);
+                        }
+                    );
                 }
             )),
 

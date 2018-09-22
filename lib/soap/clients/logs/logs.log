@@ -1,0 +1,121 @@
+
+
+-------Request Headers------18:44 22.09.2018
+
+
+
+-------Request------18:44 22.09.2018
+
+
+
+-------Response Headers------18:44 22.09.2018
+
+
+
+-------Response------18:44 22.09.2018
+
+
+
+-------Request Headers------18:44 22.09.2018
+
+
+
+-------Request------18:44 22.09.2018
+
+
+
+-------Response Headers------18:44 22.09.2018
+
+
+
+-------Response------18:44 22.09.2018
+
+
+
+-------Request Headers------18:46 22.09.2018
+
+POST /basetest/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/5.5.19
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 3057
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------18:46 22.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid>d0e0135c-b219-11e8-9ca1-58fb84a472dd</ns1:uuid><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-22 18:46</ns1:datedoc><ns1:uuidcustomer>a56ebe9c-a652-11e8-9c9d-58fb84a472dd</ns1:uuidcustomer><ns1:namecargo>Тестовая заявка</ns1:namecargo><ns1:weight>22</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>реф</ns1:ts><ns1:ts>термос</ns1:ts><ns1:ts>любой закрытый</ns1:ts><ns1:comments>123123</ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>22</ns1:countloaders><ns1:quantityofhours>111</ns1:quantityofhours><ns1:insurance>false</ns1:insurance><ns1:sum>222</ns1:sum><ns1:temperaturefrom>22</ns1:temperaturefrom><ns1:temperatureto>11</ns1:temperatureto><ns1:additionalequipment>аппарели</ns1:additionalequipment><ns1:additionalequipment>гидроборт</ns1:additionalequipment><ns1:additionalequipment>допельштоки</ns1:additionalequipment><ns1:additionalequipment>термодатчик</ns1:additionalequipment><ns1:additionalequipment>рефперегородка</ns1:additionalequipment><ns1:escort>false</ns1:escort><ns1:documentation>санобработка</ns1:documentation><ns1:size>2</ns1:size><ns1:length>2</ns1:length><ns1:width>2</ns1:width><ns1:height>2</ns1:height><ns1:methodoftransportation>Сборный груз</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-07 23:38</ns1:datefrom><ns1:dateby>2018-09-07 23:50</ns1:dateby><ns1:location>Студенческая</ns1:location><ns1:shipper>12312</ns1:shipper><ns1:contactname>123</ns1:contactname><ns1:numberphone>3123</ns1:numberphone><ns1:comment>123</ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-07 23:38</ns1:datefrom><ns1:dateby>2018-09-07 23:38</ns1:dateby><ns1:location>Судостроительная</ns1:location><ns1:shipper>312312</ns1:shipper><ns1:contactname>3123</ns1:contactname><ns1:numberphone>12312</ns1:numberphone><ns1:comment>123123</ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:methodofloading>зад</ns1:methodofloading><ns1:howpacked>Array</ns1:howpacked><ns1:countplace>123</ns1:countplace><ns1:adrclass>10</ns1:adrclass><ns1:reqrussiandriver>true</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>true</ns1:securestorage><ns1:cargohandling>false</ns1:cargohandling><ns1:methodofunloading>зад</ns1:methodofunloading><ns1:specialequipment>манипулятор</ns1:specialequipment><ns1:specialequipment>эвакуатор</ns1:specialequipment><ns1:specialequipment>кран</ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------18:46 22.09.2018
+
+HTTP/1.1 200 OK
+Date: Sat, 22 Sep 2018 15:46:22 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 776
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------18:46 22.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">false</success>
+				<error xmlns="http://www.rusexeditorresponse.org">Ошибка при создании документа. Обратитесь в тех. поддержку: {ОбщийМодуль.бит_ОбщиеФункции.Модуль(601)}: Значение не является значением объектного типа (Дата)</error>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
+
+-------Request Headers------18:48 22.09.2018
+
+POST /basetest/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/5.5.19
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 3060
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------18:48 22.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid>d0e0135c-b219-11e8-9ca1-58fb84a472dd</ns1:uuid><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-22T18:48:52</ns1:datedoc><ns1:uuidcustomer>a56ebe9c-a652-11e8-9c9d-58fb84a472dd</ns1:uuidcustomer><ns1:namecargo>Тестовая заявка</ns1:namecargo><ns1:weight>22</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>реф</ns1:ts><ns1:ts>термос</ns1:ts><ns1:ts>любой закрытый</ns1:ts><ns1:comments>123123</ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>22</ns1:countloaders><ns1:quantityofhours>111</ns1:quantityofhours><ns1:insurance>false</ns1:insurance><ns1:sum>222</ns1:sum><ns1:temperaturefrom>22</ns1:temperaturefrom><ns1:temperatureto>11</ns1:temperatureto><ns1:additionalequipment>аппарели</ns1:additionalequipment><ns1:additionalequipment>гидроборт</ns1:additionalequipment><ns1:additionalequipment>допельштоки</ns1:additionalequipment><ns1:additionalequipment>термодатчик</ns1:additionalequipment><ns1:additionalequipment>рефперегородка</ns1:additionalequipment><ns1:escort>false</ns1:escort><ns1:documentation>санобработка</ns1:documentation><ns1:size>2</ns1:size><ns1:length>2</ns1:length><ns1:width>2</ns1:width><ns1:height>2</ns1:height><ns1:methodoftransportation>Сборный груз</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-07 23:38</ns1:datefrom><ns1:dateby>2018-09-07 23:50</ns1:dateby><ns1:location>Студенческая</ns1:location><ns1:shipper>12312</ns1:shipper><ns1:contactname>123</ns1:contactname><ns1:numberphone>3123</ns1:numberphone><ns1:comment>123</ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-07 23:38</ns1:datefrom><ns1:dateby>2018-09-07 23:38</ns1:dateby><ns1:location>Судостроительная</ns1:location><ns1:shipper>312312</ns1:shipper><ns1:contactname>3123</ns1:contactname><ns1:numberphone>12312</ns1:numberphone><ns1:comment>123123</ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:methodofloading>зад</ns1:methodofloading><ns1:howpacked>Array</ns1:howpacked><ns1:countplace>123</ns1:countplace><ns1:adrclass>10</ns1:adrclass><ns1:reqrussiandriver>true</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>true</ns1:securestorage><ns1:cargohandling>false</ns1:cargohandling><ns1:methodofunloading>зад</ns1:methodofunloading><ns1:specialequipment>манипулятор</ns1:specialequipment><ns1:specialequipment>эвакуатор</ns1:specialequipment><ns1:specialequipment>кран</ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------18:48 22.09.2018
+
+HTTP/1.1 200 OK
+Date: Sat, 22 Sep 2018 15:48:53 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 776
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------18:48 22.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">false</success>
+				<error xmlns="http://www.rusexeditorresponse.org">Ошибка при создании документа. Обратитесь в тех. поддержку: {ОбщийМодуль.бит_ОбщиеФункции.Модуль(601)}: Значение не является значением объектного типа (Дата)</error>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
