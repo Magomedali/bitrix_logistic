@@ -10,10 +10,10 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 
 $title = $org ? "Организация ".$org['NAME'] : "Новая организация";
 $arResult['breadcrumbs']=[
-	[
-		'title'=>"Мои организации",
-		'url'=>"organisations"
-	],
+	// [
+	// 	'title'=>"Мои организации",
+	// 	'url'=>"organisations"
+	// ],
 	[
 		'title'=>$title,
 		'link'=>null,
@@ -162,7 +162,7 @@ $arResult['breadcrumbs']=[
 					<?php if($org && isset($org['ID']) && $org['ID']){?>
 						<input type="hidden" name="ORG[ID]" value="<?php echo $org['ID']?>">
 					<?php } ?>
-					<input type="submit" value="Добавить" class="btn btn-primary">
+					<input type="submit" value="Сохранить" class="btn btn-primary">
 				</div>
 			</div>
 		</form>

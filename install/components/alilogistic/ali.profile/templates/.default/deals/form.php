@@ -75,14 +75,8 @@ $arResult['breadcrumbs'][]=[
 			<!-- Начало формы -->
 			<div class="row">
 				<div class="col-md-12">
-					<ul class="nav nav-tabs">
-					  	<?php if($needToSelectContractor){ ?>
-					  		<li class="hiddenTab active"><a data-toggle="tab" href="#selectorganisation">Организация</a></li>
-					  		<li class="hiddenTab"><a data-toggle="tab" href="#choiceNds">НДС</a></li>
-					  	<?php }else{ ?>
-					  		<li class="hiddenTab active"><a data-toggle="tab" href="#choiceNds">НДС</a></li>
-					  	<?php } ?>
-					  
+					<ul class="nav nav-tabs">	
+					  <li class="active"><a data-toggle="tab" href="#choiceNds">Вид сотрудничества</a></li>
 					  <li><a data-toggle="tab" href="#routes">Маршрут</a></li>
 					  <li><a data-toggle="tab" href="#cargo">Груз</a></li>
 					  <li><a data-toggle="tab" href="#ts">Транспорт</a></li>
@@ -91,51 +85,47 @@ $arResult['breadcrumbs'][]=[
 
 					<div class="tab-content">
 						
-						<!-- selectorganisation tab -->
-						<?php if($needToSelectContractor){ ?>
-						<div id="selectorganisation" class="tab-pane fade in active">
+						
+						<!-- choiceNds tab -->
+						<div id="choiceNds" class="tab-pane fade in active">
+							
 							<div class="row">
 								<div class="col-xs-4 col-sm-offset-4">
 									<div class="selectOrganisationBlock">
+									<?php 
+										if(!$needToSelectContractor){
+											$firstC = reset($contractors);
+											?>
+											<p style="text-align: center;"><strong>Ваша организация:</strong> <?php echo $firstC['NAME'];?></p>
+											<?php
+											echo Html::hiddenInput("DEAL[CONTRACTOR_ID]",$firstC['ID']);
+										}else{ 
+									?>
 										<p>
-											<label for="deal_name" class="form-label">Организация</label>
+											<label for="deal_name" class="form-label">Выберите организацию:</label>
 											<?php
 												echo Html::dropDownList("DEAL[CONTRACTOR_ID]",$deal['CONTRACTOR_ID'],ArrayHelper::map($contractors,'ID','NAME'),['class'=>'form-control']);
 											?>
 										</p>
+									<?php } ?>
 									</div>
 								</div>
 							</div>
-						</div>
-						<?php } ?>
-
-
-						<!-- choiceNds tab -->
-						<div id="choiceNds" class="tab-pane fade in <?php echo !$needToSelectContractor ? 'active' : ''?>">
-							<div class="col-xs-2 col-sm-offset-5">
-								<div class="choiceNdsBlock">
-									<p>
-										<?php 
+							<div class="row">
+								<div class="col-xs-4 col-sm-offset-4">
+									<div class="choiceNdsBlock">
+										<p style="text-align: center;"><strong>Укажите вид сотрудничества:</strong></p>
+										<p style="text-align: center;">
+											<?php 
 												$with_nds = $with_o_nds = null;
-												if(isset($deal['WITH_NDS']) && $deal['WITH_NDS']){
-													$with_nds = 1;
-												}else{
-													$with_o_nds = 1;
-												}
-										?>
+												(isset($deal['WITH_NDS']) && $deal['WITH_NDS']) ? $with_nds = 1: $with_o_nds = 1;
+											?>
 											<label for="deal_with_nds" class="form-label">С НДС</label>
 											<?php echo Html::radio("DEAL[WITH_NDS]",$with_nds,['id'=>'deal_with_nds','value'=>1]);?>
-											<br>
 											<label for="deal_with_o_nds" class="form-label">Без НДС</label>
 											<?php echo Html::radio("DEAL[WITH_NDS]",$with_o_nds,['id'=>'deal_with_o_nds','value'=>0]);?>
-
-										<?php 
-											if(!$needToSelectContractor){
-												$firstC = reset($contractors);
-												echo Html::hiddenInput("DEAL[CONTRACTOR_ID]",$firstC['ID']);
-											} 
-										?>
-									</p>
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>

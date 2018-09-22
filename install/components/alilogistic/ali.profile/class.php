@@ -189,11 +189,16 @@ class AliProfile extends CBitrixComponent
         
         $user = UserTable::getRowById($id);
         $contractors = User::getCurrentUserIntegratedContractors();
-
         $hasCompany = is_array($contractors) && count($contractors);
-        
+        $orgs = Contractors::getOrgs(null,$params);
+
+        $hasntContractors = isset($_SESSION['hasntContractors']) && boolval($_SESSION['hasntContractors']);  
+        unset($_SESSION['hasntContractors']);
+
         $this->arResult['user'] = $user;
         $this->arResult['hasCompany'] = $hasCompany;
+        $this->arResult['orgs'] = $orgs;
+        $this->arResult['hasntContractors'] = $hasntContractors;
         
         return $this->arResult;
     }
@@ -350,13 +355,6 @@ class AliProfile extends CBitrixComponent
 
         return "orgs/organisations";
     }
-
-
-
-
-
-
-
 
 
 
@@ -536,6 +534,7 @@ class AliProfile extends CBitrixComponent
         $contractors = User::getCurrentUserIntegratedContractors();
 
         if(!is_array($contractors) || !count($contractors)){
+            $_SESSION['hasntContractors'] = true;
             LocalRedirect($this->getUrl());
         }
 
@@ -736,6 +735,11 @@ class AliProfile extends CBitrixComponent
         $filtres = array();
         $params = array();
         
+        $contractors = User::getCurrentUserIntegratedContractors();
+        if(empty($contractors) || (is_array($contractors) && !count($contractors))){
+            LocalRedirect($this->getUrl());
+        }
+
         if(isset($request['Filter'])){
             $filtres=$request['Filter'];
             
@@ -779,7 +783,8 @@ class AliProfile extends CBitrixComponent
             if(isset($filtres['stage']) && $filtres['stage'])
                 $params['filter']["=".$filtres['stage']] = true;
 
-
+            if(isset($filtres['contractor']) && (int)$filtres['contractor'])
+                $params['filter']["=CONTRACTOR_ID"] = (int)$filtres['contractor'];
         }
         
 
@@ -814,12 +819,13 @@ class AliProfile extends CBitrixComponent
         $params['limit']=$limit;
         $params['offset']=$offset;
         $deals = Deals::getDeals(null,$params);
-        
+
         $arResult = [
             'deals'=>$deals,
             'total'=>$total,
             'page'=>$page,
             'limit'=>$limit,
+            'contractors'=>$contractors,
             'filtres'=>['Filter'=>$filtres]
         ];
 

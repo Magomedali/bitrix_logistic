@@ -16,30 +16,16 @@ class AliMenu extends CBitrixComponent
 
 	public $menu_items = array(
 		array(
-		    "Личный кабинет",
+		    "Мой профиль",
 		    "/alk/",
 		    array(),
 		    "",
 		    ""
-		),
-        array(
-            "Мои организации",
-            "/alk/organisations",
-            array(),
-            "",
-            ""
-        )
+		)
 	);
 
 
     public $protected_menu = array(
-        array(
-            "Создать заявку",
-            "/alk/dealform",
-            array(),
-            "",
-            ""
-        ),
         array(
             "Заявки",
             "/alk/deals",

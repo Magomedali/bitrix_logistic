@@ -142,7 +142,10 @@ class Deals{
         $params = array_merge($local_params,$parameters);
         
         $contractors = ArrayHelper::map($contractors,'ID','ID');
-        $params['filter']['CONTRACTOR_ID'] = $contractors;
+        
+        if(!isset($params['filter']['=CONTRACTOR_ID']))
+            $params['filter']['=CONTRACTOR_ID'] = $contractors;
+        
         
         $deals = array();
         if($id){

@@ -2,10 +2,12 @@
 if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Ali\Logistic\Helpers\Html;
+use Ali\Logistic\Helpers\ArrayHelper;
 use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Dictionary\DealFileType;
 
 $deals = is_array($arResult['deals']) && count($arResult['deals']) ? $arResult['deals'] : null;
+$contractors = is_array($arResult['contractors']) && count($arResult['contractors']) ? $arResult['contractors'] : array();
 $filtres = is_array($arResult['filtres']) && count($arResult['filtres']) ? $arResult['filtres'] : null;
 $hasFilter=is_array($filtres)&& array_key_exists('Filter',$filtres) && is_array($filtres['Filter']) && count($filtres['Filter']);
 
@@ -43,18 +45,18 @@ function htmlFilelink($component,$files,$type){
 		<div class="panel panel-primary  form-route form-route_between" data-number="<?php echo $number; ?>">
 			<div class="panel-heading">
 				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion_filters" href="#collapse_filters">Параметры фильтра</a>
+					<a data-toggle="collapse" data-parent="#accordion_filters" href="#collapse_filters">Параметры поиска</a>
 				</h4>
 			</div>
 			<div class="collapse <?php echo $hasFilter ? 'in' :'';?>" id="collapse_filters">
 				<div class="panel-body">
 					<form action="" method="GET">
 						<div class="row">
-							<div class="col-xs-2">
+							<div class="col-xs-3">
 								<label>С:</label>
 								<?php echo Html::input("date",'Filter[date_from]',isset($filtres['Filter']['date_from']) && strtotime($filtres['Filter']['date_from']) ? date("Y-m-d",strtotime($filtres['Filter']['date_from'])) : null,['class'=>'form-control']);?>
 							</div>
-							<div class="col-xs-2">
+							<div class="col-xs-3">
 								<label>По:</label>
 								<?php echo Html::input("date",'Filter[date_to]',isset($filtres['Filter']['date_to']) && strtotime($filtres['Filter']['date_to']) ? date("Y-m-d",strtotime($filtres['Filter']['date_to'])) : null,['class'=>'form-control']);?>
 							</div>
@@ -62,11 +64,11 @@ function htmlFilelink($component,$files,$type){
 								<label>Номер:</label>
 								<?php echo Html::input("text",'Filter[number]',isset($filtres['Filter']['number']) ? $filtres['Filter']['number'] : "",['class'=>'form-control']);?>
 							</div>
-							<div class="col-xs-3">
+							<div class="col-xs-2">
 								<label>Водитель:</label>
 								<?php echo Html::input("text",'Filter[driver]',isset($filtres['Filter']['driver']) ? $filtres['Filter']['driver'] : "",['class'=>'form-control']);?>
 							</div>
-							<div class="col-xs-3">
+							<div class="col-xs-2">
 								<label>№ ТС:</label>
 								<?php echo Html::input("text",'Filter[ts]',isset($filtres['Filter']['ts']) ? $filtres['Filter']['ts'] : "",['class'=>'form-control']);?>
 							</div>
@@ -76,7 +78,7 @@ function htmlFilelink($component,$files,$type){
 								<label>Статус:</label>
 								<?php echo Html::dropDownList('Filter[state]',isset($filtres['Filter']['state']) ? $filtres['Filter']['state'] : null,DealStates::getLabels(),['class'=>'form-control','prompt'=>'Выберите статус']);?>
 							</div>
-							<div class="col-xs-2">
+							<div class="col-xs-3">
 								<label>Вес С:</label>
 								<?php echo Html::input("number",'Filter[weight_f]',isset($filtres['Filter']['weight_f']) ? $filtres['Filter']['weight_f'] : "",['class'=>'form-control']);?>
 							</div>
@@ -100,12 +102,16 @@ function htmlFilelink($component,$files,$type){
 							</div>
 						</div>
 						<div class="row">
-
 							<div class="col-xs-3">
 								<label>Стадия обработки:</label>
 								<?php echo Html::dropDownList('Filter[stage]',isset($filtres['Filter']['stage']) ? $filtres['Filter']['stage'] : null,['IS_ACTIVE'=>'Текущие','COMPLETED'=>'Завершенные','IS_DRAFT'=>"Черновик"],['class'=>'form-control','prompt'=>'Стадия обработки']);?>
 							</div>
-
+							<?php if(count($contractors) > 1){?>
+							<div class="col-xs-3">
+								<label>Организация:</label>
+								<?php echo Html::dropDownList('Filter[contractor]',isset($filtres['Filter']['contractor']) ? $filtres['Filter']['contractor'] : null,ArrayHelper::map($contractors,'ID','NAME'),['class'=>'form-control','prompt'=>'Выберите организацию']);?>
+							</div>
+							<?php } ?>
 							<div class="col-xs-3">
 								<label>Место погрузки:</label>
 								<?php echo Html::input("text",'Filter[loading]',isset($filtres['Filter']['loading']) ? $filtres['Filter']['loading'] : "",['class'=>'form-control']);?>
@@ -114,9 +120,11 @@ function htmlFilelink($component,$files,$type){
 								<label>Место разгрузки:</label>
 								<?php echo Html::input("text",'Filter[unloading]',isset($filtres['Filter']['unloading']) ? $filtres['Filter']['unloading'] : "",['class'=>'form-control']);?>
 							</div>
+						</div>
+						<div class="row">
 							<div class="col-xs-2">
 								<?php
-									echo Html::submitButton("Найти",['class'=>'btn btn-primary','style'=>'margin-top:25px;']);
+									echo Html::submitButton("Искать",['class'=>'btn btn-primary','style'=>'margin-top:25px;']);
 								?>
 							</div>
 						</div>

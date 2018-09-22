@@ -84,9 +84,24 @@ span.dt_error{
 	cursor: pointer;
 }
 
-.selectOrganisationBlock,.choiceNdsBlock{
-	margin: 75px 0px;
+.selectOrganisationBlock{
+	margin: 30px 0px;
 }
+
+.choiceNdsBlock{
+	margin-top: 25px;
+}
+
 .hiddenTab{
 	display: none !important;
+}
+
+label[for='deal_with_nds'],label[for='deal_with_o_nds']{
+	font-weight: 100;
+}
+
+#btnNewDeal{
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }

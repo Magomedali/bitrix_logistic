@@ -1,12 +1,13 @@
 <?php
- 
+
+use Ali\Logistic\Helpers\Html;
 $breadcrumbs = is_array($arResult['breadcrumbs']) && count($arResult['breadcrumbs']) ? $arResult['breadcrumbs'] : null;
 
-$pageTitle = isset($arResult['pageTitle'])? $arResult['pageTitle'] : "Личный кабинет";
+$pageTitle = isset($arResult['pageTitle'])? $arResult['pageTitle'] : "Мой профиль";
 
 ?>
 
-<div class="breacrumbs">
+<div class="breacrumbs" style="position: relative;">
 	<ol class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList">
 		<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">	
 			<a href="/" title="Главная" itemprop="url">
@@ -17,8 +18,8 @@ $pageTitle = isset($arResult['pageTitle'])? $arResult['pageTitle'] : "Личны
 			if($breadcrumbs && count($breadcrumbs)){ 
 		?>
 			<li itemprop="child" itemscope="" itemtype="https://schema.org/ListItem">
-				<a href="/alk/" title="Личный кабинет" itemprop="url">
-					<span itemprop="name">Личный кабинет<meta itemprop="position" content="1"></span>
+				<a href="/alk/" title="Мой профиль" itemprop="url">
+					<span itemprop="name">Мой профиль<meta itemprop="position" content="1"></span>
 				</a>
 			</li>
 
@@ -44,5 +45,8 @@ $pageTitle = isset($arResult['pageTitle'])? $arResult['pageTitle'] : "Личны
 			</li>
 		<?php } ?>
 	</ol>
-	<h1 class="line-behind text-left emm"><?php echo $pageTitle;?></h1>	
+	<h1 class="line-behind text-left emm"><?php echo $pageTitle;?></h1>
+	<?php
+		echo Html::a('Создать заявку',$component->getUrl("dealform"),['class'=>'btn btn-primary','id'=>'btnNewDeal']);
+	?>
 </div>

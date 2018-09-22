@@ -19,10 +19,10 @@ $org = is_array($arResult['org']) && count($arResult['org']) ? $arResult['org'] 
 $pageTitle = $org['NAME'];
 
 $arResult['breadcrumbs']=[
-	[
-		'title'=>"Мои организации",
-		'url'=>"organisations"
-	],
+	// [
+	// 	'title'=>"Мои организации",
+	// 	'url'=>"organisations"
+	// ],
 	[
 		'title'=>$pageTitle,
 		'link'=>null,
@@ -35,8 +35,10 @@ $arResult['breadcrumbs']=[
 <div id="alilogistic" class="row">
 	<div class="col-xs-12">
 		<?php if($org){?>
+		<?php if(false){?>
 		<a href="<?php echo $component->getUrl("formorg",['id'=>$org['ID']])?>">Редактировать</a>
 		<a href="<?php echo $component->getUrl("removeorg",['id'=>$org['ID']])?>">Удалить</a>
+		<?php }?>
 		<table class="table table-hover">
 			<thead>
 				

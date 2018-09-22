@@ -1,7 +1,7 @@
 <?php
-$sSectionName = "Личный кабинет";
+$sSectionName = "Мой профиль";
 $arDirProperties = Array(
-   "description" => "Личный кабинет"/*,
+   "description" => "Мой профиль"/*,
    "title" => "Личный кабинет"*/
 );
 ?>
