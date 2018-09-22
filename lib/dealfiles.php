@@ -74,7 +74,7 @@ class DealFiles{
                 $res->addError(new Error($e->getMessage(),$e->getCode()));
             }
         }else{
-            $res->addError(new Error('Не удалось загрузить сайт на сервер сайта!',2));
+            $res->addError(new Error('Не удалось загрузить файл на сервер сайта!',2));
         }
 
         return $res;

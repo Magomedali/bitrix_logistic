@@ -28,8 +28,7 @@ class Deals{
 
 	public static function defaultSelect(){
         return array(
-            '*',
-            ''
+            '*'
         );
     }
 
