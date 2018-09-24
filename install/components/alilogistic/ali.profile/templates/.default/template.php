@@ -57,9 +57,9 @@ $hasntContractors = isset($arResult['hasntContractors']) ? $arResult['hasntContr
 							<td><strong>Рабочий телефон</strong></td>
 						</tr>
 						<tr>
-							<td><?php echo $user['SECOND_NAME']?></td>
-							<td><?php echo $user['NAME']?></td>
 							<td><?php echo $user['LAST_NAME']?></td>
+							<td><?php echo $user['NAME']?></td>
+							<td><?php echo $user['SECOND_NAME']?></td>
 							<td><?php echo $user['EMAIL']?></td>
 							<td><?php echo $user['PERSONAL_PHONE']?></td>
 							<td><?php echo $user['WORK_PHONE']?></td>
@@ -74,7 +74,7 @@ $hasntContractors = isset($arResult['hasntContractors']) ? $arResult['hasntContr
 </div>
 <div class="row organisations-page">
 	<div class="panel">
-		<a href="<?php echo $component->getUrl('formorg')?>" class='btn btn-primary'>Регистрировать организацию</a>
+		<a href="<?php echo $component->getUrl('formorg')?>" class='btn btn-primary'>Добавить организацию</a>
 	</div>
 	<div class="organisations">
 		<table class="table table-bordered  table-hover">
