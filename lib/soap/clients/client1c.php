@@ -62,7 +62,7 @@ abstract class Client1C
 		//$this->log("responce",json_encode($response));
 	}
 
-	public function init(){
+	public static function init(){
 
 
 		$option = array(
