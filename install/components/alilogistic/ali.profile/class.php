@@ -578,8 +578,8 @@ class AliProfile extends CBitrixComponent
 
             if($routes_start && $routes_end){
 
-                $deal['LOADING_PLACE'] = $routes_start['ADDRESS'];
-                $deal['UNLOADING_PLACE'] = $routes_end['ADDRESS'];
+                $deal['LOADING_PLACE'] = $routes_start['TOWN'];
+                $deal['UNLOADING_PLACE'] = $routes_end['TOWN'];
                 array_unshift($routes,$routes_start);
                 array_push($routes, $routes_end);
 

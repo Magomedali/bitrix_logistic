@@ -117,11 +117,11 @@ class Deal
                     $end = end($routes);
                     $start = reset($routes);
                     if(!boolval($start['typeshipment'])){
-                        $this->load_place = $start['location'];
+                        $this->load_place = $start['town'];
                     }
 
                     if(boolval($end['typeshipment'])){
-                        $this->unload_place = $end['location'];
+                        $this->unload_place = $end['town'];
                     }
                 }
                 

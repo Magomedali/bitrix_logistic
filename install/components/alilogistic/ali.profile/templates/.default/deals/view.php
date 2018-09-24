@@ -262,7 +262,7 @@ function htmlFilelink($component,$files,$type){
 									<td><?php echo $deal['COUNT_HOURS'] ? $deal['COUNT_HOURS'] : "";?></td>
 								</tr>
 								<tr>
-									<td><strong>Страхование?</strong></td>
+									<td><strong>Страхование</strong></td>
 									<td><?php echo boolval($deal['REQUIRED_INSURANCE'])? "Да" :"Нет";?></td>
 								</tr>
 								<tr>
@@ -274,12 +274,12 @@ function htmlFilelink($component,$files,$type){
 									<td><?php echo $deal['SPECIAL_EQUIPMENT'];?></td>
 								</tr>
 								<tr>
-									<td><strong>Сопровождение?</strong></td>
+									<td><strong>Сопровождение</strong></td>
 									<td><?php echo boolval($deal['CARGO_HANDLING'])? "Да" :"Нет";?></td>
 								</tr>
 
 								<tr>
-									<td><strong>Погрузо-разгрузочные работы?</strong></td>
+									<td><strong>Погрузо-разгрузочные работы</strong></td>
 									<td><?php echo boolval($deal['REQUIRED_SUPPORT'])? "Да" :"Нет";?></td>
 								</tr>
 

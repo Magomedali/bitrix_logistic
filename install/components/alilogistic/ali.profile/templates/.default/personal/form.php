@@ -39,7 +39,7 @@ if($user){
 			<div class="row">
 				<div class="col-xs-6">
 					<label for="">Фамилия</label>
-					<?php echo Html::textInput("USER[SECOND_NAME]",$user['SECOND_NAME'],['class'=>'form-control']);?>
+					<?php echo Html::textInput("USER[LAST_NAME]",$user['LAST_NAME'],['class'=>'form-control']);?>
 				</div>
 			</div>
 
@@ -53,7 +53,7 @@ if($user){
 			<div class="row">
 				<div class="col-xs-6">
 					<label for="">Отчество</label>
-					<?php echo Html::textInput("USER[LAST_NAME]",$user['LAST_NAME'],['class'=>'form-control']);?>
+					<?php echo Html::textInput("USER[SECOND_NAME]",$user['SECOND_NAME'],['class'=>'form-control']);?>
 				</div>
 			</div>
 

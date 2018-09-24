@@ -1,10 +1,60 @@
-var Place = function(data){
+var Place = function(){
+	
+	this.components = {
+		country : [],
+		province : [],
+		locality : [],
+		area : [],
+		airport : [],
+		district: [],
+		street : [],
+		house : []
+	};
+	
+	this.kind = null;
+	this.text = null;
+	this.name = null;
+	this.description = null;
+	this.addressFormatted = null;
+	this.country = null;
 
-	this.country = data.country;
-	this.province = data.province;
-	this.locality = data.locality;
-	this.street = data.street;
-	this.house = data.house;
+	this.visible = ['country','province','locality','area','airport','district','street','house'];
+
+	this.init = function(components){
+		var p = new Place();
+		components.forEach(function(item){
+			if(p.components.hasOwnProperty(item.kind)){
+				p.components[item.kind].push(item.name);
+			}
+		});
+
+		return p;
+	}
+
+	this.placeToLi = function(comps){
+		var html = "<li class='place_item'";
+		var c = comps && comps.length ? comps : this.visible;
+		var components = this.components;
+		
+
+		
+
+		var values = [];
+		c.forEach(function(item){
+			var value = components[item].length ? components[item].join(" ") : null;
+			if(value)
+				values.push(value);
+		});
+		
+		if(!values.length) return null;
+		
+		html +=" data-value='"+this.name+"'>";
+		html += values.join(", ");
+		html +="</li>";
+
+		return html;
+	}
+
 };
 
 
@@ -27,11 +77,19 @@ var PlacesCollection = function(){
 
 						var components = item.GeoObject.metaDataProperty.GeocoderMetaData.Address.Components;
 						var place_data = {};
-						components.forEach(function(c,j){
-							place_data[c.kind] = c.name;
-						});
+						var place = (new Place()).init(components);
 
-						places.push(new Place(place_data));
+						place.name = item.GeoObject.name;
+						place.description = item.GeoObject.description;
+						place.kind = item.GeoObject.metaDataProperty.GeocoderMetaData.kind;
+						place.text = item.GeoObject.metaDataProperty.GeocoderMetaData.text;
+						
+						place.country = item.GeoObject.metaDataProperty.GeocoderMetaData.AddressDetails.Country.CountryName;
+						
+						place.addressFormatted = item.GeoObject.metaDataProperty.GeocoderMetaData.Address.formatted;
+
+
+						places.push(place);
 					}
 				});
 			}
@@ -49,36 +107,51 @@ var aliGeocoder = function(){
 var placesToHtml = function(places,components){
 	this.html = "<ul class='yandex_places_autocomplete'>";
 	
+	var list = "";
 	if(places.length){
 		places.forEach(function(item,i){
-			var parts = [];
-			if(components && components.length){
-				this.html = "<ul class='yandex_places_autocomplete' data-components='"+components.join("|")+"'>";
-				components.indexOf("country") >=0 && typeof item.country != 'undefined' ? parts.push(item.country) : null;
-				components.indexOf("province") >=0 && typeof item.province != 'undefined' ? parts.push(item.province) : null;
-				components.indexOf("locality") >=0 && typeof item.locality != 'undefined' ? parts.push(item.locality) : null;
-				components.indexOf("street") >=0 && typeof item.street != 'undefined' ? parts.push(item.street) : null;
-				components.indexOf("house") >=0 && typeof item.house != 'undefined' ? parts.push(item.house) : null;
+			var li = item.placeToLi(components);
+			if(li)
+				list += li;
+		});
+	}
+	
+	if(!list.length) return null;
+
+	this.html +=list;
+	this.html += "</ul>";
+
+	return this.html;
+}
+
+var placesPropertyToHtml = function(places,property,value,kind){
+	this.html = "<ul class='yandex_places_autocomplete'>";
+	
+	var list = "";
+	if(places.length){
+		places.forEach(function(item,i){
+			var components = item.components;
+			if(kind && kind.length){
+				
+				kind.forEach(function(k){
+					if(components.hasOwnProperty(k) && components[k].length){
+						if(item.hasOwnProperty(property) && item.hasOwnProperty(value)){
+							list += "<li class='place_item' data-value='"+item[value]+"'>"+item[property]+"</li>";
+						}
+					}
+				});
+
 			}else{
-				typeof item.country != 'undefined' ? parts.push(item.country) : null;
-				typeof item.province != 'undefined' ? parts.push(item.province) : null;
-				typeof item.locality != 'undefined' ? parts.push(item.locality) : null;
-				typeof item.street != 'undefined' ? parts.push(item.street) : null;
-				typeof item.house != 'undefined' ? parts.push(item.house) : null;
+				if(item.hasOwnProperty(property) && item.hasOwnProperty(value)){
+					list += "<li class='place_item' data-value='"+item[value]+"'>"+item[property]+"</li>";
+				}
 			}
-			if(parts.length){
-				this.html+= "<li class='place_item' data-country='"+item.country+"'"+
-							" data-province='"+item.province+"'"+
-							" data-locality='"+item.locality+"'"+
-							" data-street='"+item.street+"'"+
-							" data-house='"+item.house+"'"+
-							">";
-				this.html += parts.join(", ");
-				this.html += "</li>";
-			}
+			
 			
 		});
 	}
+	if(!list.length) return null;
+	this.html += list;
 	this.html += "</ul>";
 
 	return this.html;
@@ -117,7 +190,8 @@ $(function(){
 
 							places = collect.places;
 						}
-						var html = placesToHtml(places,['province','locality']);
+						
+						var html = placesPropertyToHtml(places,"text","addressFormatted");
 
 						list.html(html);
 						list.show();
@@ -135,7 +209,7 @@ $(function(){
 		var parent = $(this).parents("div.geocoder.geocoder-address");
 		var list = parent.find("div.places-list");
 		var town = $(this).parents(".form-route").find("div.geocoder-town").find("input[type=text]").val();
-		console.log(town);
+		
 		if(!list.length){
 			list = $("<div/>").addClass("places-list").html($("<ul/>"));
 			parent.append(list);
@@ -150,8 +224,7 @@ $(function(){
 					url:host,
 					data:{
 						geocode:val,
-						format:'json',
-						results:10
+						format:'json'
 					},
 					dataType:"json",
 					success:function(resp){
@@ -162,8 +235,9 @@ $(function(){
 
 							places = collect.places;
 						}
-						var html = placesToHtml(places,['street','house']);
 
+						var html = placesPropertyToHtml(places,"name","name",['street','house']);
+						
 						list.html(html);
 						list.show();
 					},
@@ -178,28 +252,7 @@ $(function(){
 			event.preventDefault();
 			
 			var data = $(this).data();
-			var ul_components = $(this).parent("ul").data("components");
-			var components = [];
-			if(typeof ul_components != 'undefined' && ul_components != ""){
-				var components = ul_components.split("|");
-			}
-			var parts = [];
-			if(components.length){
-				components.indexOf("country") >=0 && data.country != 'undefined' && typeof data.country != 'undefined' ? parts.push(data.country) : null;
-				components.indexOf("province") >=0 && data.province != 'undefined' && typeof data.province != 'undefined' ? parts.push(data.province) : null;
-				components.indexOf("province") >=0 && data.province !== data.locality && data.locality != 'undefined' && typeof data.locality != 'undefined' ? parts.push(data.locality) : null;
-				components.indexOf("street") >=0 && data.street != 'undefined' && typeof data.street != 'undefined' ? parts.push(data.street) : null;
-				components.indexOf("house") >=0 && data.house != 'undefined' && typeof data.house != 'undefined' ? parts.push(data.house) : null;
-			}else{
-				data.country != 'undefined' && typeof data.country != 'undefined' ? parts.push(data.country) : null;
-				data.province != 'undefined' && typeof data.province != 'undefined' ? parts.push(data.province) : null;
-				data.province !== data.locality && data.locality != 'undefined' && typeof data.locality != 'undefined' ? parts.push(data.locality) : null;
-				data.street != 'undefined' && typeof data.street != 'undefined' ? parts.push(data.street) : null;
-				data.house != 'undefined' && typeof data.house != 'undefined' ? parts.push(data.house) : null;
-			}
-			
-			
-			$(this).parents("div.geocoder").find("input[type=text]").val(parts.join(", "));
+			$(this).parents("div.geocoder").find("input[type=text]").val(data.value);
 			$(this).parents("div.places-list").hide();
 		});
 })
