@@ -20,13 +20,16 @@ class DealFilesSchemaTable extends Entity\DataManager
     public static function getMap()
     {
         return array(
+
             //ID
             new Entity\IntegerField('ID', array(
                 'primary' => true,
                 'autocomplete' => true
             )),
+
             
             new Entity\IntegerField('DEAL_ID'),
+
 
             new Entity\ReferenceField(
                 'DEAL',
@@ -50,8 +53,9 @@ class DealFilesSchemaTable extends Entity\DataManager
                 }
             )),
 
+
             new Entity\FloatField('SUM',array(
-                'title'=>'Сумма',
+                'title'=>'Сумма счета',
                 'required'=>false,
                 'default_value'=>function(){
                     return 0;
@@ -64,6 +68,23 @@ class DealFilesSchemaTable extends Entity\DataManager
                     );
                 }
             )),
+
+
+            new Entity\FloatField('SUM_PAID',array(
+                'title'=>'Сумма оплаты',
+                'required'=>false,
+                'default_value'=>function(){
+                    return 0;
+                },
+                'save_data_modification'=>function(){
+                    return array(
+                        function($value,$primary,$row,$field){
+                            return $value ? $value : 0 ;
+                        }
+                    );
+                }
+            )),
+
 
             new Entity\StringField('FILE_NUMBER',array(
                 'required'=>false,

@@ -165,6 +165,7 @@ $nsp = "http://".$_SERVER['HTTP_HOST']."/alkserver/";
                     <xs:element name="binaryFile" type="xs:base64Binary"/>
                     <xs:element name="paidDate" type="xs:datetime" nillable="true"/>
                     <xs:element name="sum" type="xs:float" nillable="true"/>
+                    <xs:element name="sumPaid" type="xs:float" nillable="true"/>
         		</xs:sequence>
         	</xs:complexType>
         </xs:schema>

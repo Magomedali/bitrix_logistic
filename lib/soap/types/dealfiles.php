@@ -17,6 +17,7 @@ class DealFiles
 	public $binaryFile;
 	public $paidDate;
 	public $sum;
+	public $sumPaid;
 
 	protected $deal_id = null;
 
@@ -31,6 +32,7 @@ class DealFiles
 			$this->binaryFile = $data['binaryFile'];
 			$this->paidDate = isset($data['paidDate']) ? $data['paidDate'] : null;
 			$this->sum = isset($data['sum']) ? $data['sum'] : null;
+			$this->sumPaid = isset($data['sumPaid']) ? $data['sumPaid'] : null;
 		}elseif(is_object($data)){
 			$this->dealUuid = isset($data->dealUuid) ? $data->dealUuid : '';
 			$this->fileNumber = isset($data->fileNumber) ? $data->fileNumber : '';
@@ -38,6 +40,7 @@ class DealFiles
 			$this->binaryFile = isset($data->binaryFile) ? $data->binaryFile : '';
 			$this->paidDate = isset($data->paidDate) ? $data->paidDate : null;
 			$this->sum = isset($data->sum) ? $data->sum : 0;
+			$this->sumPaid = isset($data->sumPaid) ? $data->sumPaid : 0;
 		}
 		
 	}

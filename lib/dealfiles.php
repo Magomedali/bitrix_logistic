@@ -23,6 +23,7 @@ class DealFiles{
         $fNumber = $Elementfile->fileNumber;
         $fileBinary = $Elementfile->binaryFile;
         $sum = $Elementfile->sum;
+        $sumPaid = $Elementfile->sumPaid;
         $paidDate = $Elementfile->paidDate ? DateTime::createFromTimestamp(strtotime($Elementfile->paidDate)) : null;
 
         $fileDate = $Elementfile->fileDate ? DateTime::createFromTimestamp(strtotime($Elementfile->fileDate)) : DateTime();
@@ -57,6 +58,7 @@ class DealFiles{
             }
             $data['FILE']=$fName;
             $data['SUM']=$sum;
+            $data['SUM_PAID']=$sum;
 
             try {
                 if($file_id){
