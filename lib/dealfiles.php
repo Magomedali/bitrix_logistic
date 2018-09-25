@@ -58,7 +58,7 @@ class DealFiles{
             }
             $data['FILE']=$fName;
             $data['SUM']=$sum;
-            $data['SUM_PAID']=$sum;
+            $data['SUM_PAID']=$sumPaid;
 
             try {
                 if($file_id){
