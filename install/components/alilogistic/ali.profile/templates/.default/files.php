@@ -26,10 +26,11 @@ $arResult['breadcrumbs'][]=[
 				<tr>
 					<th>№</th>
 					<th>Дата</th>
-					<th>Сумма</th>
+					<th>Сумма счета</th>
 					<?php 
 						if($type == DealFileType::FILE_BILL){
 							?>
+							<th>Сумма оплаты</th>
 							<th>Дата оплаты</th>
 							<?php
 						}
@@ -51,6 +52,7 @@ $arResult['breadcrumbs'][]=[
 								<?php 
 									if($type == DealFileType::FILE_BILL){
 										?>
+										<td><?php echo $f['SUM_PAID'] ? $f['SUM_PAID'] : '';?></td>
 										<th><?php echo date("d.m.Y",strtotime($f['PAID_AT']));?></th>
 										<?php
 									}
