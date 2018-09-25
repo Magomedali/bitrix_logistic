@@ -46,7 +46,7 @@ class Deals1C extends Client1C
 		} 
 
         $data['uuid'] = $params['INTEGRATED_ID'];
-		$data['datedoc'] = $params['CREATED_AT'] instanceof DateTime ? $params['CREATED_AT']->format("Y-m-d H:i") : $params['CREATED_AT'] ;
+		$data['datedoc'] = $params['CREATED_AT'] instanceof DateTime ? $params['CREATED_AT']->format("Y-m-d\TH:i:s") : $params['CREATED_AT'] ;
 		$data['uuidcustomer'] = $params['CONTRACTOR_INTEGRATED_ID'];
 		$data['namecargo'] = $params['NAME'];
 		$data['weight'] = $params['WEIGHT'];
@@ -99,8 +99,8 @@ class Deals1C extends Client1C
 			foreach ($params['ROUTES'] as $r) {
 				$route = array();
 				$route['typeshipment'] = (int)$r['KIND'] != RoutesKind::LOADING;
-				$route['datefrom'] = date("Y-m-d H:i",strtotime($r['START_AT']));
-				$route['dateby'] = date("Y-m-d H:i",strtotime($r['FINISH_AT']));
+				$route['datefrom'] = date("Y-m-d\TH:i:s",strtotime($r['START_AT']));
+				$route['dateby'] = date("Y-m-d\TH:i:s",strtotime($r['FINISH_AT']));
 				$route['town'] = $r['TOWN'];
 				$route['location'] = $r['ADDRESS'];
 				$route['shipper'] = $r['ORGANISATION'];
