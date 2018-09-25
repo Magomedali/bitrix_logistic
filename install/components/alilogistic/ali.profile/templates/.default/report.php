@@ -70,7 +70,7 @@ $file_path = ALI_REVISES_PATH;
 				<div class="col-xs-3">
 					<div class="row">
 						<div class="col-xs-6">
-							<label for="with_nds">С</label>
+							<label for="with_nds">С НДС</label>
 							<?php
 								echo Html::checkbox("with_nds",$parameters && isset($parameters['with_nds']) && $parameters['with_nds'],['id'=>'with_nds']);
 							?>
