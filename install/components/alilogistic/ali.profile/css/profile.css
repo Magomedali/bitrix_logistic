@@ -105,3 +105,11 @@ label[for='deal_with_nds'],label[for='deal_with_o_nds']{
     top: 0px;
     right: 0px;
 }
+
+.alkProfileForm{
+
+}
+
+.alkProfileForm > div.row{
+	margin-bottom: 10px;
+}

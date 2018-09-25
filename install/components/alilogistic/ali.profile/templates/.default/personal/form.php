@@ -34,7 +34,7 @@ if($user){
 
 <div id="alilogistic" class="row">
 	<div class="col-xs-6">
-		<form action="" method="POST">
+		<form action="" method="POST" class="alkProfileForm">
 			
 			<div class="row">
 				<div class="col-xs-6">
@@ -77,6 +77,21 @@ if($user){
 					<?php echo Html::textInput("USER[WORK_PHONE]",$user['WORK_PHONE'],['class'=>'form-control']);?>
 				</div>
 			</div>
+			
+			<div class="row">
+				<div class="col-xs-6">
+					<label for="changePassword">Сменить пароль</label>
+					<?php echo Html::checkbox("changePassword",null,['id'=>'changePassword']);?>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-6">
+					<label for="">Новый пароль</label>
+					<?php echo Html::input('password',"new_password",null,['class'=>'form-control','autocomplete'=>'off','minlength'=>6]);?>
+				</div>
+			</div>
+
 
 			<div class="row">
 				<div class="col-xs-6">

@@ -234,7 +234,40 @@ class AliProfile extends CBitrixComponent
             $CUser =  new CUser;
 
             if($CUser->Update($id,$user)){
-                LocalRedirect($this->getUrl());
+
+                if(isset($request['changePassword']) 
+                    && (int)$request['changePassword'] 
+                    && isset($request['new_password'])){
+
+                    $newPass = trim(strip_tags($request['new_password']));
+                    if(strlen($newPass) < 6){
+                        $errors = array("Неправильный формат пароля! Пароль должен состоять минимум из 6 символов.");
+                    }
+
+                    if($CUser->Update($id,['PASSWORD'=>$newPass])){
+                        LocalRedirect($this->getUrl());
+                    }else{
+                        $errors = [$CUser->LAST_ERROR];
+                    }
+                    //отправка на почту ссылку для смены пароля
+                    // global $USER;
+                    // $arResult = $USER->SendPassword($USER->GetLogin(), $USER->GetParam("EMAIL"));
+                    // if($arResult["TYPE"] == "OK") 
+                    //     $errors=["Контрольная строка для смены пароля выслана."];
+                    // else 
+                    //     $errors=["Введенные логин (email) не найдены."];
+
+                    // global $USER;
+                    // $arResult = $USER->ChangePassword($USER->GetLogin(), "WRD45GT", $newPass, $newPass);
+                    // if($arResult["TYPE"] == "OK")
+                    //     LocalRedirect($this->getUrl());
+                    // else 
+                    //     $errors=["не удалось сменить пароль!Обратитесь к администратору"];
+
+                }else{
+                    LocalRedirect($this->getUrl());
+                }
+                
             }else{
                 $errors = [$CUser->LAST_ERROR];
             }
@@ -261,13 +294,33 @@ class AliProfile extends CBitrixComponent
      * @return bool
      */
     function checkPassword($userPassword, $password)
-    {
+    {   
+        // p6K[$T6i33d4824c30983e9ae498531c2b6e8a99
         $salt = substr($userPassword, 0, (strlen($userPassword) - 32));
 
         $realPassword = substr($userPassword, -32);
         $password = md5($salt.$password);
         
         return ($password == $realPassword);
+    }
+
+
+
+    /**
+     * Получаем хэш пароля
+     *
+     * @param password
+     *
+     * @return hash
+     */
+    public function hashPassword($password)
+    {   
+        $salt = uniqid(mt_rand(), true);
+        $salt = substr(md5($salt),0,8);
+
+        $password = md5($salt.$password);
+        
+        return $salt.$password;
     }
 
     public function followAction(){
