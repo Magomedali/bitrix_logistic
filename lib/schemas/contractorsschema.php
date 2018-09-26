@@ -236,16 +236,15 @@ class ContractorsSchemaTable extends Entity\DataManager
                                     return "У ИП должен отсутствовать код КПП";
                                 }
 
-                                if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL && $len != $validLeng){
-                                    return "Код КПП должен состоять из ".$validLeng." цифр";
-                                }
-
                                 if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL){
                                     //Для юр лиц обязателен и должен быть уникальным
                                     //$field->addValidator(new \Bitrix\Main\Entity\Validator\Unique('Организация с таким КПП зарегистрирован на сайте'));
                                 }
                             }
                             
+                            if($row['ENTITY_TYPE'] == \Ali\Logistic\Dictionary\ContractorsType::LEGAL && $len != $validLeng){
+                                return "Код КПП для юр.лиц должен состоять из ".$validLeng." цифр.";
+                            }
 
                             return true;
                         }
