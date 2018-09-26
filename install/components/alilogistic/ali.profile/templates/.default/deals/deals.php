@@ -196,17 +196,17 @@ function htmlFilelink($component,$files,$type){
 									<?php 
 										if(isset($o['files'])){
 										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_BILL);
-										}
-									
-										if(isset($o['files'])){
-										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_ACT);
-										}
-									 
-										if(isset($o['files'])){
+										
 										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_INVOICE);
-										}
-									
-										if(isset($o['files'])){
+										 	
+										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_ACT);
+										
+										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_CONTRACT);
+
+										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_DRIVER_ATTORNEY);
+
+										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_PRINT_FORM);
+
 										 	echo htmlFilelink($component,$o['files'],DealFileType::FILE_TTH);
 										}
 									?>
