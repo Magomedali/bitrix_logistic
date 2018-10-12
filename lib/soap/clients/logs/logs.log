@@ -236,3 +236,97 @@ Content-Type: text/xml;charset=utf-8
 		</m:uploadapplicationResponse>
 	</soap:Body>
 </soap:Envelope>
+
+-------Request Headers------13:45 26.09.2018
+
+POST /exp/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 4150
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------13:45 26.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid xsi:nil="true"/><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-26T13:45:58</ns1:datedoc><ns1:uuidcustomer>10f36d90-6fea-11e4-bebb-d43d7ef75401</ns1:uuidcustomer><ns1:namecargo>Упаковка, оборудование</ns1:namecargo><ns1:weight>3500</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>любой закрытый</ns1:ts><ns1:comments></ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>0</ns1:countloaders><ns1:quantityofhours>0</ns1:quantityofhours><ns1:insurance>false</ns1:insurance><ns1:sum>0</ns1:sum><ns1:temperaturefrom>0</ns1:temperaturefrom><ns1:temperatureto>0</ns1:temperatureto><ns1:additionalequipment>гидроборт</ns1:additionalequipment><ns1:escort>false</ns1:escort><ns1:documentation></ns1:documentation><ns1:size>46.08</ns1:size><ns1:length>2.4</ns1:length><ns1:width>8</ns1:width><ns1:height>2.4</ns1:height><ns1:methodoftransportation>Выделенный транспорт</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T10:00:00</ns1:datefrom><ns1:dateby>2018-09-27T10:00:00</ns1:dateby><ns1:location>МО, Дмитровский р-он, д. Никольское</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Сергей, Владимир</ns1:contactname><ns1:numberphone>+7-925-808-21-33, +7-925-808-21-48</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Московская область, Дмитровский городской округ, деревня Никольское</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-27T12:00:00</ns1:datefrom><ns1:dateby>2018-09-27T20:00:00</ns1:dateby><ns1:location>МКАД, 66-й километр, внешняя сторона</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Павел</ns1:contactname><ns1:numberphone>+7-919-108-14-60</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва, МКАД, 66-й километр, внешняя сторона</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T14:00:00</ns1:datefrom><ns1:dateby>2018-09-27T20:00:00</ns1:dateby><ns1:location>Москва, МКАД, 66-й километр, внешняя сторона</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Павел</ns1:contactname><ns1:numberphone>+7-919-108-14-60</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва, МКАД, 66-й километр, внешняя сторона</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-27T20:00:00</ns1:datefrom><ns1:dateby>2018-09-28T08:00:00</ns1:dateby><ns1:location>Московская область, Дмитровский городской округ, деревня Никольское</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Сергей, Владимир</ns1:contactname><ns1:numberphone>+7-925-808-21-33, +7-925-808-21-48</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Московская область, Дмитровский городской округ, деревня Никольское</ns1:town></ns1:routes><ns1:methodofloading>зад</ns1:methodofloading><ns1:howpacked>паллет</ns1:howpacked><ns1:countplace>0</ns1:countplace><ns1:adrclass>0</ns1:adrclass><ns1:reqrussiandriver>false</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>false</ns1:securestorage><ns1:cargohandling>false</ns1:cargohandling><ns1:methodofunloading>зад</ns1:methodofunloading><ns1:specialequipment></ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------13:45 26.09.2018
+
+HTTP/1.1 200 OK
+Date: Wed, 26 Sep 2018 10:45:58 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 688
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------13:45 26.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">true</success>
+				<error xmlns="http://www.rusexeditorresponse.org"/>
+				<uuid xmlns="http://www.rusexeditorresponse.org">59a4884a-c179-11e8-bb8f-f44d309e2a8e</uuid>
+				<number xmlns="http://www.rusexeditorresponse.org"
+						xsi:type="xs:string">00000008015</number>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
+
+-------Request Headers------13:56 26.09.2018
+
+POST /exp/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 4181
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------13:56 26.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid>59a4884a-c179-11e8-bb8f-f44d309e2a8e</ns1:uuid><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-26T13:56:35</ns1:datedoc><ns1:uuidcustomer>10f36d90-6fea-11e4-bebb-d43d7ef75401</ns1:uuidcustomer><ns1:namecargo>Упаковка, оборудование</ns1:namecargo><ns1:weight>3500</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>любой закрытый</ns1:ts><ns1:comments></ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>0</ns1:countloaders><ns1:quantityofhours>0</ns1:quantityofhours><ns1:insurance>false</ns1:insurance><ns1:sum>0</ns1:sum><ns1:temperaturefrom>0</ns1:temperaturefrom><ns1:temperatureto>0</ns1:temperatureto><ns1:additionalequipment>гидроборт</ns1:additionalequipment><ns1:escort>false</ns1:escort><ns1:documentation></ns1:documentation><ns1:size>46.08</ns1:size><ns1:length>2.4</ns1:length><ns1:width>8</ns1:width><ns1:height>2.4</ns1:height><ns1:methodoftransportation>Выделенный транспорт</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T10:00:00</ns1:datefrom><ns1:dateby>2018-09-27T10:00:00</ns1:dateby><ns1:location>МО, Дмитровский р-он, д. Никольское</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Сергей, Владимир</ns1:contactname><ns1:numberphone>+7-925-808-21-33, +7-925-808-21-48</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Московская область, Дмитровский городской округ, деревня Никольское</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-27T12:00:00</ns1:datefrom><ns1:dateby>2018-09-27T20:00:00</ns1:dateby><ns1:location>МКАД, 66-й километр, внешняя сторона</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Павел</ns1:contactname><ns1:numberphone>+7-919-108-14-60</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва, МКАД, 66-й километр, внешняя сторона</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T14:00:00</ns1:datefrom><ns1:dateby>2018-09-27T20:00:00</ns1:dateby><ns1:location>Москва, МКАД, 66-й километр, внешняя сторона</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Павел</ns1:contactname><ns1:numberphone>+7-919-108-14-60</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва, МКАД, 66-й километр, внешняя сторона</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-27T20:00:00</ns1:datefrom><ns1:dateby>2018-09-28T08:00:00</ns1:dateby><ns1:location>Московская область, Дмитровский городской округ, деревня Никольское</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Сергей, Владимир</ns1:contactname><ns1:numberphone>+7-925-808-21-33, +7-925-808-21-48</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Московская область, Дмитровский городской округ, деревня Никольское</ns1:town></ns1:routes><ns1:methodofloading>зад</ns1:methodofloading><ns1:howpacked>паллет</ns1:howpacked><ns1:countplace>0</ns1:countplace><ns1:adrclass>0</ns1:adrclass><ns1:reqrussiandriver>false</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>false</ns1:securestorage><ns1:cargohandling>false</ns1:cargohandling><ns1:methodofunloading>зад</ns1:methodofunloading><ns1:specialequipment></ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------13:56 26.09.2018
+
+HTTP/1.1 200 OK
+Date: Wed, 26 Sep 2018 10:56:35 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 688
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------13:56 26.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">true</success>
+				<error xmlns="http://www.rusexeditorresponse.org"/>
+				<uuid xmlns="http://www.rusexeditorresponse.org">59a4884a-c179-11e8-bb8f-f44d309e2a8e</uuid>
+				<number xmlns="http://www.rusexeditorresponse.org"
+						xsi:type="xs:string">00000008015</number>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>

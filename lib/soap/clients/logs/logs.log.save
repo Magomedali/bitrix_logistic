@@ -1,0 +1,332 @@
+
+
+-------Request Headers------18:53 22.09.2018
+
+POST /basetest/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 2727
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------18:53 22.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid>775965e5-b448-11e8-9ca1-58fb84a472dd</ns1:uuid><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-22 18:53</ns1:datedoc><ns1:uuidcustomer>6e1b83b3-d9dc-11e4-8200-74d4353c3419</ns1:uuidcustomer><ns1:namecargo>Ящик груза</ns1:namecargo><ns1:weight>1</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>термос</ns1:ts><ns1:ts>борт</ns1:ts><ns1:comments></ns1:comments><ns1:nds>false</ns1:nds><ns1:countloaders>1</ns1:countloaders><ns1:quantityofhours>1</ns1:quantityofhours><ns1:insurance>true</ns1:insurance><ns1:sum>100</ns1:sum><ns1:temperaturefrom>0</ns1:temperaturefrom><ns1:temperatureto>0</ns1:temperatureto><ns1:additionalequipment></ns1:additionalequipment><ns1:escort>true</ns1:escort><ns1:documentation></ns1:documentation><ns1:size>12</ns1:size><ns1:length>4</ns1:length><ns1:width>2</ns1:width><ns1:height>3</ns1:height><ns1:methodoftransportation>Сборный груз</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-10 18:50</ns1:datefrom><ns1:dateby>2018-09-11 18:50</ns1:dateby><ns1:location>Студенческая улица дом 33 к 8</ns1:location><ns1:shipper>Магомедали</ns1:shipper><ns1:contactname>Магомедали</ns1:contactname><ns1:numberphone>89250720927</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-11 18:50</ns1:datefrom><ns1:dateby>2018-09-12 18:50</ns1:dateby><ns1:location>Судостроительная</ns1:location><ns1:shipper>Али</ns1:shipper><ns1:contactname>Али</ns1:contactname><ns1:numberphone>89250720921</ns1:numberphone><ns1:comment>Стоп</ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:methodofloading>бок</ns1:methodofloading><ns1:howpacked>Array</ns1:howpacked><ns1:countplace>3</ns1:countplace><ns1:adrclass>0</ns1:adrclass><ns1:reqrussiandriver>false</ns1:reqrussiandriver><ns1:crossdocking>true</ns1:crossdocking><ns1:securestorage>true</ns1:securestorage><ns1:cargohandling>true</ns1:cargohandling><ns1:methodofunloading>бок</ns1:methodofunloading><ns1:specialequipment>манипулятор</ns1:specialequipment><ns1:specialequipment>эвакуатор</ns1:specialequipment><ns1:specialequipment>кран</ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------18:53 22.09.2018
+
+HTTP/1.1 200 OK
+Date: Sat, 22 Sep 2018 15:53:09 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 776
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------18:53 22.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">false</success>
+				<error xmlns="http://www.rusexeditorresponse.org">Ошибка при создании документа. Обратитесь в тех. поддержку: {ОбщийМодуль.бит_ОбщиеФункции.Модуль(601)}: Значение не является значением объектного типа (Дата)</error>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
+
+-------Request Headers------21:17 23.09.2018
+
+POST /basetest/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 3013
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------21:17 23.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid xsi:nil="true"/><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-23 21:17</ns1:datedoc><ns1:uuidcustomer>10f36d90-6fea-11e4-bebb-d43d7ef75401</ns1:uuidcustomer><ns1:namecargo>ТЕкстиль по россии</ns1:namecargo><ns1:weight>50</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>реф</ns1:ts><ns1:ts>термос</ns1:ts><ns1:comments>Тест тест комментарий</ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>1</ns1:countloaders><ns1:quantityofhours>5</ns1:quantityofhours><ns1:insurance>true</ns1:insurance><ns1:sum>10000</ns1:sum><ns1:temperaturefrom>-16</ns1:temperaturefrom><ns1:temperatureto>30</ns1:temperatureto><ns1:additionalequipment>коники</ns1:additionalequipment><ns1:additionalequipment>аппарели</ns1:additionalequipment><ns1:additionalequipment>гидроборт</ns1:additionalequipment><ns1:escort>true</ns1:escort><ns1:documentation>медкнижка</ns1:documentation><ns1:documentation>санобработка</ns1:documentation><ns1:size>15000</ns1:size><ns1:length>30</ns1:length><ns1:width>50</ns1:width><ns1:height>10</ns1:height><ns1:methodoftransportation>Сборный груз</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-25 12:37</ns1:datefrom><ns1:dateby>2018-09-25 12:37</ns1:dateby><ns1:location>2-й Митинский переулок, 3</ns1:location><ns1:shipper>ООО "ТентРеф"</ns1:shipper><ns1:contactname>Михаил</ns1:contactname><ns1:numberphone>445112231</ns1:numberphone><ns1:comment>погр</ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-26 12:37</ns1:datefrom><ns1:dateby>2018-09-26 12:37</ns1:dateby><ns1:location>улица Декабристов 12</ns1:location><ns1:shipper>ООО "сибирь"</ns1:shipper><ns1:contactname>Алексей</ns1:contactname><ns1:numberphone>789456123</ns1:numberphone><ns1:comment>разгр</ns1:comment><ns1:town>г. Иваново</ns1:town></ns1:routes><ns1:methodofloading>верх</ns1:methodofloading><ns1:methodofloading>бок</ns1:methodofloading><ns1:howpacked>паллет</ns1:howpacked><ns1:countplace>1</ns1:countplace><ns1:adrclass>5</ns1:adrclass><ns1:reqrussiandriver>true</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>true</ns1:securestorage><ns1:cargohandling>true</ns1:cargohandling><ns1:methodofunloading>верх</ns1:methodofunloading><ns1:methodofunloading>бок</ns1:methodofunloading><ns1:specialequipment>манипулятор</ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------21:17 23.09.2018
+
+HTTP/1.1 200 OK
+Date: Sun, 23 Sep 2018 18:17:35 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 688
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------21:17 23.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">true</success>
+				<error xmlns="http://www.rusexeditorresponse.org"/>
+				<uuid xmlns="http://www.rusexeditorresponse.org">f19282c5-bf5c-11e8-bb8f-f44d309e2a8e</uuid>
+				<number xmlns="http://www.rusexeditorresponse.org"
+						xsi:type="xs:string">00000007819</number>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
+
+-------Request Headers------21:18 23.09.2018
+
+POST /basetest/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 3043
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------21:18 23.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid>f19282c5-bf5c-11e8-bb8f-f44d309e2a8e</ns1:uuid><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-23 21:18</ns1:datedoc><ns1:uuidcustomer>10f36d90-6fea-11e4-bebb-d43d7ef75401</ns1:uuidcustomer><ns1:namecargo>ТЕкстиль по россии</ns1:namecargo><ns1:weight>50</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>реф</ns1:ts><ns1:ts>термос</ns1:ts><ns1:comments>Тест тест комментарий</ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>1</ns1:countloaders><ns1:quantityofhours>5</ns1:quantityofhours><ns1:insurance>true</ns1:insurance><ns1:sum>10000</ns1:sum><ns1:temperaturefrom>-16</ns1:temperaturefrom><ns1:temperatureto>30</ns1:temperatureto><ns1:additionalequipment>коники</ns1:additionalequipment><ns1:additionalequipment>аппарели</ns1:additionalequipment><ns1:additionalequipment>гидроборт</ns1:additionalequipment><ns1:escort>true</ns1:escort><ns1:documentation>медкнижка</ns1:documentation><ns1:documentation>санобработка</ns1:documentation><ns1:size>15000</ns1:size><ns1:length>30</ns1:length><ns1:width>50</ns1:width><ns1:height>10</ns1:height><ns1:methodoftransportation>Сборный груз</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-25 12:37</ns1:datefrom><ns1:dateby>2018-09-25 12:37</ns1:dateby><ns1:location>3-й Митинский переулок 1</ns1:location><ns1:shipper>ООО "ТентРеф"</ns1:shipper><ns1:contactname>Михаил</ns1:contactname><ns1:numberphone>445112231</ns1:numberphone><ns1:comment>погр</ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-26 12:37</ns1:datefrom><ns1:dateby>2018-09-26 12:37</ns1:dateby><ns1:location>улица Декабристов 12</ns1:location><ns1:shipper>ООО "сибирь"</ns1:shipper><ns1:contactname>Алексей</ns1:contactname><ns1:numberphone>789456123</ns1:numberphone><ns1:comment>разгр</ns1:comment><ns1:town>г. Иваново</ns1:town></ns1:routes><ns1:methodofloading>верх</ns1:methodofloading><ns1:methodofloading>бок</ns1:methodofloading><ns1:howpacked>паллет</ns1:howpacked><ns1:countplace>1</ns1:countplace><ns1:adrclass>5</ns1:adrclass><ns1:reqrussiandriver>true</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>true</ns1:securestorage><ns1:cargohandling>true</ns1:cargohandling><ns1:methodofunloading>верх</ns1:methodofunloading><ns1:methodofunloading>бок</ns1:methodofunloading><ns1:specialequipment>манипулятор</ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------21:18 23.09.2018
+
+HTTP/1.1 200 OK
+Date: Sun, 23 Sep 2018 18:18:22 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 688
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------21:18 23.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">true</success>
+				<error xmlns="http://www.rusexeditorresponse.org"/>
+				<uuid xmlns="http://www.rusexeditorresponse.org">f19282c5-bf5c-11e8-bb8f-f44d309e2a8e</uuid>
+				<number xmlns="http://www.rusexeditorresponse.org"
+						xsi:type="xs:string">00000007819</number>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
+
+-------Request Headers------11:49 24.09.2018
+
+POST /basetest/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 3176
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------11:49 24.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid xsi:nil="true"/><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-24 11:49</ns1:datedoc><ns1:uuidcustomer>1c0632af-bfd5-11e8-bb8f-f44d309e2a8e</ns1:uuidcustomer><ns1:namecargo>Оборудование</ns1:namecargo><ns1:weight>1860</ns1:weight><ns1:ts>тент</ns1:ts><ns1:comments>3 поддона по 1400х1750х1800 каждый&#13;
+1 поддон 1200х800х800&#13;
+1 поддон 1200х800х1600&#13;
+1 поддон 1400х800х830&#13;
+1 поддон 1200х900х700&#13;
+1 поддон 1200х900х700</ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>0</ns1:countloaders><ns1:quantityofhours>0</ns1:quantityofhours><ns1:insurance>false</ns1:insurance><ns1:sum>0</ns1:sum><ns1:temperaturefrom>0</ns1:temperaturefrom><ns1:temperatureto>0</ns1:temperatureto><ns1:additionalequipment></ns1:additionalequipment><ns1:escort>false</ns1:escort><ns1:documentation></ns1:documentation><ns1:size>30.38</ns1:size><ns1:length>2.45</ns1:length><ns1:width>6.2</ns1:width><ns1:height>2</ns1:height><ns1:methodoftransportation>Выделенный транспорт</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-25 10:00</ns1:datefrom><ns1:dateby>2018-09-25 18:00</ns1:dateby><ns1:location>1-й Панковский проезд, 1Б</ns1:location><ns1:shipper>Аксилвент</ns1:shipper><ns1:contactname>Маша</ns1:contactname><ns1:numberphone>888888888</ns1:numberphone><ns1:comment>нет</ns1:comment><ns1:town>Люберцы</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-29 10:00</ns1:datefrom><ns1:dateby>2018-09-29 18:00</ns1:dateby><ns1:location>Береговая ул.</ns1:location><ns1:shipper>Аксилвент</ns1:shipper><ns1:contactname>Маша</ns1:contactname><ns1:numberphone>88888888</ns1:numberphone><ns1:comment>нет</ns1:comment><ns1:town>Ялта</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-29 10:00</ns1:datefrom><ns1:dateby>2018-09-29 18:00</ns1:dateby><ns1:location>Кубанская улица, 30</ns1:location><ns1:shipper>Аксилвент</ns1:shipper><ns1:contactname>Маша</ns1:contactname><ns1:numberphone>888888888</ns1:numberphone><ns1:comment>нет</ns1:comment><ns1:town>Симферополь</ns1:town></ns1:routes><ns1:methodofloading>бок</ns1:methodofloading><ns1:howpacked>паллет</ns1:howpacked><ns1:countplace>8</ns1:countplace><ns1:adrclass>0</ns1:adrclass><ns1:reqrussiandriver>false</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>false</ns1:securestorage><ns1:cargohandling>false</ns1:cargohandling><ns1:methodofunloading>бок</ns1:methodofunloading><ns1:specialequipment></ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------11:49 24.09.2018
+
+HTTP/1.1 200 OK
+Date: Mon, 24 Sep 2018 08:49:17 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 688
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------11:49 24.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">true</success>
+				<error xmlns="http://www.rusexeditorresponse.org"/>
+				<uuid xmlns="http://www.rusexeditorresponse.org">b8217c11-bfd6-11e8-bb8f-f44d309e2a8e</uuid>
+				<number xmlns="http://www.rusexeditorresponse.org"
+						xsi:type="xs:string">00000007820</number>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
+
+-------Request Headers------14:33 25.09.2018
+
+POST /basetest/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 3041
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------14:33 25.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid xsi:nil="true"/><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-25T14:33:04</ns1:datedoc><ns1:uuidcustomer>1c0632af-bfd5-11e8-bb8f-f44d309e2a8e</ns1:uuidcustomer><ns1:namecargo>Оплата по счету</ns1:namecargo><ns1:weight>50</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>реф</ns1:ts><ns1:ts>термос</ns1:ts><ns1:comments>Коммент</ns1:comments><ns1:nds>false</ns1:nds><ns1:countloaders>1</ns1:countloaders><ns1:quantityofhours>1</ns1:quantityofhours><ns1:insurance>false</ns1:insurance><ns1:sum>1000</ns1:sum><ns1:temperaturefrom>0</ns1:temperaturefrom><ns1:temperatureto>0</ns1:temperatureto><ns1:additionalequipment>коники</ns1:additionalequipment><ns1:additionalequipment>аппарели</ns1:additionalequipment><ns1:escort>true</ns1:escort><ns1:documentation>медкнижка</ns1:documentation><ns1:documentation>санобработка</ns1:documentation><ns1:size>1000</ns1:size><ns1:length>20</ns1:length><ns1:width>1</ns1:width><ns1:height>50</ns1:height><ns1:methodoftransportation>Сборный груз</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T14:29:00</ns1:datefrom><ns1:dateby>2018-09-27T14:29:00</ns1:dateby><ns1:location>Привольная улица, 1к1</ns1:location><ns1:shipper>ООО "ТрансНефть"</ns1:shipper><ns1:contactname>Андрей</ns1:contactname><ns1:numberphone>89441234564</ns1:numberphone><ns1:comment>погр</ns1:comment><ns1:town>Москва</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-28T14:29:00</ns1:datefrom><ns1:dateby>2018-09-29T14:29:00</ns1:dateby><ns1:location>бульвар Лёни Голикова</ns1:location><ns1:shipper>Текстиль</ns1:shipper><ns1:contactname>Алексей</ns1:contactname><ns1:numberphone>12314232</ns1:numberphone><ns1:comment>разгр</ns1:comment><ns1:town>Новгородская область, Великий Новгород</ns1:town></ns1:routes><ns1:methodofloading>верх</ns1:methodofloading><ns1:methodofloading>бок</ns1:methodofloading><ns1:howpacked>паллет</ns1:howpacked><ns1:countplace>1</ns1:countplace><ns1:adrclass>2</ns1:adrclass><ns1:reqrussiandriver>false</ns1:reqrussiandriver><ns1:crossdocking>true</ns1:crossdocking><ns1:securestorage>false</ns1:securestorage><ns1:cargohandling>true</ns1:cargohandling><ns1:methodofunloading>верх</ns1:methodofunloading><ns1:methodofunloading>бок</ns1:methodofunloading><ns1:specialequipment>манипулятор</ns1:specialequipment><ns1:specialequipment>эвакуатор</ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------14:33 25.09.2018
+
+HTTP/1.1 200 OK
+Date: Tue, 25 Sep 2018 11:33:10 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 688
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------14:33 25.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">true</success>
+				<error xmlns="http://www.rusexeditorresponse.org"/>
+				<uuid xmlns="http://www.rusexeditorresponse.org">c781d41c-c0b6-11e8-bb8f-f44d309e2a8e</uuid>
+				<number xmlns="http://www.rusexeditorresponse.org"
+						xsi:type="xs:string">00000007823</number>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
+
+-------Request Headers------13:45 26.09.2018
+
+POST /exp/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 4150
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------13:45 26.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid xsi:nil="true"/><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-26T13:45:58</ns1:datedoc><ns1:uuidcustomer>10f36d90-6fea-11e4-bebb-d43d7ef75401</ns1:uuidcustomer><ns1:namecargo>Упаковка, оборудование</ns1:namecargo><ns1:weight>3500</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>любой закрытый</ns1:ts><ns1:comments></ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>0</ns1:countloaders><ns1:quantityofhours>0</ns1:quantityofhours><ns1:insurance>false</ns1:insurance><ns1:sum>0</ns1:sum><ns1:temperaturefrom>0</ns1:temperaturefrom><ns1:temperatureto>0</ns1:temperatureto><ns1:additionalequipment>гидроборт</ns1:additionalequipment><ns1:escort>false</ns1:escort><ns1:documentation></ns1:documentation><ns1:size>46.08</ns1:size><ns1:length>2.4</ns1:length><ns1:width>8</ns1:width><ns1:height>2.4</ns1:height><ns1:methodoftransportation>Выделенный транспорт</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T10:00:00</ns1:datefrom><ns1:dateby>2018-09-27T10:00:00</ns1:dateby><ns1:location>МО, Дмитровский р-он, д. Никольское</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Сергей, Владимир</ns1:contactname><ns1:numberphone>+7-925-808-21-33, +7-925-808-21-48</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Московская область, Дмитровский городской округ, деревня Никольское</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-27T12:00:00</ns1:datefrom><ns1:dateby>2018-09-27T20:00:00</ns1:dateby><ns1:location>МКАД, 66-й километр, внешняя сторона</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Павел</ns1:contactname><ns1:numberphone>+7-919-108-14-60</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва, МКАД, 66-й километр, внешняя сторона</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T14:00:00</ns1:datefrom><ns1:dateby>2018-09-27T20:00:00</ns1:dateby><ns1:location>Москва, МКАД, 66-й километр, внешняя сторона</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Павел</ns1:contactname><ns1:numberphone>+7-919-108-14-60</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва, МКАД, 66-й километр, внешняя сторона</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-27T20:00:00</ns1:datefrom><ns1:dateby>2018-09-28T08:00:00</ns1:dateby><ns1:location>Московская область, Дмитровский городской округ, деревня Никольское</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Сергей, Владимир</ns1:contactname><ns1:numberphone>+7-925-808-21-33, +7-925-808-21-48</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Московская область, Дмитровский городской округ, деревня Никольское</ns1:town></ns1:routes><ns1:methodofloading>зад</ns1:methodofloading><ns1:howpacked>паллет</ns1:howpacked><ns1:countplace>0</ns1:countplace><ns1:adrclass>0</ns1:adrclass><ns1:reqrussiandriver>false</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>false</ns1:securestorage><ns1:cargohandling>false</ns1:cargohandling><ns1:methodofunloading>зад</ns1:methodofunloading><ns1:specialequipment></ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------13:45 26.09.2018
+
+HTTP/1.1 200 OK
+Date: Wed, 26 Sep 2018 10:45:58 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 688
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------13:45 26.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">true</success>
+				<error xmlns="http://www.rusexeditorresponse.org"/>
+				<uuid xmlns="http://www.rusexeditorresponse.org">59a4884a-c179-11e8-bb8f-f44d309e2a8e</uuid>
+				<number xmlns="http://www.rusexeditorresponse.org"
+						xsi:type="xs:string">00000008015</number>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
+
+-------Request Headers------13:56 26.09.2018
+
+POST /exp/ws/ws1.1cws HTTP/1.1
+Host: 217.76.41.228
+Connection: Keep-Alive
+User-Agent: PHP-SOAP/7.0.31
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "http://www.rusexeditor.org#rusexeditor:uploadapplication"
+Content-Length: 4181
+Authorization: Basic 0KTQtdC00YPQu9C+0LIg0JTQtdC90LjRgTpUcG9yZ1M0
+
+
+
+-------Request------13:56 26.09.2018
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.rusexeditorapplication.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://www.rusexeditor.org"><SOAP-ENV:Body><ns2:uploadapplication><ns2:application><ns1:uuid>59a4884a-c179-11e8-bb8f-f44d309e2a8e</ns1:uuid><ns1:number xsi:nil="true"/><ns1:datedoc>2018-09-26T13:56:35</ns1:datedoc><ns1:uuidcustomer>10f36d90-6fea-11e4-bebb-d43d7ef75401</ns1:uuidcustomer><ns1:namecargo>Упаковка, оборудование</ns1:namecargo><ns1:weight>3500</ns1:weight><ns1:ts>тент</ns1:ts><ns1:ts>любой закрытый</ns1:ts><ns1:comments></ns1:comments><ns1:nds>true</ns1:nds><ns1:countloaders>0</ns1:countloaders><ns1:quantityofhours>0</ns1:quantityofhours><ns1:insurance>false</ns1:insurance><ns1:sum>0</ns1:sum><ns1:temperaturefrom>0</ns1:temperaturefrom><ns1:temperatureto>0</ns1:temperatureto><ns1:additionalequipment>гидроборт</ns1:additionalequipment><ns1:escort>false</ns1:escort><ns1:documentation></ns1:documentation><ns1:size>46.08</ns1:size><ns1:length>2.4</ns1:length><ns1:width>8</ns1:width><ns1:height>2.4</ns1:height><ns1:methodoftransportation>Выделенный транспорт</ns1:methodoftransportation><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T10:00:00</ns1:datefrom><ns1:dateby>2018-09-27T10:00:00</ns1:dateby><ns1:location>МО, Дмитровский р-он, д. Никольское</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Сергей, Владимир</ns1:contactname><ns1:numberphone>+7-925-808-21-33, +7-925-808-21-48</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Московская область, Дмитровский городской округ, деревня Никольское</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-27T12:00:00</ns1:datefrom><ns1:dateby>2018-09-27T20:00:00</ns1:dateby><ns1:location>МКАД, 66-й километр, внешняя сторона</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Павел</ns1:contactname><ns1:numberphone>+7-919-108-14-60</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва, МКАД, 66-й километр, внешняя сторона</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>false</ns1:typeshipment><ns1:datefrom>2018-09-27T14:00:00</ns1:datefrom><ns1:dateby>2018-09-27T20:00:00</ns1:dateby><ns1:location>Москва, МКАД, 66-й километр, внешняя сторона</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Павел</ns1:contactname><ns1:numberphone>+7-919-108-14-60</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Москва, МКАД, 66-й километр, внешняя сторона</ns1:town></ns1:routes><ns1:routes><ns1:typeshipment>true</ns1:typeshipment><ns1:datefrom>2018-09-27T20:00:00</ns1:datefrom><ns1:dateby>2018-09-28T08:00:00</ns1:dateby><ns1:location>Московская область, Дмитровский городской округ, деревня Никольское</ns1:location><ns1:shipper>ООО Деловая Русь</ns1:shipper><ns1:contactname>Сергей, Владимир</ns1:contactname><ns1:numberphone>+7-925-808-21-33, +7-925-808-21-48</ns1:numberphone><ns1:comment></ns1:comment><ns1:town>Московская область, Дмитровский городской округ, деревня Никольское</ns1:town></ns1:routes><ns1:methodofloading>зад</ns1:methodofloading><ns1:howpacked>паллет</ns1:howpacked><ns1:countplace>0</ns1:countplace><ns1:adrclass>0</ns1:adrclass><ns1:reqrussiandriver>false</ns1:reqrussiandriver><ns1:crossdocking>false</ns1:crossdocking><ns1:securestorage>false</ns1:securestorage><ns1:cargohandling>false</ns1:cargohandling><ns1:methodofunloading>зад</ns1:methodofunloading><ns1:specialequipment></ns1:specialequipment></ns2:application></ns2:uploadapplication></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+
+-------Response Headers------13:56 26.09.2018
+
+HTTP/1.1 200 OK
+Date: Wed, 26 Sep 2018 10:56:35 GMT
+Server: Apache/2.4.33 (Win64)
+Content-Length: 688
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/xml;charset=utf-8
+
+
+-------Response------13:56 26.09.2018
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	<soap:Body>
+		<m:uploadapplicationResponse xmlns:m="http://www.rusexeditor.org">
+			<m:return xmlns:xs="http://www.w3.org/2001/XMLSchema"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+				<success xmlns="http://www.rusexeditorresponse.org">true</success>
+				<error xmlns="http://www.rusexeditorresponse.org"/>
+				<uuid xmlns="http://www.rusexeditorresponse.org">59a4884a-c179-11e8-bb8f-f44d309e2a8e</uuid>
+				<number xmlns="http://www.rusexeditorresponse.org"
+						xsi:type="xs:string">00000008015</number>
+			</m:return>
+		</m:uploadapplicationResponse>
+	</soap:Body>
+</soap:Envelope>
