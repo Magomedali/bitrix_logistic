@@ -2,7 +2,7 @@
 header("Content-type: text/xml; charset='utf-8'");
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
-$server = "http://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
+$server = "https://".$_SERVER['HTTP_HOST']."/alkserver/index.php";
 $nsp = "http://".$_SERVER['HTTP_HOST']."/alkserver/";
 ?>
 <definitions 	xmlns="http://schemas.xmlsoap.org/wsdl/"
