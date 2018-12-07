@@ -1,1 +1,9 @@
 /files
+/files/
+
+/lib/soap/clients/logs
+/lib/soap/clients/logs/
+
+
+/lib/soap/server/output
+/lib/soap/server/output/
