@@ -33,6 +33,7 @@ class Route
 		$this->datefrom = $route['datefrom'];
 		$this->dateby = $route['dateby'];
 		$this->town = $route['town'];
+		$this->region = $route['region'];
 		$this->location = $route['location'];
 		$this->shipper = $route['shipper'];
 		$this->contactname = $route['contactname'];
@@ -79,6 +80,7 @@ class Route
     	$data['ORDER'] = $this->order;
 
     	$data['TOWN'] = $this->town;
+    	$data['REGION'] = $this->region;
     	$data['ADDRESS'] = $this->location;
     	$data['COMMENT'] = $this->comment;
     	$data['ORGANISATION'] = $this->shipper;

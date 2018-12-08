@@ -129,6 +129,7 @@ $nsp = "http://".$_SERVER['HTTP_HOST']."/alkserver/";
     				<xs:element name="datefrom" type="xs:dateTime"/>
     				<xs:element name="dateby" type="xs:dateTime"/>
     				<xs:element name="town" type="xs:string" nillable="true"/>
+                    <xs:element name="region" type="xs:string" nillable="true"/>
     				<xs:element name="location" type="xs:string"/>
     				<xs:element name="shipper" type="xs:string"/>
     				<xs:element name="contactname" type="xs:string"/>

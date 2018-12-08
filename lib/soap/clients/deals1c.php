@@ -102,6 +102,7 @@ class Deals1C extends Client1C
 				$route['datefrom'] = date("Y-m-d\TH:i:s",strtotime($r['START_AT']));
 				$route['dateby'] = date("Y-m-d\TH:i:s",strtotime($r['FINISH_AT']));
 				$route['town'] = $r['TOWN'];
+				$route['region'] = $r['REGION'];
 				$route['location'] = $r['ADDRESS'];
 				$route['shipper'] = $r['ORGANISATION'];
 				$route['contactname'] = $r['PERSON'];

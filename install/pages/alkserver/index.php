@@ -1,5 +1,6 @@
 <?php
 
+require(__DIR__ . '/security.php');
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 
 ob_end_clean();
@@ -14,7 +15,7 @@ use Ali\Logistic\soap\Server\ServerHandler;
 
 if(CModule::IncludeModule('ali.logistic')){
 
-	ini_set("soap.wsdl_cache_enabled", "1");
+	ini_set("soap.wsdl_cache_enabled", "0");
 	try {
 		//Создаем новый SOAP-сервер
 		$server = LogisticServer::init();
