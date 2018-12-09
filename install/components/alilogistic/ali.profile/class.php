@@ -681,9 +681,9 @@ class AliProfile extends CBitrixComponent
                             $deal['ROUTES']=$routes;
 
                             $deal['CONTRACTOR_INTEGRATED_ID'] = $contrs_uuids[$deal['CONTRACTOR_ID']];
-                            //$res = Deals::integrateDealTo1C($deal);
+                            $res = Deals::integrateDealTo1C($deal);
 
-                            if(1 || $res->isSuccess()){
+                            if($res->isSuccess()){
                                 LocalRedirect($this->getUrl("deals"));
                             }else{
                                 LocalRedirect($this->getUrl("draftdeals"));
@@ -784,7 +784,7 @@ class AliProfile extends CBitrixComponent
                 $contractor = (int)$request['contractor'];
                 global $DB;
                 $results = $DB->Query("
-                    SELECT dr.PERSON,dr.PHONE,dr.COMMENT FROM ".RoutesSchemaTable::getTableName()." dr 
+                    SELECT DISTINCT dr.PERSON,dr.PHONE,dr.COMMENT FROM ".RoutesSchemaTable::getTableName()." dr 
                     INNER JOIN ".DealsSchemaTable::getTableName()." d ON d.ID =  dr.DEAL_ID
                     WHERE d.CONTRACTOR_ID = {$contractor} AND dr.ORGANISATION LIKE '%{$org}%' AND  dr.PERSON LIKE '%{$key}%'
                     LIMIT 10
