@@ -47,11 +47,19 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 						?>
 					</div>
 					<div class="col-xs-5">
-						<div class="geocoder geocoder-town">
+						<div class="geocoder geocoder-region">
 							<p>
-								<label>Населенный пункт:</label>
+								<label>Регион</label>
 								<?php
-									echo Html::input("text","ROUTES[{$number}][TOWN]",$route && isset($route['TOWN']) ? $route['TOWN'] : null,['class'=>'form-control town','autocomplete'=>"off"]);
+									echo Html::input("text","ROUTES[{$number}][REGION]",$route && isset($route['REGION']) ? $route['REGION'] : null,['class'=>'form-control region','autocomplete'=>"off"]);
+								?>
+							</p>
+						</div>
+						<div class="geocoder geocoder-address">
+							<p>
+								<label>Точный адрес:</label>
+								<?php
+									echo Html::input("text","ROUTES[{$number}][ADDRESS]",$route && isset($route['ADDRESS']) ? $route['ADDRESS'] : null,['class'=>'form-control address','autocomplete'=>"off"]);
 								?>
 							</p>
 						</div>
@@ -62,28 +70,33 @@ $route = isset($arResult['route']) && $arResult['route'] ? $arResult['route'] : 
 							?>
 							<span class="dt_error"></span>
 						</p>
-						<p>
-							<label>Организация:</label>
-							<?php
-								echo Html::input("text","ROUTES[{$number}][ORGANISATION]",$route && isset($route['ORGANISATION']) ? $route['ORGANISATION'] : null,['class'=>'form-control org']);
-							?>
-						</p>
-						<p>
-							<label>Контактное лицо:</label>
-							<?php
-								echo Html::input("text","ROUTES[{$number}][PERSON]",$route && isset($route['PERSON']) ? $route['PERSON'] : null,['class'=>'form-control person']);
-							?>
-						</p>
-					</div>
-					<div class="col-xs-5">
-						<div class="geocoder geocoder-address">
+						<div class="autocomplete autocomplete-org">
 							<p>
-								<label>Точный адрес:</label>
+								<label>Организация:</label>
 								<?php
-									echo Html::input("text","ROUTES[{$number}][ADDRESS]",$route && isset($route['ADDRESS']) ? $route['ADDRESS'] : null,['class'=>'form-control address','autocomplete'=>"off"]);
+									echo Html::input("text","ROUTES[{$number}][ORGANISATION]",$route && isset($route['ORGANISATION']) ? $route['ORGANISATION'] : null,['class'=>'form-control org','autocomplete'=>'off']);
 								?>
 							</p>
 						</div>
+						<div class="autocomplete autocomplete-person">
+							<p>
+								<label>Контактное лицо:</label>
+								<?php
+									echo Html::input("text","ROUTES[{$number}][PERSON]",$route && isset($route['PERSON']) ? $route['PERSON'] : null,['class'=>'form-control person','autocomplete'=>'off']);
+								?>
+							</p>
+						</div>
+					</div>
+					<div class="col-xs-5">
+						<div class="geocoder geocoder-town">
+							<p>
+								<label>Населенный пункт:</label>
+								<?php
+									echo Html::input("text","ROUTES[{$number}][TOWN]",$route && isset($route['TOWN']) ? $route['TOWN'] : null,['class'=>'form-control town','autocomplete'=>"off"]);
+								?>
+							</p>
+						</div>
+						<div style="height: 69px;"></div>
 						<p>
 							<label>Дата по:</label>
 							<?php

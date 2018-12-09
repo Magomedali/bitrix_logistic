@@ -1,15 +1,15 @@
 
-div.geocoder{
+div.geocoder,div.autocomplete{
 	position: relative;
 }
 
 
-div.geocoder div.places-list{
+div.geocoder div.places-list,div.autocomplete div.autocomplete-list{
 	position: absolute;
 	width: 100%;
 }
 
-	div.geocoder div.places-list ul{
+	div.geocoder div.places-list ul,div.autocomplete div.autocomplete-list ul{
 		margin: 0px;
     	position: relative;
 	    z-index: 100;
@@ -22,18 +22,18 @@ div.geocoder div.places-list{
 	    top: -11px;
 	}
 
-		div.geocoder div.places-list ul li{
+		div.geocoder div.places-list ul li,div.autocomplete div.autocomplete-list ul li{
 			list-style: none;
 			cursor: pointer;
 			padding: 2px 5px;
 			border-bottom: 1px solid #a4b9ca;
 		}
 
-		div.geocoder div.places-list ul li:last-child{
+		div.geocoder div.places-list ul li:last-child,div.autocomplete div.autocomplete-list ul li:last-child{
 			border-bottom: none;
 		}
 
-		div.geocoder div.places-list ul li:hover{
+		div.geocoder div.places-list ul li:hover,div.autocomplete div.autocomplete-list ul li:hover{
 			background:#3b98de;
 			color: #fff;
 		}

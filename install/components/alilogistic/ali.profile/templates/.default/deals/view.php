@@ -71,6 +71,7 @@ function htmlFilelink($component,$files,$type){
 										<th>Время от</th>
 										<th>Время до</th>
 										<th>Организация</th>
+										<th>Регион</th>
 										<th>Населенный пункт</th>
 										<th>Адрес</th>
 										<th>Контактное лицо</th>
@@ -88,6 +89,7 @@ function htmlFilelink($component,$files,$type){
 													<td><?php echo Html::encode($r['START_AT']);?></td>
 													<td><?php echo Html::encode($r['FINISH_AT']);?></td>
 													<td><?php echo Html::encode($r['ORGANISATION']);?></td>
+													<td><?php echo Html::encode($r['REGION']);?></td>
 													<td><?php echo Html::encode($r['TOWN']);?></td>
 													<td><?php echo Html::encode($r['ADDRESS']);?></td>
 													<td><?php echo Html::encode($r['PERSON']);?></td>
@@ -145,7 +147,7 @@ function htmlFilelink($component,$files,$type){
 								</tr>
 								<tr>
 									<td><strong>Как упакован</strong></td>
-									<td><?php echo HowPacked::getLabels($deal['HOW_PACKED'])?></td>
+									<td><?php echo $deal['HOW_PACKED'] ? HowPacked::getLabels($deal['HOW_PACKED']) : ""?></td>
 								</tr>
 								<tr>
 									<td><strong>Количество мест</strong></td>

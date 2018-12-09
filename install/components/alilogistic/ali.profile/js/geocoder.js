@@ -117,12 +117,11 @@ var placesToHtml = function(places,components){
 	}
 	
 	if(!list.length) return null;
-
 	this.html +=list;
 	this.html += "</ul>";
-
 	return this.html;
 }
+
 
 var placesPropertyToHtml = function(places,property,value,kind){
 	this.html = "<ul class='yandex_places_autocomplete'>";
@@ -135,19 +134,17 @@ var placesPropertyToHtml = function(places,property,value,kind){
 				
 				kind.forEach(function(k){
 					if(components.hasOwnProperty(k) && components[k].length){
-						if(item.hasOwnProperty(property) && item.hasOwnProperty(value)){
+						if(item.hasOwnProperty(property) && item.hasOwnProperty(value)  && item[property]){
 							list += "<li class='place_item' data-value='"+item[value]+"'>"+item[property]+"</li>";
 						}
 					}
 				});
 
 			}else{
-				if(item.hasOwnProperty(property) && item.hasOwnProperty(value)){
+				if(item.hasOwnProperty(property) && item.hasOwnProperty(value) && item[property]){
 					list += "<li class='place_item' data-value='"+item[value]+"'>"+item[property]+"</li>";
 				}
 			}
-			
-			
 		});
 	}
 	if(!list.length) return null;
@@ -161,10 +158,11 @@ var placesPropertyToHtml = function(places,property,value,kind){
 $(function(){
 
 	var host = "https://geocode-maps.yandex.ru/1.x/";
-	$("body").on("keyup","div.geocoder-town input[type=text]",function(event){
+
+	$("body").on("keyup","div.geocoder-region input[type=text]",function(event){
 		event.preventDefault();
 		var val = $(this).val();
-		var parent = $(this).parents("div.geocoder.geocoder-town");
+		var parent = $(this).parents("div.geocoder.geocoder-region");
 		var list = parent.find("div.places-list");
 
 		if(!list.length){
@@ -174,6 +172,53 @@ $(function(){
 		}
 
 		if(val.length > 3){
+			$.ajax({
+					url:host,
+					data:{
+						geocode:val,
+						format:'json',
+						results:10
+					},
+					dataType:"json",
+					success:function(resp){
+						var places = [];
+						if(resp.hasOwnProperty("response")){
+							var collect = new PlacesCollection();
+							collect.importYnadex(resp.response);
+
+							places = collect.places;
+						}
+						console.log(places);
+						var html = placesPropertyToHtml(places,"description","description",['province','country','locality']);
+
+						list.html(html);
+						list.show();
+					},
+					error:function(msg){
+						console.log(msg);
+					}
+			})
+		}
+	});
+
+
+	$("body").on("keyup","div.geocoder-town input[type=text]",function(event){
+		event.preventDefault();
+		var val = $(this).val();
+		var parent = $(this).parents("div.geocoder.geocoder-town");
+		var list = parent.find("div.places-list");
+		var region = $(this).parents(".form-route").find("div.geocoder-region").find("input[type=text]").val();
+
+		if(!list.length){
+			list = $("<div/>").addClass("places-list").html($("<ul/>"));
+			parent.append(list);
+			list.hide();
+		}
+
+		if(val.length > 3){
+			
+			val = region+", "+val;
+
 			$.ajax({
 					url:host,
 					data:{
@@ -249,10 +294,10 @@ $(function(){
 	});
 
 	$("body").on("click","li.place_item",function(event){
-			event.preventDefault();
+		event.preventDefault();
 			
-			var data = $(this).data();
-			$(this).parents("div.geocoder").find("input[type=text]").val(data.value);
-			$(this).parents("div.places-list").hide();
-		});
+		var data = $(this).data();
+		$(this).parents("div.geocoder").find("input[type=text]").val(data.value);
+		$(this).parents("div.places-list").hide();
+	});
 })

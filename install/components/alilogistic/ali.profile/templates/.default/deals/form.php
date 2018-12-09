@@ -649,6 +649,7 @@ $arResult['breadcrumbs'][]=[
 		this.dt_from;
 		this.dt_to;
 		this.town;
+		this.region;
 		this.address;
 		this.person;
 		this.org;
@@ -660,6 +661,7 @@ $arResult['breadcrumbs'][]=[
 			this.dt_to = form.find("input.finishdate").val();
 
 			this.town = form.find("input.town").val();
+			this.region = form.find("input.region").val();
 			this.address = form.find("input.address").val();
 			this.person = form.find("input.person").val();
 			this.org = form.find("input.org").val();
@@ -672,6 +674,7 @@ $arResult['breadcrumbs'][]=[
 			to.find("input.finishdate").val(this.dt_to);
 
 			to.find("input.town").val(this.town);
+			to.find("input.region").val(this.region);
 			to.find("input.address").val(this.address);
 			to.find("input.person").val(this.person);
 			to.find("input.org").val(this.org);
@@ -777,6 +780,120 @@ $arResult['breadcrumbs'][]=[
 		if(l > 0 && w > 0 && h > 0){
 			space.val(space_val.toFixed(2));
 		}
-	})
+	});
 
+
+	var orgAutocompleteHost = "<?php echo $component->getActionUrl("autocompleteOrg");?>";
+	$("body").on("keyup",'.form-route .autocomplete input.org',function(){
+		var thisRoute = $(this).parents(".form-route");
+		var parent = $(this).parents("div.autocomplete.autocomplete-org");
+		var list = parent.find("div.autocomplete-list");
+		var contractorId = $("input[name='DEAL[CONTRACTOR_ID]']").val();
+		var val = $(this).val();
+
+		if(!contractorId) return false;
+
+		if(!list.length){
+			list = $("<div/>").addClass("autocomplete-list").html($("<ul/>"));
+			parent.append(list);
+			list.hide();
+		}
+
+		if(val.length >= 3){
+			$.ajax({
+					url:orgAutocompleteHost,
+					data:{
+						key:val,
+						contractor:contractorId
+					},
+					dataType:"html",
+					success:function(html){
+						if(html){
+							list.html(html);
+							list.show();
+						}
+					},
+					error:function(msg){
+						console.log(msg);
+					}
+			})
+		}
+	});
+
+
+	$("body").on("click",".autocomplete-org .autocomplete-list li",function(){
+		var tText = $(this).text();
+		var thisInput = $(this).parents(".autocomplete-org").find("input[type='text']");
+		var list = $(this).parents(".autocomplete-list");
+
+		if(thisInput.length){
+			thisInput.val(tText);
+		}
+
+		if(list.length){
+			list.hide();
+		}		
+	});
+
+
+
+
+	var personAutocompleteHost = "<?php echo $component->getActionUrl("autocompletePerson");?>";
+	$("body").on("keyup",'.form-route .autocomplete input.person',function(){
+		var thisRoute = $(this).parents(".form-route");
+		var parent = $(this).parents("div.autocomplete.autocomplete-person");
+		var list = parent.find("div.autocomplete-list");
+		var contractorId = $("input[name='DEAL[CONTRACTOR_ID]']").val();
+		var org = thisRoute.find("input.org").val();
+		var val = $(this).val();
+
+		if(!contractorId || !org) return false;
+
+		if(!list.length){
+			list = $("<div/>").addClass("autocomplete-list").html($("<ul/>"));
+			parent.append(list);
+			list.hide();
+		}
+
+		if(val.length >= 3){
+			$.ajax({
+					url:personAutocompleteHost,
+					data:{
+						key:val,
+						contractor:contractorId,
+						org:org
+					},
+					dataType:"html",
+					success:function(html){
+						if(html){
+							list.html(html);
+							list.show();
+						}
+					},
+					error:function(msg){
+						console.log(msg);
+					}
+			})
+		}
+	});
+
+
+	$("body").on("click",".autocomplete-person .autocomplete-list li",function(){
+		var tText = $(this).text();
+		var thisInput = $(this).parents(".autocomplete-person").find("input[type='text']");
+		var thisInputPhone = $(this).parents(".form-route").find("input.phone");
+		var list = $(this).parents(".autocomplete-list");
+
+		if(thisInput.length){
+			thisInput.val(tText);
+		}
+
+		if(thisInputPhone.length){
+			thisInputPhone.val($(this).data("phone"));
+		}
+
+		if(list.length){
+			list.hide();
+		}		
+	});
 </script>

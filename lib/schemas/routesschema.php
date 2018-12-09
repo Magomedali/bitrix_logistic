@@ -50,7 +50,7 @@ class RoutesSchemaTable extends Entity\DataManager
 
             new Entity\ReferenceField(
                 'DEAL',
-                '\Ali\Logistic\Deals',
+                '\Ali\Logistic\Schemas\DealsSchema',
                 array('=this.DEAL_ID' => 'ref.ID'),
                 array('join_type' => 'INNER')
             ),
@@ -157,6 +157,10 @@ class RoutesSchemaTable extends Entity\DataManager
                 }
             )),
 
+            new Entity\ExpressionField(
+                'ORGANISATION_DISTINCT',
+                'DISTINCT ORGANISATION'
+            ),
 
             new Entity\StringField('PERSON',array(
                 'title'=>'Контактное лицо',

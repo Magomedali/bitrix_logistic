@@ -19,6 +19,7 @@ use Ali\Logistic\helpers\ArrayHelper;
 use Ali\Logistic\helpers\MimeTypes;
 use Ali\Logistic\soap\clients\Sverka1C;
 use Ali\Logistic\Schemas\DealsSchemaTable;
+use Ali\Logistic\Schemas\RoutesSchemaTable;
 use Ali\Logistic\Dictionary\DealFileType;
 use Ali\Logistic\Dictionary\DealStates;
 use Ali\Logistic\Schemas\ReviseSchemaTable;
@@ -680,9 +681,9 @@ class AliProfile extends CBitrixComponent
                             $deal['ROUTES']=$routes;
 
                             $deal['CONTRACTOR_INTEGRATED_ID'] = $contrs_uuids[$deal['CONTRACTOR_ID']];
-                            $res = Deals::integrateDealTo1C($deal);
+                            //$res = Deals::integrateDealTo1C($deal);
 
-                            if($res->isSuccess()){
+                            if(1 || $res->isSuccess()){
                                 LocalRedirect($this->getUrl("deals"));
                             }else{
                                 LocalRedirect($this->getUrl("draftdeals"));
@@ -731,7 +732,79 @@ class AliProfile extends CBitrixComponent
 
 
 
+    public function autocompleteOrgAction(){
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
 
+        if(!$request->isAjaxRequest()){
+            LocalRedirect($this->getUrl());
+        }
+        $list = array();
+        try {
+            if(isset($request['key']) && isset($request['contractor']) && (int)$request['contractor'] && $request['key']){
+                $key = trim(strip_tags($request['key']));
+                $key = \Bitrix\Main\Text\Encoding::convertEncodingToCurrent($key);
+                $contractor = (int)$request['contractor'];
+
+                $list = RoutesSchemaTable::getList(array(
+                    'select'=>['ORGANISATION_DISTINCT'],
+                    'filter'=>[
+                        'DEAL.CONTRACTOR_ID'=>$contractor,
+                        "%=ORGANISATION"=>"%{$key}%"
+                    ],
+                    'limit'=>10
+                ))->fetchAll();
+            }  
+        } catch (\Exception $e) {}
+        
+
+        
+        $this->arResult = [
+            'list'=>$list
+        ];
+
+        return "deals/autocomlete_list";
+    }
+
+
+    public function autocompletePersonAction(){
+        $context = Application::getInstance()->getContext();
+        $request = $context->getRequest();
+
+        if(!$request->isAjaxRequest()){
+            LocalRedirect($this->getUrl());
+        }
+        $list = array();
+        try {
+            if(isset($request['key']) && isset($request['contractor']) && isset($request['org']) && $request['org'] && (int)$request['contractor'] && $request['key']){
+                $key = trim(strip_tags($request['key']));
+                $key = \Bitrix\Main\Text\Encoding::convertEncodingToCurrent($key);
+                $org = trim(strip_tags($request['org']));
+                $org = \Bitrix\Main\Text\Encoding::convertEncodingToCurrent($org);
+                $contractor = (int)$request['contractor'];
+                global $DB;
+                $results = $DB->Query("
+                    SELECT dr.PERSON,dr.PHONE,dr.COMMENT FROM ".RoutesSchemaTable::getTableName()." dr 
+                    INNER JOIN ".DealsSchemaTable::getTableName()." d ON d.ID =  dr.DEAL_ID
+                    WHERE d.CONTRACTOR_ID = {$contractor} AND dr.ORGANISATION LIKE '%{$org}%' AND  dr.PERSON LIKE '%{$key}%'
+                    LIMIT 10
+                ");
+
+
+                while ($row = $results->Fetch()){
+                    array_push($list, $row);
+                }
+            }  
+        } catch (\Exception $e) {}
+        
+
+        
+        $this->arResult = [
+            'list'=>$list
+        ];
+
+        return "deals/autocomlete_person_list";
+    }
 
 
 
@@ -869,6 +942,7 @@ class AliProfile extends CBitrixComponent
 
         
 
+        $params['order']=['CREATED_AT'=>'DESC'];
         $params['limit']=$limit;
         $params['offset']=$offset;
         $deals = Deals::getDeals(null,$params);
