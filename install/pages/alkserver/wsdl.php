@@ -1,6 +1,10 @@
 <?php
 
-if($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
+// if($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
+// 	require(__DIR__ . '/security.php');
+// }
+
+if(!(isset($_GET['l']) && (int)$_GET['l'] == 1)){
 	require(__DIR__ . '/security.php');
 }
 

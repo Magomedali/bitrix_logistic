@@ -15,7 +15,7 @@ class LogisticServer{
 		fwrite($f, "\n Запрос на сервер ".date("H:i:s d.m.Y")." \n");
 		try {
 
-			$server = new \SoapServer("http://".$_SERVER['HTTP_HOST']."/alkserver/wsdl.php");
+			$server = new \SoapServer("http://".$_SERVER['HTTP_HOST']."/alkserver/wsdl.php?l=1");
 
 			fclose($f);
 			

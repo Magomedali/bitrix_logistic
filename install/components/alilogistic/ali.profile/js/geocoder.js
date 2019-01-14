@@ -131,14 +131,18 @@ var placesPropertyToHtml = function(places,property,value,kind){
 		places.forEach(function(item,i){
 			var components = item.components;
 			if(kind && kind.length){
-				
+				var v = "";
+				var p = "";
 				kind.forEach(function(k){
 					if(components.hasOwnProperty(k) && components[k].length){
-						if(item.hasOwnProperty(property) && item.hasOwnProperty(value)  && item[property]){
-							list += "<li class='place_item' data-value='"+item[value]+"'>"+item[property]+"</li>";
+						if(item.hasOwnProperty(property) && item.hasOwnProperty(value)  && item[property] && item[value]){
+							v = item[value];
+							p = item[property];
 						}
 					}
 				});
+				if(v && p)
+					list += "<li class='place_item' data-value='"+v+"'>"+p+"</li>";
 
 			}else{
 				if(item.hasOwnProperty(property) && item.hasOwnProperty(value) && item[property]){
@@ -236,7 +240,7 @@ $(function(){
 							places = collect.places;
 						}
 						
-						var html = placesPropertyToHtml(places,"text","addressFormatted");
+						var html = placesPropertyToHtml(places,"name","name");
 
 						list.html(html);
 						list.show();
